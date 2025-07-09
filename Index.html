@@ -1,15 +1,68 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Coming Soon</title>
-    <link href="style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nadun Avishka Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>🚧 Portfolio Under Construction 🚧</h1>
-        <p>I’m currently building my portfolio. It will include my graphic design, 3D art, video editing, and animation projects.</p>      
+    <aside class="sidebar expanded">
+        <div class="profile">
+            <img src="assets/profile.jpg" alt="Nadun Avishka" />
+            <h1>Nadun Avishka</h1>
+            <p>Creative Visual Specialist</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#intro" class="nav-link active"><span>Intro</span><div class="progress"></div></a>
+            <a href="#featured" class="nav-link"><span>Featured</span><div class="progress"></div></a>
+            <a href="#brand" class="nav-link"><span>Brand</span><div class="progress"></div></a>
+            <a href="#company" class="nav-link"><span>Company</span><div class="progress"></div></a>
+            <a href="#cgi" class="nav-link"><span>CGI</span><div class="progress"></div></a>
+            <a href="#about" class="nav-link"><span>About &amp; Contact</span><div class="progress"></div></a>
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        <section id="intro" class="panel" style="background-image: url('assets/hero-bg.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content center">
+                <h1>VISUALS</h1><h3>SPEAK WHERE</h3><h1>WORDS</h1><h3>FALL SHORT</h3>
+                <p>Nadun Avishka | Design ∙ Motion ∙ Animation ∙ 3D</p>
+            </div>
+        </section>
+        <section id="featured" class="panel" style="background-image: url('assets/bg-featured.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content top-left">
+                <h2>Featured<br>Projects</h2>
+            </div>
+        </section>
+        <section id="brand" class="panel" style="background-image: url('assets/bg-brand.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content top-left">
+                <h2>Brand<br>Work</h2>
+            </div>
+        </section>
+        <section id="company" class="panel" style="background-image: url('assets/bg-company.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content top-left">
+                <h2>Company<br>Videos</h2>
+            </div>
+        </section>
+        <section id="cgi" class="panel" style="background-image: url('assets/bg-cgi.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content top-left">
+                <h2>CGI &amp;<br>3D Animation</h2>
+            </div>
+        </section>
+        <section id="about" class="panel" style="background-image: url('assets/bg-about.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content center">
+                <h1>About &amp; Contact</h1>
+                <p>Email: navishka123@gmail.com<br>WhatsApp: +94 77 085 4054</p>
+            </div>
+        </section>
     </div>
 </body>
 </html>

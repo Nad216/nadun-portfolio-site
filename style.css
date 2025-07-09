@@ -1,44 +1,184 @@
-body {
+:root {
+    --clr-primary: #1CB7A9;
+    --clr-bg: rgba(40, 52, 61, 0.5);
+    --clr-dark: #28343D;
+    --clr-accent: #374457;
+    --clr-light: #fff;
+    --sidebar-width: 250px;
+}
+* {
     margin: 0;
     padding: 0;
-    background: #1b1b1b;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--clr-dark);
+    color: var(--clr-light);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
+}
+.sidebar {
+    width: var(--sidebar-width);
     height: 100vh;
+    background: var(--clr-bg);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.profile {
     text-align: center;
+    margin-bottom: 3rem;
 }
-
-.container {
-    max-width: 600px;
-    padding: 2rem;
-    background: #2c2c2c;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-}
-
-h1 {
-    font-size: 2rem;
+.profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
     margin-bottom: 1rem;
 }
-
-p {
-    margin: 0.5rem 0;
+.profile h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
 }
-
-.links {
-    margin-top: 1rem;
+.profile p {
+    font-size: 0.9rem;
+    color: var(--clr-primary);
 }
-
-    .links a {
-        color: #1e90ff;
-        text-decoration: none;
-        margin: 0 0.5rem;
-        font-weight: bold;
+.sidebar-nav {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.nav-link {
+    position: relative;
+    color: var(--clr-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s, font-weight 0.3s;
+}
+.nav-link .progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+}
+    .nav-link .progress::after {
+        content: '';
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(to right, var(--clr-primary) 0%, rgba(28, 183, 169, 0) 100%);
+        transition: width 0.6s ease;
+        margin: 4px 0px;
     }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
+.nav-link.active,
+.nav-link:hover {
+    color: var(--clr-primary);
+    font-weight: 700;
+}
+.nav-link.active .progress::after {
+    width: 100%;
+}
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+.panel {
+    position: relative;
+    height: 100vh;
+    scroll-snap-align: start;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.panel-content {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    padding: 2rem;
+}
+.panel-content.center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.panel-content.top-left {
+    top: 2%;
+    left: 2rem;
+    transform: none;
+    text-align: left;
+}
+.panel-content h1 {
+    font-size: 7rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+.panel-content h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+.panel-content h3 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+.panel-content p {
+    font-size: 1.3rem;
+}
+@media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+    }
+    .panel {
+        height: 100vh;
+    }
+    .panel-content.center {
+        padding: 1rem;
+        transform: translate(-50%, -50%);
+    }
+    .panel-content h1 {
+        font-size: 3rem;
+    }
+    .panel-content h2 {
+        font-size: 2rem;
+    }
+    .panel-content h3 {
+        font-size: 2rem;
+    }
+    .panel-content p {
+        font-size: 1rem;
+    }
+}
