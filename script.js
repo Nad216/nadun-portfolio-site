@@ -1,55 +1,49 @@
-﻿// Load JSON and populate featured and section cards
-fetch("data.json")
+﻿// Navigation highlighting based on scroll position
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.panel');
+
+function updateActiveLink() {
+    let index = sections.length;
+    while (--index >= 0) {
+        const sectionTop = sections[index].getBoundingClientRect().top;
+        if (sectionTop <= window.innerHeight / 2) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            navLinks[index].classList.add('active');
+            break;
+        }
+    }
+}
+
+document.querySelector('.main-content').addEventListener('scroll', updateActiveLink);
+window.addEventListener('load', updateActiveLink);
+
+// Load JSON and render projects
+fetch('data/projects.json')
     .then(response => response.json())
     .then(data => {
-        displayFeatured(data);
-        displaySections(data);
+        // Render cards into each panel
+        function renderProjects(sectionId, projects) {
+            const section = document.querySelector(`#${sectionId} .panel-content`); // ✅ Fixed with backticks
+            if (!section) return;
+
+            projects.forEach(project => {
+                const div = document.createElement('div');
+                div.classList.add('project');
+                div.innerHTML = `
+                    <a href="${project.link}" target="_blank">
+                        <img src="${project.image}" alt="${project.title}">
+                        <p><strong>${project.title}</strong><br>${project.description}</p>
+                    </a>
+                `;
+                section.appendChild(div);
+            });
+        }
+
+        renderProjects('featured', data.featured);
+        renderProjects('brand', data.brand);
+        renderProjects('animation', data.animation);
+        renderProjects('cgi', data.cgi);
     })
     .catch(error => {
-        console.error("Error loading JSON data:", error);
+        console.error('Error loading projects:', error);
     });
-
-// Add featured cards to #featured-cards (inside the "Featured" section)
-function displayFeatured(data) {
-    const featuredContainer = document.getElementById("featured-cards");
-    if (!featuredContainer) return;
-
-    Object.keys(data).forEach(category => {
-        data[category].forEach(item => {
-            if (item.featured) {
-                const card = createCard(item, item.highlight);
-                featuredContainer.appendChild(card);
-            }
-        });
-    });
-}
-
-// Add normal (non-featured) cards to their respective panels (e.g., #brand-grid)
-function displaySections(data) {
-    Object.keys(data).forEach(category => {
-        const grid = document.getElementById(`${category}-grid`);
-        if (!grid) return;
-
-        data[category].forEach(item => {
-            if (!item.featured || item.keep) {
-                const card = createCard(item, item.highlight);
-                grid.appendChild(card);
-            }
-        });
-    });
-}
-
-// Create a visual card from item data
-function createCard(item, highlight = false) {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    if (highlight) card.classList.add("highlight");
-
-    card.innerHTML = `
-        <img src="${item.image}" alt="${item.title}" />
-        <h3>${item.title}</h3>
-        <p>${item.description}</p>
-        <a href="${item.link}" target="_blank" style="color: var(--clr-primary); font-weight: bold;">View</a>
-    `;
-    return card;
-}
