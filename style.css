@@ -182,3 +182,42 @@ body {
         font-size: 1rem;
     }
 }
+
+/* project cards */
+
+.project {
+    margin-top: 1rem;
+    display: inline-block;
+    text-align: center;
+    max-width: 220px;
+    margin-right: 1rem;
+}
+
+    .project img {
+        width: 100%;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .project img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+    .project p {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+        color: #fff;
+    }
+
+@media (max-width: 768px) {
+    .project {
+        width: 100%;
+        max-width: none;
+        margin-right: 0;
+    }
+
+        .project img {
+            width: 100%;
+        }
+}

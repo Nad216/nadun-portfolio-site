@@ -1,0 +1,40 @@
+{
+	"featured": [
+		{
+			"title": "Viral YouTube Song",
+			"description": "This music video reached 40M+ views on YouTube.",
+			"image": "assets/featured-song.jpg",
+			"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk"
+		},
+		{
+			"title": "Drive Motion Graphic",
+			"description": "High-res motion graphic hosted on Google Drive.",
+			"image": "assets/motion-graphic.jpg",
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+		}
+	],
+	"brand": [
+		{
+			"title": "Brand Logo Design",
+			"description": "Visual identity design for top brand.",
+			"image": "assets/logo1.jpg",
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+		}
+	],
+	"animation": [
+		{
+			"title": "Company Promo Video",
+			"description": "Promotional video for international launch.",
+			"image": "assets/company-video.jpg",
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+		}
+	],
+	"cgi": [
+		{
+			"title": "3D Animation Reel",
+			"description": "Showcase of my 3D animation works.",
+			"image": "assets/cgi-animation.jpg",
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+		}
+	]
+}
