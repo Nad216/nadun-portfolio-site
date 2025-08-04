@@ -1,5 +1,4 @@
-﻿// Navigation highlighting based on scroll position
-const navLinks = document.querySelectorAll('.nav-link');
+﻿const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.panel');
 
 function updateActiveLink() {
@@ -21,14 +20,21 @@ window.addEventListener('load', updateActiveLink);
 fetch('data/projects.json')
     .then(response => response.json())
     .then(data => {
-        // Render cards into each panel
+        // Reusable card appender
         function renderProjects(sectionId, projects) {
-            const section = document.querySelector(`#${sectionId} .panel-content`); // ✅ Fixed with backticks
+            if (!projects || !Array.isArray(projects)) return;
+
+            const section = document.querySelector(`#${sectionId} .panel-content`);
             if (!section) return;
 
             projects.forEach(project => {
                 const div = document.createElement('div');
                 div.classList.add('project');
+
+                if (project.highlight) {
+                    div.classList.add('highlight-project');
+                }
+
                 div.innerHTML = `
                     <a href="${project.link}" target="_blank">
                         <img src="${project.image}" alt="${project.title}">
@@ -39,7 +45,18 @@ fetch('data/projects.json')
             });
         }
 
-        renderProjects('featured', data.featured);
+        // 🌟 Get all featured items from across categories
+        const featuredProjects = [];
+
+        Object.keys(data).forEach(category => {
+            data[category].forEach(item => {
+                if (item.featured) {
+                    featuredProjects.push(item);
+                }
+            });
+        });
+
+        renderProjects('featured', featuredProjects); // ✅ Now correct
         renderProjects('brand', data.brand);
         renderProjects('animation', data.animation);
         renderProjects('cgi', data.cgi);
