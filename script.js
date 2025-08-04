@@ -1,41 +1,53 @@
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.panel');
-
-function updateActiveLink() {
-    let index = sections.length;
-    while (--index >= 0) {
-        const sectionTop = sections[index].getBoundingClientRect().top;
-        if (sectionTop <= window.innerHeight / 2) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            navLinks[index].classList.add('active');
-            break;
-        }
-    }
-}
-document.querySelector('.main-content').addEventListener('scroll', updateActiveLink);
-window.addEventListener('load', updateActiveLink);
-
-fetch('data/projects.json')
+﻿fetch("data.json")
     .then(response => response.json())
     .then(data => {
-        // Helper function
-        function renderProjects(sectionId, projects) {
-            const section = document.querySelector(`#${sectionId} .panel-content`);
-            projects.forEach(project => {
-                const div = document.createElement('div');
-                div.classList.add('project');
-                div.innerHTML = `
-          <a href="${project.link}" target="_blank">
-            <img src="${project.image}" alt="${project.title}">
-            <p><strong>${project.title}</strong><br>${project.description}</p>
-          </a>
-        `;
-                section.appendChild(div);
-            });
-        }
-
-        renderProjects('featured', data.featured);
-        renderProjects('brand', data.brand);
-        renderProjects('animation', data.animation);
-        renderProjects('cgi', data.cgi);
+        displaySections(data);
+        displayFeatured(data);
     });
+
+function displaySections(data) {
+    const sectionContainer = document.getElementById("sections");
+
+    Object.keys(data).forEach(category => {
+        const section = document.createElement("section");
+        section.classList.add("category-section");
+        section.innerHTML = `<h2>${category.toUpperCase()}</h2><div class="card-grid" id="${category}-grid"></div>`;
+        sectionContainer.appendChild(section);
+
+        const grid = section.querySelector(".card-grid");
+
+        data[category].forEach(item => {
+            if (!item.featured || item.keep) {
+                const card = createCard(item, item.highlight);
+                grid.appendChild(card);
+            }
+        });
+    });
+}
+
+function displayFeatured(data) {
+    const featuredContainer = document.getElementById("featured");
+    Object.keys(data).forEach(category => {
+        data[category].forEach(item => {
+            if (item.featured) {
+                const card = createCard(item, false);
+                featuredContainer.appendChild(card);
+            }
+        });
+    });
+}
+
+function createCard(item, highlight = false) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    if (highlight) {
+        card.classList.add("highlight");
+    }
+    card.innerHTML = `
+    <img src="${item.image}" alt="${item.title}" />
+    <h3>${item.title}</h3>
+    <p>${item.description}</p>
+    <a href="${item.link}" target="_blank">View</a>
+  `;
+    return card;
+}

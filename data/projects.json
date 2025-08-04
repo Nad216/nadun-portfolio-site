@@ -1,18 +1,4 @@
 {
-	"featured": [
-		{
-			"title": "Viral YouTube Song - Thoppi Welenda",
-			"description": "A stylized 3D animation made in 3ds Max. This short focuses on humor and timing, with hand-keyed character animation and simple environment design.",
-			"image": "assets/thumbs/Toppi Welenda Thumb.jpg",
-			"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk"
-		},
-		{
-			"title": "Drive Motion Graphic",
-			"description": "High-res motion graphic hosted on Google Drive.",
-			"image": "assets/motion-graphic.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
-		}
-	],
 	"brand": [
 		{
 			"title": "Brand Logo Design",
@@ -30,6 +16,21 @@
 		}
 	],
 	"cgi": [
+		{
+			"title": "Viral YouTube Song - Thoppi Welenda",
+			"description": "A stylized 3D animation made in 3ds Max. This short focuses on humor and timing, with hand-keyed character animation and simple environment design.",
+			"image": "assets/thumbs/Toppi Welenda Thumb.jpg",
+			"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
+			"featured": true,
+			"keep": true,
+			"highlight": true
+		},
+		{
+			"title": "Drive Motion Graphic",
+			"description": "High-res motion graphic hosted on Google Drive.",
+			"image": "assets/motion-graphic.jpg",
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+		},
 		{
 			"title": "3D Animation Reel",
 			"description": "Showcase of my 3D animation works.",
