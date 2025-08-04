@@ -221,3 +221,29 @@ body {
             width: 100%;
         }
 }
+
+/* project cards for featured */
+.featured .project {
+    margin-top: 2rem;
+    max-width: 100%;
+    text-align: center;
+}
+
+    .project img {
+        width: 100%;
+        max-width: 800px;
+        border-radius: 12px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin: 0 auto;
+    }
+
+        .project img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+
+    .project p {
+        font-size: 1.1rem;
+        margin-top: 0.75rem;
+        color: #fff;
+    }
