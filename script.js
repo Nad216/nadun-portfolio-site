@@ -30,9 +30,22 @@ function generateLogosHTML(softwareList) {
 
 
 // Load JSON and render projects
+// Load JSON and render projects
 fetch('data/projects.json')
     .then(response => response.json())
     .then(data => {
+        // Collect featured projects from all categories
+        const featuredProjects = [];
+        Object.values(data).forEach(category => {
+            if (Array.isArray(category)) {
+                category.forEach(project => {
+                    if (project.featured) {
+                        featuredProjects.push(project);
+                    }
+                });
+            }
+        });
+
         function renderProjects(sectionId, projects) {
             if (!projects || !Array.isArray(projects)) return;
 
@@ -43,8 +56,8 @@ fetch('data/projects.json')
                 if (sectionId === 'featured') {
                     // Featured projects get special layout
                     const div = document.createElement('div');
-                    div.classList.add('featured-project');
-                    div.classList.add('highlight-project');
+                    div.classList.add('featured-project', 'highlight-project');
+
                     // Built with (Created using) text if exists
                     const builtWithText = generateLogosHTML(project.createdUsing);
 
@@ -58,25 +71,23 @@ fetch('data/projects.json')
                         </div>
                     `;
                     container.appendChild(div);
-                    featuredProjects.push(item);
-                    if (project.keep) {
-                        // Normal project card
-                        const div = document.createElement('div');
-                        div.classList.add('project');
-                        if (project.highlight) div.classList.add('highlight-project');
 
-                        // Built with (Created using) text if exists
-                        const builtWithText = project.createdUsing ?
+                    if (project.keep) {
+                        const smallCard = document.createElement('div');
+                        smallCard.classList.add('project');
+                        if (project.highlight) smallCard.classList.add('highlight-project');
+
+                        const smallBuiltWithText = project.createdUsing ?
                             `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
 
-                        div.innerHTML = `
-                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
-                            <img src="${project.image}" alt="${project.title}">
-                            <p><strong>${project.title}</strong><br>${project.description}</p>
-                            ${builtWithText}
-                        </a>
-                    `;
-                        container.appendChild(div);
+                        smallCard.innerHTML = `
+                            <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                                <img src="${project.image}" alt="${project.title}">
+                                <p><strong>${project.title}</strong><br>${project.description}</p>
+                                ${smallBuiltWithText}
+                            </a>
+                        `;
+                        container.appendChild(smallCard);
                     }
 
                 } else {
@@ -85,7 +96,6 @@ fetch('data/projects.json')
                     div.classList.add('project');
                     if (project.highlight) div.classList.add('highlight-project');
 
-                    // Built with (Created using) text if exists
                     const builtWithText = project.createdUsing ?
                         `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
 
@@ -101,7 +111,7 @@ fetch('data/projects.json')
             });
         }
 
-        renderProjects('featured', featuredProjects); // ✅ Now correct
+        renderProjects('featured', featuredProjects);
         renderProjects('brand', data.brand);
         renderProjects('animation', data.animation);
         renderProjects('cgi', data.cgi);
