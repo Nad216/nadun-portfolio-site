@@ -31,71 +31,38 @@ function generateLogosHTML(softwareList) {
 
 // Load JSON and render projects
 fetch('data/projects.json')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-        const featuredProjects = [];
 
-        // First pass: gather featured projects
-        Object.entries(data).forEach(([category, projects]) => {
-            if (Array.isArray(projects)) {
-                projects.forEach(project => {
-                    if (project.featured) {
-                        featuredProjects.push({ ...project, category }); // save category name for keep logic later
-                    }
-                });
-            }
-        });
+        const featuredContainer = document.querySelector('#featured-cards');
 
-        function renderProjects(sectionId, projects) {
-            if (!projects || !Array.isArray(projects)) return;
-
-            const container = document.querySelector(`#${sectionId}-cards`);
-            if (!container) return;
+        Object.entries(data).forEach(([categoryName, projects]) => {
+            // Target the section itself
+            const categorySection = document.querySelector(`#${categoryName} .panel-content`);
 
             projects.forEach(project => {
-                const div = document.createElement('div');
-                div.classList.add('project');
-                if (project.highlight) div.classList.add('highlight-project');
 
-                const builtWithText = project.createdUsing ?
-                    `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+                // RULE 1 & 3 — Featured always goes to Featured
+                if (project.featured) {
+                    const bigCard = document.createElement('div');
+                    bigCard.classList.add('featured-project', 'highlight-project');
 
-                div.innerHTML = `
-                    <a href="${project.link}" target="_blank" rel="noopener noreferrer">
-                        <img src="${project.image}" alt="${project.title}">
-                        <p><strong>${project.title}</strong><br>${project.description}</p>
-                        ${builtWithText}
-                    </a>
-                `;
-                container.appendChild(div);
-            });
-        }
+                    const builtWithText = project.createdUsing ?
+                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
 
-        function renderFeatured(projects) {
-            const container = document.querySelector('#featured-cards');
-            if (!container) return;
+                    bigCard.innerHTML = `
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${project.image}" alt="${project.title}">
+                        </a>
+                        <div class="details">
+                            <p><strong>${project.title}</strong><br>${project.description}</p>
+                            ${builtWithText}
+                        </div>
+                    `;
+                    featuredContainer.appendChild(bigCard);
 
-            projects.forEach(project => {
-                const div = document.createElement('div');
-                div.classList.add('featured-project', 'highlight-project');
-
-                const builtWithText = generateLogosHTML(project.createdUsing);
-
-                div.innerHTML = `
-                    <a href="${project.link}" target="_blank" rel="noopener noreferrer">
-                        <img src="${project.image}" alt="${project.title}">
-                    </a>
-                    <div class="details">
-                        <p><strong>${project.title}</strong><br>${project.description}</p>
-                        ${builtWithText}
-                    </div>
-                `;
-                container.appendChild(div);
-
-                // If keep: true, also render in original category as small card
-                if (project.keep) {
-                    const origContainer = document.querySelector(`#${project.category}-cards`);
-                    if (origContainer) {
+                    // RULE 3 — If keep = true, ALSO add small card to original category
+                    if (project.keep && categorySection) {
                         const smallCard = document.createElement('div');
                         smallCard.classList.add('project');
                         if (project.highlight) smallCard.classList.add('highlight-project');
@@ -110,20 +77,31 @@ fetch('data/projects.json')
                                 ${smallBuiltWithText}
                             </a>
                         `;
-                        origContainer.appendChild(smallCard);
+                        categorySection.appendChild(smallCard);
                     }
                 }
+
+                // RULE 2 — Non-featured always go to category
+                if (!project.featured && categorySection) {
+                    const normalCard = document.createElement('div');
+                    normalCard.classList.add('project');
+                    if (project.highlight) normalCard.classList.add('highlight-project');
+
+                    const builtWithText = project.createdUsing ?
+                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+
+                    normalCard.innerHTML = `
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${project.image}" alt="${project.title}">
+                            <p><strong>${project.title}</strong><br>${project.description}</p>
+                            ${builtWithText}
+                        </a>
+                    `;
+                    categorySection.appendChild(normalCard);
+                }
             });
-        }
-
-        // 1. Render featured section
-        renderFeatured(featuredProjects);
-
-        // 2. Render all categories with non-featured projects only
-        Object.entries(data).forEach(([category, projects]) => {
-            const nonFeatured = projects.filter(p => !p.featured);
-            renderProjects(category, nonFeatured);
         });
+
     })
     .catch(error => {
         console.error('Error loading projects:', error);
