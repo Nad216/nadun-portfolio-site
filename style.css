@@ -321,7 +321,6 @@ body {
         width: 24px;
         height: 24px;
         object-fit: contain;
-        filter: brightness(0) invert(1); /* white logos on dark background, tweak as needed */
         transition: transform 0.2s ease;
     }
 
