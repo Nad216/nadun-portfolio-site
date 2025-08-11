@@ -58,6 +58,7 @@ fetch('data/projects.json')
                         </div>
                     `;
                     container.appendChild(div);
+                    featuredProjects.push(item);
                     if (project.keep)
                     {
                         // Normal project card
@@ -100,16 +101,6 @@ fetch('data/projects.json')
                 }
             });
         }
-
-        // Collect all featured projects marked with "featured": true
-        const featuredProjects = [];
-        Object.keys(data).forEach(category => {
-            data[category].forEach(item => {
-                if (item.featured) {
-                    featuredProjects.push(item);
-                }
-            });
-        });
 
         renderProjects('featured', featuredProjects); // ✅ Now correct
         renderProjects('brand', data.brand);
