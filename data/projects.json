@@ -31,7 +31,7 @@
 			"description": "A stylized 3D animation made in Blender. This short is focuses on delivery process happening in 60 min from a different presepective.",
 			"image": "assets/Lulu 60 Min Delivery Video.jpg",
 			"link": "https://drive.google.com/file/d/1FRiMEof6Voneic9bmgcwKa38eYZo5FUO/view?usp=drive_link",
-			"featured": true,
+			"featured": false,
 			"keep": true,
 			"highlight": false,
 			"createdUsing": [ "Blender", "After Effects" ]
