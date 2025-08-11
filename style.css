@@ -317,13 +317,17 @@ body {
     justify-content: left;
 }
 
-    .built-with-logos img {
-        width: 24px;
-        height: 24px;
-        object-fit: contain;
-        transition: transform 0.2s ease;
-    }
+.built-with-logos img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
 
         .built-with-logos img:hover {
             transform: scale(1.2);
         }
+
+.built-with-logos {
+    font-size: 0.5rem;
+}
