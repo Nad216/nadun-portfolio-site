@@ -274,5 +274,6 @@ body {
     .card.highlight {
         border-color: #1CB7A9;
         box-shadow: 0 0 10px #1CB7A9;
+        padding: 1rem;
     }
 
