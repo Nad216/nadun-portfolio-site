@@ -38,7 +38,7 @@ fetch('data/projects.json')
 
         Object.entries(data).forEach(([categoryName, projects]) => {
             // Target the section itself
-            const categorySection = document.querySelector(`#${categoryName} .panel-content`);
+            const categorySection = document.querySelector(`#${categoryName}-cards`);
 
             projects.forEach(project => {
 
