@@ -314,7 +314,7 @@ body {
     display: flex;
     gap: 0.6rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
 }
 
     .built-with-logos img {

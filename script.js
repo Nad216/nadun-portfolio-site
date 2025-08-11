@@ -44,7 +44,7 @@ fetch('data/projects.json')
                     const div = document.createElement('div');
                     div.classList.add('featured-project');
                     if (project.highlight) div.classList.add('highlight-project');
-
+                    'Built with:'
                     // Built with (Created using) text if exists
                     const builtWithText = generateLogosHTML(project.createdUsing);
 
