@@ -44,7 +44,7 @@ fetch('data/projects.json')
                     // Featured projects get special layout
                     const div = document.createElement('div');
                     div.classList.add('featured-project');
-                    if (project.highlight) div.classList.add('highlight-project');                    
+                    div.classList.add('highlight-project');                    
                     // Built with (Created using) text if exists
                     const builtWithText = generateLogosHTML(project.createdUsing);
 
@@ -58,6 +58,26 @@ fetch('data/projects.json')
                         </div>
                     `;
                     container.appendChild(div);
+                    if (project.keep)
+                    {
+                        // Normal project card
+                        const div = document.createElement('div');
+                        div.classList.add('project');
+                        if (project.highlight) div.classList.add('highlight-project');
+
+                        // Built with (Created using) text if exists
+                        const builtWithText = project.createdUsing ?
+                            `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+
+                        div.innerHTML = `
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${project.image}" alt="${project.title}">
+                            <p><strong>${project.title}</strong><br>${project.description}</p>
+                            ${builtWithText}
+                        </a>
+                    `;
+                        container.appendChild(div);
+                    }
 
                 } else {
                     // Normal project card

@@ -18,7 +18,7 @@
 	"cgi": [
 		{
 			"title": "Viral YouTube Song - Thoppi Welenda",
-			"description": "A stylized 3D animation made in 3ds Max. This short focuses on humor and timing, with hand-keyed character animation and simple environment design.",
+			"description": "A stylized 3D animation made in 3ds Max. This video focuses on humor and timing, with hand-keyed character animation and simple environment design.",
 			"image": "assets/thumbs/Toppi Welenda Thumb.jpg",
 			"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
 			"featured": true,
@@ -27,10 +27,15 @@
 			"createdUsing": [ "3ds Max", "After Effects" ]
 		},
 		{
-			"title": "Drive Motion Graphic",
-			"description": "High-res motion graphic hosted on Google Drive.",
-			"image": "assets/motion-graphic.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+			"title": "Lulu 60 Min Free Delivery Video",
+			"description": "A stylized 3D animation made in Blender. This short is focuses on delivery process happening in 60 min from a different presepective.",
+			"image": "assets/Lulu 60 Min Delivery Video.jpg",
+			"link": "https://drive.google.com/file/d/1FRiMEof6Voneic9bmgcwKa38eYZo5FUO/view?usp=drive_link",
+			"featured": true,
+			"keep": true,
+			"highlight": false,
+			"createdUsing": [ "Blender", "After Effects" ]
+
 		},
 		{
 			"title": "3D Animation Reel",
