@@ -16,6 +16,18 @@ function updateActiveLink() {
 document.querySelector('.main-content').addEventListener('scroll', updateActiveLink);
 window.addEventListener('load', updateActiveLink);
 
+function generateLogosHTML(softwareList) {
+    if (!softwareList || !softwareList.length) return '';
+    return `
+      <div class="built-with-logos">
+        ${softwareList.map(software =>
+        `<img src="assets/logos/${software.replace(/\s+/g, '')}.png" alt="${software}" title="${software}" loading="lazy" />`
+    ).join('')}
+      </div>
+    `;
+}
+
+
 // Load JSON and render projects
 fetch('data/projects.json')
     .then(response => response.json())
@@ -34,8 +46,7 @@ fetch('data/projects.json')
                     if (project.highlight) div.classList.add('highlight-project');
 
                     // Built with (Created using) text if exists
-                    const builtWithText = project.createdUsing ?
-                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+                    const builtWithText = generateLogosHTML(project.createdUsing);
 
                     div.innerHTML = `
                         <a href="${project.link}" target="_blank" rel="noopener noreferrer">

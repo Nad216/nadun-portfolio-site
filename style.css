@@ -308,39 +308,23 @@ body {
             margin-bottom: 1rem;
             transform: none !important;
         }
-        .built-with-logos {
-    margin-top: 0.8rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.software-logo {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1); /* white icons on dark bg */
-    transition: transform 0.3s ease;
-}
-
-.software-logo:hover {
-    transform: scale(1.2);
-}
-
 }
 .built-with-logos {
-    margin-top: 0.8rem;
+    margin-top: 0.5rem;
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.software-logo {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1); /* white icons on dark bg */
-    transition: transform 0.3s ease;
-}
-
-    .software-logo:hover {
-        transform: scale(1.2);
+    .built-with-logos img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        filter: brightness(0) invert(1); /* white logos on dark background, tweak as needed */
+        transition: transform 0.2s ease;
     }
+
+        .built-with-logos img:hover {
+            transform: scale(1.2);
+        }
