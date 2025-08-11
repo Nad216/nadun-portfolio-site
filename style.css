@@ -330,5 +330,5 @@ body {
 
 .built-with-label {
     font-size: 0.7rem;
-    color: var(--clr-accent);
+    opacity: 0.5;
 }
