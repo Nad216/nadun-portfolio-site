@@ -20,34 +20,58 @@ window.addEventListener('load', updateActiveLink);
 fetch('data/projects.json')
     .then(response => response.json())
     .then(data => {
-        // Reusable card appender
         function renderProjects(sectionId, projects) {
             if (!projects || !Array.isArray(projects)) return;
 
-            const section = document.querySelector(`#${sectionId} .panel-content`);
-            if (!section) return;
+            const container = document.querySelector(`#${sectionId}-cards`);
+            if (!container) return;
 
             projects.forEach(project => {
-                const div = document.createElement('div');
-                div.classList.add('project');
+                if (sectionId === 'featured') {
+                    // Featured projects get special layout
+                    const div = document.createElement('div');
+                    div.classList.add('featured-project');
+                    if (project.highlight) div.classList.add('highlight-project');
 
-                if (project.highlight) {
-                    div.classList.add('highlight-project');
+                    // Built with (Created using) text if exists
+                    const builtWithText = project.createdUsing ?
+                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+
+                    div.innerHTML = `
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${project.image}" alt="${project.title}">
+                        </a>
+                        <div class="details">
+                            <p><strong>${project.title}</strong><br>${project.description}</p>
+                            ${builtWithText}
+                        </div>
+                    `;
+                    container.appendChild(div);
+
+                } else {
+                    // Normal project card
+                    const div = document.createElement('div');
+                    div.classList.add('project');
+                    if (project.highlight) div.classList.add('highlight-project');
+
+                    // Built with (Created using) text if exists
+                    const builtWithText = project.createdUsing ?
+                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+
+                    div.innerHTML = `
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${project.image}" alt="${project.title}">
+                            <p><strong>${project.title}</strong><br>${project.description}</p>
+                            ${builtWithText}
+                        </a>
+                    `;
+                    container.appendChild(div);
                 }
-
-                div.innerHTML = `
-                    <a href="${project.link}" target="_blank">
-                        <img src="${project.image}" alt="${project.title}">
-                        <p><strong>${project.title}</strong><br>${project.description}</p>
-                    </a>
-                `;
-                section.appendChild(div);
             });
         }
 
-        // 🌟 Get all featured items from across categories
+        // Collect all featured projects marked with "featured": true
         const featuredProjects = [];
-
         Object.keys(data).forEach(category => {
             data[category].forEach(item => {
                 if (item.featured) {

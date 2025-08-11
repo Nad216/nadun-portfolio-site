@@ -185,12 +185,14 @@ body {
 
 /* project cards */
 
+/* Project container and card base styles */
 .project {
     margin-top: 1rem;
     display: inline-block;
     text-align: center;
     max-width: 220px;
     margin-right: 1rem;
+    position: relative;
 }
 
     .project img {
@@ -210,21 +212,9 @@ body {
         color: #fff;
     }
 
-@media (max-width: 768px) {
-    .project {
-        width: 100%;
-        max-width: none;
-        margin-right: 0;
-    }
-
-        .project img {
-            width: 100%;
-        }
-}
-
-/* Highlighted (logic-based) project style */
+/* Highlighted project style */
 .highlight-project {
-    border: 2px solid #1CB7A9;
+    border: 2px solid var(--clr-primary);
     background-color: rgba(28, 183, 169, 0.1);
     transform: scale(1.03);
     transition: all 0.3s ease;
@@ -234,46 +224,123 @@ body {
         box-shadow: 0 0 20px rgba(28, 183, 169, 0.5);
     }
 
-/* Optional: Badge for top projects */
-.badge {
-    position: absolute;
-    background-color: #1CB7A9;
-    color: white;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    top: 5px;
-    left: 5px;
-    z-index: 10;
-}
-
-.project {
-    position: relative;
-}
-
-.card-grid {
+/* Container for featured cards */
+#featured-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    justify-content: center;
+    padding-top: 1rem;
 }
 
-.card {
-    width: 250px;
-    padding: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: white;
-    transition: 0.3s ease;
+/* Featured project special card */
+.featured-project {
+    max-width: 800px;
+    margin: 1rem auto 2rem auto;
+    text-align: left;
+    color: #fff;
+    background: rgba(40, 52, 61, 0.75);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
 }
 
-    .card img {
-        width: 100%;
-        border-radius: 8px;
+    .featured-project:hover {
+        transform: scale(1.02);
+        box-shadow: 0 12px 30px rgba(28, 183, 169, 0.8);
     }
 
-    .card.highlight {
-        border-color: #1CB7A9;
-        box-shadow: 0 0 10px #1CB7A9;
+    .featured-project img {
+        width: 250px;
+        height: auto;
+        border-radius: 12px;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .featured-project:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Text details inside featured project */
+    .featured-project .details {
+        flex-grow: 1;
+    }
+
+        .featured-project .details p {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: #eee;
+        }
+
+/* Built with text style */
+.built-with {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--clr-primary);
+    font-style: italic;
+}
+
+/* Responsive for featured projects */
+@media (max-width: 768px) {
+    #featured-cards {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .featured-project {
+        flex-direction: column;
+        max-width: 100%;
         padding: 1rem;
+        margin: 1rem 0;
     }
 
+        .featured-project img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            transform: none !important;
+        }
+        .built-with-logos {
+    margin-top: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.software-logo {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* white icons on dark bg */
+    transition: transform 0.3s ease;
+}
+
+.software-logo:hover {
+    transform: scale(1.2);
+}
+
+}
+.built-with-logos {
+    margin-top: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.software-logo {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* white icons on dark bg */
+    transition: transform 0.3s ease;
+}
+
+    .software-logo:hover {
+        transform: scale(1.2);
+    }
