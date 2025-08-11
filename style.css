@@ -193,7 +193,7 @@ body {
 }
 
 /* Generic grid for dynamically inserted .project cards in other sections */
-.panel-content:not(#featured .panel-content) {
+.small-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;

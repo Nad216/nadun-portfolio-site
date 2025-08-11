@@ -64,7 +64,7 @@ fetch('data/projects.json')
                     // RULE 3 — If keep = true, ALSO add small card to original category
                     if (project.keep && categorySection) {
                         const smallCard = document.createElement('div');
-                        smallCard.classList.add('project');
+                        smallCard.classList.add('project', 'small-cards');
                         if (project.highlight) smallCard.classList.add('highlight-project');
 
                         const smallBuiltWithText = project.createdUsing ?
@@ -84,7 +84,7 @@ fetch('data/projects.json')
                 // RULE 2 — Non-featured always go to category
                 if (!project.featured && categorySection) {
                     const normalCard = document.createElement('div');
-                    normalCard.classList.add('project');
+                    normalCard.classList.add('project', 'small-cards');
                     if (project.highlight) normalCard.classList.add('highlight-project');
 
                     const builtWithText = project.createdUsing ?
