@@ -20,6 +20,7 @@ function generateLogosHTML(softwareList) {
     if (!softwareList || !softwareList.length) return '';
     return `
       <div class="built-with-logos">
+        <span class="built-with-label">Built with:</span>
         ${softwareList.map(software =>
         `<img src="assets/logos/${software.replace(/\s+/g, '')}.png" alt="${software}" title="${software}" loading="lazy" />`
     ).join('')}
@@ -43,8 +44,7 @@ fetch('data/projects.json')
                     // Featured projects get special layout
                     const div = document.createElement('div');
                     div.classList.add('featured-project');
-                    if (project.highlight) div.classList.add('highlight-project');
-                    'Built with:'
+                    if (project.highlight) div.classList.add('highlight-project');                    
                     // Built with (Created using) text if exists
                     const builtWithText = generateLogosHTML(project.createdUsing);
 
