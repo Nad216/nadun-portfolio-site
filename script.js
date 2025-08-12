@@ -47,8 +47,7 @@ fetch('data/projects.json')
                     const bigCard = document.createElement('div');
                     bigCard.classList.add('featured-project', 'highlight-project');
 
-                    const builtWithText = project.createdUsing ?
-                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+                    const builtWithText = generateLogosHTML(project.createdUsing);
 
                     bigCard.innerHTML = `
                         <a href="${project.link}" target="_blank" rel="noopener noreferrer">
@@ -67,8 +66,7 @@ fetch('data/projects.json')
                         smallCard.classList.add('project', 'small-cards');
                         if (project.highlight) smallCard.classList.add('highlight-project');
 
-                        const smallBuiltWithText = project.createdUsing ?
-                            `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+                        const builtWithText = generateLogosHTML(project.createdUsing);
 
                         smallCard.innerHTML = `
                             <a href="${project.link}" target="_blank" rel="noopener noreferrer">
@@ -87,8 +85,7 @@ fetch('data/projects.json')
                     normalCard.classList.add('project', 'small-cards');
                     if (project.highlight) normalCard.classList.add('highlight-project');
 
-                    const builtWithText = project.createdUsing ?
-                        `<p class="built-with">Built with: ${project.createdUsing.join(', ')}</p>` : '';
+                    const builtWithText = generateLogosHTML(project.createdUsing);
 
                     normalCard.innerHTML = `
                         <a href="${project.link}" target="_blank" rel="noopener noreferrer">
