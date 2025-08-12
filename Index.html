@@ -23,6 +23,27 @@
             <a href="#about" class="nav-link"><span>About &amp; Contact</span><div class="progress"></div></a>
         </nav>
     </aside>
+    <div class="mobile-bar" id="mobile-bar">
+        <div class="mobile-left">
+            <img src="assets/profile.jpg" alt="Nadun Avishka" class="mobile-profile" />
+        </div>
+
+        <!-- optional brand text (hidden by default) -->
+        <div class="mobile-brand" aria-hidden="true">Nadun Avishka</div>
+
+        <div class="mobile-right">
+            <button id="menu-toggle" class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+        </div>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+        <a href="#intro" class="nav-link">Intro</a>
+        <a href="#featured" class="nav-link">Featured</a>
+        <a href="#brand" class="nav-link">Brand</a>
+        <a href="#animation" class="nav-link">Animation</a>
+        <a href="#cgi" class="nav-link">CGI</a>
+        <a href="#about" class="nav-link">About &amp; Contact</a>
+    </nav>
 
     <div class="main-content">
         <section id="intro" class="panel" style="background-image: url('assets/hero-bg.jpg')">
@@ -36,8 +57,8 @@
             <div class="overlay"></div>
             <div class="panel-content top-left">
                 <h2>Featured<br>Projects</h2>
-                <div id="featured-cards" class="card-grid"></div> <!-- this is for that -->
             </div>
+            <div id="featured-cards" class="card-grid"></div> <!-- this is for that -->
         </section>
         <section id="brand" class="panel" style="background-image: url('assets/bg-brand.jpg')">
             <div class="overlay"></div>

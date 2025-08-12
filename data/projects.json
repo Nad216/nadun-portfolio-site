@@ -39,9 +39,10 @@
 		},
 		{
 			"title": "3D Animation Reel",
-			"description": "Showcase of my 3D animation works.",
+			"description": "Showcase of my 3D animation works.Why IS this Not Showing",
 			"image": "assets/cgi-animation.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing",
+			"createdUsing": [ "3ds Max", "After Effects" ]
 		}
 	]
 }

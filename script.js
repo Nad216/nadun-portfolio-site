@@ -104,3 +104,21 @@ fetch('data/projects.json')
         console.error('Error loading projects:', error);
     });
 
+// --- Mobile menu toggle ---
+const menuBtn = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close after clicking a nav link
+    document.querySelectorAll('#mobile-menu .nav-link').forEach(a => {
+        a.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
