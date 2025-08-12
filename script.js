@@ -66,7 +66,7 @@ fetch('data/projects.json')
                         smallCard.classList.add('project', 'small-cards');
                         if (project.highlight) smallCard.classList.add('highlight-project');
 
-                        const builtWithText = generateLogosHTML(project.createdUsing);
+                        const smallBuiltWithText = generateLogosHTML(project.createdUsing);
 
                         smallCard.innerHTML = `
                             <a href="${project.link}" target="_blank" rel="noopener noreferrer">
