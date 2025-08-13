@@ -28,7 +28,7 @@ body {
 }
 
 /* ===========================
-   Sidebar (desktop) - unchanged
+   Sidebar (desktop)
    =========================== */
 .sidebar {
     width: var(--sidebar-width);
@@ -126,13 +126,13 @@ body {
 }
 
 /* ===========================
-   Panel (sections)
-   - min-height so they grow with content
-   - use display:block (we place grids as siblings)
+   Panel (sections) — reserve top space for titles
    =========================== */
 .panel {
     position: relative;
     min-height: 100vh; /* allow panels to expand as content grows */
+    /* reserve space at top for the absolutely-positioned title */
+    padding-top: clamp(6rem, 12vh, 8rem);
     scroll-snap-align: start;
     background-size: cover;
     background-position: center;
@@ -145,15 +145,14 @@ body {
     inset: 0;
     background: rgba(0,0,0,0.5);
     z-index: 1;
-    pointer-events: none; /* <-- key fix so overlay doesn't block clicks */
+    pointer-events: none; /* overlay shouldn't block clicks */
 }
 
-/* Panel content (titles) should always be above grids */
+/* Panel content (titles) — positioned inside panel padding area */
 .panel-content {
     position: absolute;
     z-index: 10; /* above cards/grids */
     color: white;
-    /* ensure clickable content inside title can receive events */
     pointer-events: auto;
 }
 
@@ -164,8 +163,9 @@ body {
         text-align: center;
     }
 
+    /* anchor title at the TOP of the panel padding area */
     .panel-content.top-left {
-        top: 2%;
+        top: 0;
         left: 3rem;
         transform: none;
         text-align: left;
@@ -197,9 +197,7 @@ body {
     }
 
 /* ===========================
-   Card grids (real containers)
-   - placed as siblings under .panel (not inside .panel-content)
-   - lifted above overlay but below panel-content
+   Card grids (flow content) — now start after panel padding
    =========================== */
 .card-grid {
     display: grid;
@@ -207,12 +205,12 @@ body {
     gap: 1.5rem;
 }
 
-/* Featured grid (outside the panel-content) */
+/* Featured grid */
 #featured-cards {
     position: relative;
-    z-index: 2; /* below panel-content (10) */
+    z-index: 2; /* below panel-content (10) but above overlay */
     padding: 1rem 3rem 3rem;
-    margin-top: clamp(4rem, 8vh, 6rem); /* responsive gap so title is always visible */
+    margin-top: 0; /* panels manage spacing now */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.5rem;
@@ -225,7 +223,7 @@ body {
     position: relative;
     z-index: 2;
     padding: 1rem 3rem 3rem;
-    margin-top: clamp(4rem, 8vh, 6rem);
+    margin-top: 0; /* panels manage spacing now */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
@@ -234,7 +232,6 @@ body {
 
 /* ===========================
    Featured project styling
-   - select cover image specifically so logos aren't targeted
    =========================== */
 .featured-project {
     background: rgba(30,40,50,0.85);
@@ -251,14 +248,12 @@ body {
         box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
 
-    /* cover image only (big visual) */
     .featured-project > a > img {
         width: 100%;
         height: auto;
         display: block;
     }
 
-    /* text area inside featured */
     .featured-project .details {
         padding: 1rem;
         color: white;
@@ -291,7 +286,6 @@ body {
         margin-bottom: 0.5rem;
     }
 
-    /* Make the whole card clickable */
     .project a,
     .featured-project a {
         display: block;
@@ -305,7 +299,7 @@ body {
     background-color: rgba(28,183,169,0.12);
 }
 
-/* built-with text (fallback) */
+/* built-with */
 .built-with {
     margin-top: .8rem;
     font-size: .9rem;
@@ -313,7 +307,6 @@ body {
     font-style: italic;
 }
 
-/* built-with logos (global rules) */
 .built-with-logos {
     margin-top: 0.5rem;
     display: flex;
@@ -356,7 +349,7 @@ body {
     gap: 12px;
     padding: 0 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    justify-content: flex-start; /* place left items together; push hamburger with margin-left:auto */
+    justify-content: flex-start; /* left cluster + hamburger on right */
 }
 
 /* mobile bar pieces */
@@ -449,13 +442,11 @@ body {
     .mobile-menu .progress {
         display: none;
     }
-/* simpler mobile UI */
 
 /* ===========================
    Responsive tweaks
    =========================== */
 @media (max-width: 900px) {
-    /* switch to mobile top bar */
     .sidebar {
         display: none;
     }
@@ -473,20 +464,35 @@ body {
         padding-top: 56px; /* keep content below the mobile bar */
     }
 
-    /* make grids tighter on mobile */
+    /* put panel title and grids below the top-bar */
+    .panel {
+        padding-top: calc(56px + 2.5rem); /* top-bar height + room for title */
+    }
+
+    /* <<< MOBILE FIX: use sticky title so it never hides behind top bar */
+    .panel-content.top-left {
+        position: sticky;
+        top: 56px; /* below the mobile bar */
+        left: 0;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        z-index: 105; /* below mobile-bar (110) but above cards */
+        background: transparent;
+    }
+
+    /* grids start after panel padding (no extra margin needed) */
     #featured-cards {
         padding: 0.75rem 1rem 2rem;
-        margin-top: clamp(3.5rem, 15vh, 5rem);
+        margin-top: 0;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
     #brand-cards, #animation-cards, #cgi-cards {
         padding: 0.75rem 1rem 2.25rem;
-        margin-top: clamp(3.5rem, 15vh, 5rem);
+        margin-top: 0;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
-    /* slightly smaller title sizes */
     .panel-content h1 {
         font-size: 3rem;
     }
@@ -503,17 +509,14 @@ body {
         font-size: 1rem;
     }
 
-    /* smaller built-with logos on featured only */
     #featured-cards .built-with-logos img {
         width: 18px;
         height: 18px;
     }
-    /* keep other logos at default size (24px) unless you want them smaller too */
 }
 
 /* keep previous small-featured responsive rules intact */
 @media (max-width:768px) {
-    /* if you still want to preserve the vertical featured style */
     #featured-cards {
         flex-direction: column;
         align-items: center;
@@ -535,16 +538,12 @@ body {
         }
 }
 
-/* ===========================
-   Minor accessibility / UX touches
-   =========================== */
-/* Make sure focus outlines are visible (keyboard users) */
+/* Accessibility / UX touches */
 a:focus, button:focus {
     outline: 2px solid rgba(255,255,255,0.15);
     outline-offset: 3px;
 }
 
-/* avoid text selection flicker while dragging */
 body, button, a {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
