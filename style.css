@@ -134,43 +134,56 @@ body {
     pointer-events: none; /* overlay shouldn't block clicks */
 }
 
-
 /* ===========================
-   Panel (sections) — reserve top space for titles
+   Panel (sections) — updated to use an in-flow panel-inner
    =========================== */
 .panel {
     position: relative;
-    min-height: 100vh; /* allow panels to expand as content grows */
-    /* reserve space at top for the absolutely-positioned title */
-    padding-top: clamp(6rem, 12vh, 8rem);
+    min-height: 100vh;
     scroll-snap-align: start;
     background-size: cover;
     background-position: center;
-    display: block; /* keep flow simple: title (absolute) + grids under it */
+    padding: 0; /* spacing handled by .panel-inner */
+    display: block;
 }
 
+/* NEW: wrapper that holds title + cards in the same flow */
+.panel-inner {
+    position: relative;
+    z-index: 2; /* above overlay */
+    padding: 2.25rem 3rem; /* controls top spacing & horizontal padding */
+    display: block;
+}
 
-/* Panel content (titles) — positioned inside panel padding area */
+/* Panel content (titles) — now in-flow inside the panel-inner */
 .panel-content {
-    position: absolute;
-    z-index: 10; /* above cards/grids */
+    position: relative; /* in-flow element */
+    z-index: 3;
+    margin-bottom: 1rem; /* gap between title and cards */
     color: white;
     pointer-events: auto;
 }
 
+    /* keep center variant visually centered while in-flow */
     .panel-content.center {
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        height: 100vh;
+        display: flex; /* flexbox layout */
+        flex-direction: column; /* stack text vertically */
+        justify-content: center; /* vertical centering */
+        align-items: center; /* horizontal centering */
         text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 900px;
+        padding-top: 0; /* remove extra top gap */
+        padding-bottom: 0;
     }
 
-    /* anchor title at the TOP of the panel padding area */
+
+    /* top-left variant is left-aligned in the flow */
     .panel-content.top-left {
-        top: 0;
-        left: 3rem;
-        transform: none;
         text-align: left;
+        padding: 0.1rem 0; /* small padding */
     }
 
     .panel-content h1 {
@@ -199,41 +212,34 @@ body {
     }
 
 /* ===========================
-   Card grids (flow content) — now start after panel padding
+   Card grids (flow content) — inside .panel-inner directly after title
    =========================== */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-}
-
-/* Featured grid */
-#featured-cards {
-    position: relative;
-    z-index: 2; /* below panel-content (10) but above overlay */
-    padding: 1rem 3rem 3rem;
-    margin-top: 0; /* panels manage spacing now */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-}
-
-/* Category grids */
+.card-grid,
+#featured-cards,
 #brand-cards,
 #animation-cards,
 #cgi-cards {
-    position: relative;
-    z-index: 2;
-    padding: 1rem 3rem 3rem;
-    margin-top: 0; /* panels manage spacing now */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
     align-items: start;
+    margin: 0;
+    padding: 0; /* .panel-inner supplies the outer padding */
+}
+
+/* keep your grid columns per-section */
+.card-grid,
+#featured-cards {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+#brand-cards,
+#animation-cards,
+#cgi-cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
 /* ===========================
-   Featured project styling
+   Featured project styling (unchanged)
    =========================== */
 .featured-project {
     background: rgba(30,40,50,0.85);
@@ -262,12 +268,12 @@ body {
     }
 
 /* ===========================
-   Small cards (projects)
+   Small cards (projects) unchanged
    =========================== */
 .project {
     background: rgba(40,52,61,0.75);
     border-radius: 10px;
-    padding: 0.8rem;
+    padding: 0.2rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     text-align: center;
     transition: transform .25s ease, box-shadow .25s ease;
@@ -288,6 +294,10 @@ body {
         margin-bottom: 0.5rem;
     }
 
+    .project p {
+        padding: 0.1rem;
+    }
+
     .project a,
     .featured-project a {
         display: block;
@@ -299,6 +309,11 @@ body {
 .highlight-project {
     border: 2px solid var(--clr-primary);
     background-color: rgba(28,183,169,0.12);
+    text-align: center;
+}
+
+.highlight-project p {
+    padding: 0.1rem;
 }
 
 /* built-with */
@@ -316,6 +331,7 @@ body {
     flex-wrap: wrap;
     justify-content: left;
     align-items: center;
+    padding: 0.1rem 0.3rem;
 }
 
     .built-with-logos img {
@@ -335,7 +351,7 @@ body {
 }
 
 /* ===========================
-   Mobile top bar + drawer (styles)
+   Mobile top bar + drawer (styles) unchanged except small adjustments
    =========================== */
 .mobile-bar {
     display: none; /* shown only on small screens via media query */
@@ -466,32 +482,31 @@ body {
         padding-top: 56px; /* keep content below the mobile bar */
     }
 
-    /* put panel title and grids below the top-bar */
+    /* panel-inner provides spacing that accounts for the mobile top bar */
     .panel {
-        padding-top: calc(56px + 2.5rem); /* top-bar height + room for title */
+        /* remain a block; spacing is done by .panel-inner */
+    }
+
+    .panel-inner {
+        padding: calc(56px + 1rem) 1rem 1.5rem;
     }
 
     /* <<< MOBILE FIX: use sticky title so it never hides behind top bar */
     .panel-content.top-left {
         position: sticky;
-        top: 56px; /* below the mobile bar */
         left: 0;
-        padding: 0.5rem 1rem;
+        padding: 0 0.5rem;
         margin: 0;
         z-index: 105; /* below mobile-bar (110) but above cards */
         background: transparent;
     }
 
-    /* grids start after panel padding (no extra margin needed) */
+    /* grids start after panel-inner padding (no extra margin needed) */
     #featured-cards {
-        padding: 0.75rem 1rem 2rem;
-        margin-top: 0;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
     #brand-cards, #animation-cards, #cgi-cards {
-        padding: 0.75rem 1rem 2.25rem;
-        margin-top: 0;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
@@ -528,7 +543,7 @@ body {
     .featured-project {
         flex-direction: column;
         max-width: 100%;
-        padding: 1rem;
+        padding: .1rem;
         margin: 1rem 0;
     }
 
