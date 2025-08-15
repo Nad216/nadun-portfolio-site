@@ -4,7 +4,16 @@
 			"title": "Brand Logo Design",
 			"description": "Visual identity design for top brand.",
 			"image": "assets/logo1.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+			"thumb": "assets/logo1.jpg",
+			"media": {
+				"type": "images",
+				"source": "local",
+				"link": "assets/logo1.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/logo1.jpg"
+				]
+			}
 		}
 	],
 	"animation": [
@@ -12,7 +21,14 @@
 			"title": "Company Promo Video",
 			"description": "Promotional video for international launch.",
 			"image": "assets/company-video.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing"
+			"thumb": "assets/company-video.jpg",
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/file/d/YourFileID/preview",
+				"format": "horizontal",
+				"stills": []
+			}
 		}
 	],
 	"cgi": [
@@ -20,29 +36,58 @@
 			"title": "Viral YouTube Song - Thoppi Welenda",
 			"description": "A stylized 3D animation made in 3ds Max. This video focuses on humor and timing, with hand-keyed character animation and simple environment design.",
 			"image": "assets/thumbs/Toppi Welenda Thumb.jpg",
-			"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
+			"thumb": "assets/thumbs/Toppi Welenda Thumb.jpg",
 			"featured": true,
 			"keep": true,
 			"highlight": true,
-			"createdUsing": [ "3ds Max", "After Effects" ]
+			"createdUsing": [
+				"3ds Max",
+				"After Effects"
+			],
+			"media": {
+				"type": "video",
+				"source": "youtube",
+				"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
+				"format": "horizontal",
+				"stills": []
+			}
 		},
 		{
 			"title": "Lulu 60 Min Free Delivery Video",
-			"description": "A stylized 3D animation made in Blender. This short is focuses on delivery process happening in 60 min from a different presepective.",
+			"description": "A stylized 3D animation made in Blender. This short focuses on delivery process happening in 60 min from a different perspective.",
 			"image": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
-			"link": "https://drive.google.com/file/d/1FRiMEof6Voneic9bmgcwKa38eYZo5FUO/preview",
+			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
 			"featured": false,
 			"keep": true,
 			"highlight": false,
-			"createdUsing": [ "Blender", "After Effects" ]
-
+			"createdUsing": [
+				"Blender",
+				"After Effects"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/file/d/1FRiMEof6Voneic9bmgcwKa38eYZo5FUO/preview",
+				"format": "horizontal",
+				"stills": []
+			}
 		},
 		{
 			"title": "3D Animation Reel",
-			"description": "Showcase of my 3D animation works.Why IS this Not Showing",
+			"description": "Showcase of my 3D animation works.",
 			"image": "assets/cgi-animation.jpg",
-			"link": "https://drive.google.com/file/d/YourFileID/view?usp=sharing",
-			"createdUsing": [ "3ds Max", "After Effects" ]
+			"thumb": "assets/cgi-animation.jpg",
+			"createdUsing": [
+				"3ds Max",
+				"After Effects"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/file/d/YourFileID/preview",
+				"format": "horizontal",
+				"stills": []
+			}
 		}
 	]
 }
