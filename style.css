@@ -125,6 +125,16 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Overlay: visual only; never intercept clicks */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+    pointer-events: none; /* overlay shouldn't block clicks */
+}
+
+
 /* ===========================
    Panel (sections) — reserve top space for titles
    =========================== */
@@ -139,14 +149,6 @@ body {
     display: block; /* keep flow simple: title (absolute) + grids under it */
 }
 
-/* Overlay: visual only; never intercept clicks */
-.overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 1;
-    pointer-events: none; /* overlay shouldn't block clicks */
-}
 
 /* Panel content (titles) — positioned inside panel padding area */
 .panel-content {
