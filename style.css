@@ -179,7 +179,6 @@ body {
         padding-bottom: 0;
     }
 
-
     /* top-left variant is left-aligned in the flow */
     .panel-content.top-left {
         text-align: left;
@@ -370,19 +369,16 @@ body {
     justify-content: flex-start; /* left cluster + hamburger on right */
 }
 
-/* mobile bar pieces */
 .mobile-left, .mobile-right {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* ensure right cluster is pushed to the far right */
 .mobile-right {
     margin-left: auto;
 }
 
-/* profile image inside mobile bar */
 .mobile-profile {
     width: 40px;
     height: 40px;
@@ -393,11 +389,10 @@ body {
     border: 2px solid rgba(255,255,255,0.06);
 }
 
-/* left-aligned mobile brand (sits next to profile image) */
 .mobile-brand {
-    display: block; /* visible on mobile */
-    position: relative; /* in-flow so it sits after .mobile-left */
-    margin-left: 10px; /* small gap from the profile image */
+    display: block;
+    position: relative;
+    margin-left: 10px;
     z-index: 111;
     color: #fff;
     font-weight: 700;
@@ -406,12 +401,11 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 60%; /* keep it from overlapping the hamburger */
-    text-align: left; /* left-align the text */
-    pointer-events: none; /* clicks pass through to photo/hamburger */
+    max-width: 60%;
+    text-align: left;
+    pointer-events: none;
 }
 
-/* slightly reduce on very small devices */
 @media (max-width: 360px) {
     .mobile-brand {
         font-size: 0.85rem;
@@ -482,7 +476,6 @@ body {
         padding-top: 56px; /* keep content below the mobile bar */
     }
 
-    /* panel-inner provides spacing that accounts for the mobile top bar */
     .panel {
         /* remain a block; spacing is done by .panel-inner */
     }
@@ -491,7 +484,6 @@ body {
         padding: calc(56px + 1rem) 1rem 1.5rem;
     }
 
-    /* <<< MOBILE FIX: use sticky title so it never hides behind top bar */
     .panel-content.top-left {
         position: sticky;
         left: 0;
@@ -501,7 +493,6 @@ body {
         background: transparent;
     }
 
-    /* grids start after panel-inner padding (no extra margin needed) */
     #featured-cards {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
@@ -532,7 +523,6 @@ body {
     }
 }
 
-/* keep previous small-featured responsive rules intact */
 @media (max-width:768px) {
     #featured-cards {
         flex-direction: column;
@@ -566,8 +556,7 @@ body, button, a {
 }
 
 /* ===========================
-   ADDITIONS: Overlay / embed / gallery / play-button styles
-   (works with NO-IFRAME script: #fullscreen-overlay, .embed-container, .fs-play-button, .fs-thumbs)
+   Overlay & embed styles (base)
    =========================== */
 
 /* Fullscreen overlay (dialog) */
@@ -584,37 +573,33 @@ body, button, a {
     box-sizing: border-box;
 }
 
-    /* when active */
     #fullscreen-overlay.open,
     .fullscreen-overlay.open {
         display: flex;
     }
 
-    /* hide when aria-hidden true (defensive) */
     #fullscreen-overlay[aria-hidden="true"],
     .fullscreen-overlay[aria-hidden="true"] {
         display: none !important;
     }
 
-/* inner dialog */
 .fs-inner {
     background: linear-gradient(180deg, rgba(15,20,25,0.98), rgba(10,12,14,0.98));
     border-radius: 12px;
     width: min(1100px, 98%);
     max-height: 92vh;
-    overflow: hidden;
+    overflow: hidden; /* important to contain content */
     outline: none;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 
-/* close button */
 .fs-close {
     position: absolute;
     right: 18px;
     top: 16px;
-    z-index: 5;
+    z-index: 10;
     border: none;
     background: transparent;
     color: var(--clr-light);
@@ -623,7 +608,7 @@ body, button, a {
     padding: 6px 10px;
 }
 
-/* content wrapper */
+/* content wrapper: header / content / footer — middle row grows */
 .fs-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -641,37 +626,26 @@ body, button, a {
     align-items: flex-start;
 }
 
-.fs-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--clr-light);
-}
+    /* keep a small left container helper */
+    .fs-header .fs-left {
+        min-width: 0;
+    }
 
-.fs-desc {
-    margin: 0;
-    opacity: 0.9;
-    color: rgba(255,255,255,0.9);
-    font-size: 0.98rem;
-}
-
-.fs-builtwith {
-    margin-top: 6px;
-}
-
-/* actions area */
+/* small area for actions (fullscreen button) inserted by JS */
 .fs-actions {
     margin-top: 8px;
 }
 
-/* main media area */
+/* media area — keep block display for horizontal to preserve previous look */
 .fs-media {
     padding: 12px 18px;
-    display: flex;
+    display: block; /* preserve horizontal behavior */
     align-items: center;
     justify-content: center;
     min-height: 220px;
-    max-height: calc(92vh - 230px);
+    max-height: calc(92vh - 230px); /* leave room for header + footer */
+    box-sizing: border-box;
+    overflow: hidden; /* prevent accidental overflow */
 }
 
 /* footer thumbnails */
@@ -689,7 +663,6 @@ body, button, a {
     padding-bottom: 6px;
 }
 
-    /* thumbnail images */
     .fs-thumbs img {
         width: 72px;
         height: 48px;
@@ -705,9 +678,7 @@ body, button, a {
             opacity: 1;
         }
 
-/* ===========================
-   Embed containers (aspect ratios) — used by JS
-   =========================== */
+/* embed container aspect helpers (unchanged) */
 .embed-container {
     position: relative;
     width: 100%;
@@ -717,21 +688,20 @@ body, button, a {
     border-radius: 10px;
 }
 
-/* aspect ratio helpers */
 .embed-16-9 {
     padding-bottom: 56.25%;
 }
-/* standard horizontal video */
+/* horizontal */
 .embed-9-16 {
     padding-bottom: 177.7778%;
 }
-/* tall vertical video */
+/* tall vertical */
 .embed-1-1 {
     padding-bottom: 100%;
 }
 /* square */
 
-/* inner media fills container */
+/* media fill */
 .embed-container iframe,
 .embed-container img,
 .embed-container video {
@@ -746,7 +716,7 @@ body, button, a {
     object-fit: cover;
 }
 
-/* poster/play button overlay (no-iframe approach) */
+/* poster/play overlay */
 .fs-play-button {
     display: inline-flex;
     align-items: center;
@@ -764,15 +734,8 @@ body, button, a {
         transform: scale(1.04);
     }
 
-/* ensure poster images cover nicely inside embed container (fallback) */
-.embed-container > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* small screens: make overlay comfortable */
-@media (max-width: 900px) {
+/* mobile comfort */
+@media (max-width:900px) {
     .fs-inner {
         width: 100%;
         height: 100%;
@@ -799,13 +762,13 @@ body, button, a {
     }
 }
 
-/* Accessibility: visible focus ring on interactive items */
-.fs-open-original:focus, .fs-play-button:focus, .fs-close:focus {
+/* accessibility focus */
+.fs-play-button:focus, .fs-close:focus {
     outline: 3px solid rgba(28,183,169,0.24);
     outline-offset: 2px;
 }
 
-/* Minor niceties for cards if you want a clickable-card affordance */
+/* clickable-card nicety */
 .project a, .featured-project > a {
     transition: transform .12s ease;
 }
@@ -814,40 +777,371 @@ body, button, a {
         transform: scale(.997);
     }
 
-/* keep built-with color consistent inside overlay too */
-#fullscreen-overlay .built-with-label {
-    color: rgba(255,255,255,0.8);
-}
-
-/* Prevent overlay from being focusable when hidden (defensive) */
+/* prevent overlay from being focusable when hidden */
 #fullscreen-overlay[aria-hidden="true"] .fs-inner {
     pointer-events: none;
 }
 
-/* End of original CSS content appended */
-
-/* ===== overlay media sizing fixes ===== */
-.fs-media {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    gap: 0;
+/* ===== non-intrusive overlay embed fallback to prevent collapse =====
+   This keeps horizontal layout exactly as before; only ensures embed has a reasonable max/min.
+*/
+.fs-media .embed-container {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 180px;
+    max-width: 1200px; /* allows wide horizontal players */
 }
 
-    /* overlay-specific embed container sizing: fills available width, but caps so it doesn't overflow */
-    .fs-media .embed-container {
+    /* ensure overlay poster/media fit the embed area */
+    .fs-media .embed-container img,
+    .fs-media .embed-container video,
+    .fs-media .embed-container iframe {
         width: 100%;
-        max-width: 1100px; /* keep consistent with .fs-inner width */
-        box-sizing: border-box;
-        min-height: 180px; /* fallback if aspect padding fails for any reason */
+        height: 100%;
+        object-fit: cover;
     }
 
-        /* ensure poster images and videos fit exactly */
-        .fs-media .embed-container img,
-        .fs-media .embed-container video,
-        .fs-media .embed-container iframe {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+/* ===== fullscreen button styling (small & unobtrusive) ===== */
+.fs-fullscreen {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: var(--clr-light);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .fs-fullscreen:hover {
+        transform: translateY(-1px);
+    }
+
+    .fs-fullscreen:focus {
+        outline: 3px solid rgba(28,183,169,0.18);
+        outline-offset: 2px;
+    }
+
+/* ===========================
+   VERTICAL SPLIT (DESKTOP) — ONLY applied when JS inserts .fs-split
+   - desktop: two columns (details on left, media on right)
+   - mobile: stacked, details above, media below
+   - media column uses full available height; media is contained (no overflow)
+   =========================== */
+
+.fs-split {
+    display: flex;
+    gap: 18px;
+    align-items: stretch; /* stretch children to full available height */
+    justify-content: center;
+    padding: 0 18px 12px 18px;
+    box-sizing: border-box;
+    height: 100%; /* crucial: take the whole middle row's height */
+    overflow: hidden;
+}
+
+    /* details column (header moved here by JS) */
+    .fs-split .fs-header {
+        flex: 1 1 40%;
+        max-width: 46%;
+        min-width: 260px;
+        box-sizing: border-box;
+        padding: 18px 12px 18px 12px;
+        background: transparent;
+        overflow-y: auto; /* allow long descriptions to scroll */
+    }
+
+    /* media column */
+    .fs-split .fs-media {
+        flex: 1 1 58%;
+        max-width: 58%;
+        box-sizing: border-box;
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* fill the split height */
+        overflow: hidden;
+    }
+
+    /* make embed-container fill the media column height (remove aspect padding for split) */
+    .fs-split .embed-container {
+        width: 100%;
+        height: 100%; /* fill available column height */
+        padding-bottom: 0; /* don't use padding-bottom aspect trick inside split */
+        min-height: 320px; /* ensure tall vertical gets space */
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+        /* ensure media keeps aspect ratio and fits within column height (no overflow) */
+        .fs-split .embed-container iframe,
+        .fs-split .embed-container img,
+        .fs-split .embed-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* center the media */
+            width: auto; /* let width scale automatically */
+            height: 100%; /* fill height of column */
+            max-width: 100%;
+            object-fit: contain; /* show whole video; no cropping */
         }
+
+        /* video controls may add to height — limit to container */
+        .fs-split .embed-container video {
+            max-height: 100%;
+            box-sizing: border-box;
+        }
+
+/* mobile: stack header above media for vertical projects */
+@media (max-width: 900px) {
+    .fs-split {
+        flex-direction: column;
+        padding: 8px 12px;
+        height: auto; /* allow content to size normally on mobile */
+    }
+
+        .fs-split .fs-header {
+            order: 0;
+            max-width: 100%;
+            width: 100%;
+            padding: 12px 0;
+            max-height: none;
+        }
+
+        .fs-split .fs-media {
+            order: 1;
+            max-width: 100%;
+            width: 100%;
+            padding: 8px 0 12px;
+            height: auto;
+        }
+
+        .fs-split .embed-container {
+            height: 0; /* use aspect ratio helpers on mobile */
+            padding-bottom: 177.7778%; /* keep tall vertical aspect on mobile */
+            min-height: 220px;
+        }
+
+            .fs-split .embed-container iframe,
+            .fs-split .embed-container img,
+            .fs-split .embed-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+}
+
+/* small refinement: thumbnail sizes for vertical layout on desktop */
+@media (min-width: 900px) {
+    .fs-thumbs img {
+        width: 64px;
+        height: 48px;
+    }
+}
+/* ----- HIDE .fs-media when overlay is handling a vertical split ----- */
+#fullscreen-overlay.vertical .fs-media {
+    display: none !important;
+}
+
+/* ensure fs-split is placed in the content middle row and fills height */
+#fullscreen-overlay .fs-split {
+    grid-row: 2; /* explicit row placement so it occupies the growable area */
+    height: 100%; /* fill the middle row's height */
+    align-self: stretch;
+}
+
+/* defensive: when overlay.vertical is present, make sure the grid template still behaves */
+#fullscreen-overlay.vertical .fs-content {
+    grid-template-rows: auto 1fr auto; /* explicit, in case your styles were modified */
+    min-height: 0; /* allow children to size inside correctly */
+}
+
+/* small fix: when fs-media is hidden, ensure footer is not pushed off by a stray min-height */
+#fullscreen-overlay.vertical .fs-footer {
+    z-index: 2;
+}
+
+/* ===== Overlay height / fs-content growth =====
+   Make the overlay much taller on desktop (approx 85-95% of viewport)
+   and ensure fs-content's middle row is growable so fs-split fills it.
+*/
+:root {
+    --overlay-height-desktop: 90vh; /* feel free to set 85vh / 92vh etc. */
+    --overlay-height-max: 95vh;
+}
+
+/* increase the dialog height so fs-content has room */
+.fs-inner {
+    height: var(--overlay-height-desktop);
+    max-height: var(--overlay-height-max);
+    /* keep the radius & style but ensure vertical space */
+    box-sizing: border-box;
+}
+
+/* ensure the grid middle row grows to occupy available overlay height */
+.fs-content {
+    grid-template-rows: auto 1fr auto; /* header / middle / footer */
+    min-height: 0; /* allow children to shrink/scroll correctly */
+    height: 100%;
+}
+
+/* For very large screens allow a touch more */
+@media (min-width: 1600px) {
+    :root {
+        --overlay-height-desktop: 92vh;
+        --overlay-height-max: 95vh;
+    }
+}
+
+/* ----- vertical mode tweaks (overlay.vertical applied by JS) ----- */
+
+/* hide the legacy .fs-media when vertical split is used (prevents double reserving) */
+#fullscreen-overlay.vertical .fs-media {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ensure fs-footer stays visible and the split occupies middle row fully */
+#fullscreen-overlay.vertical .fs-content {
+    grid-template-rows: auto 1fr auto;
+    min-height: 0;
+}
+
+/* ensure fs-split lands exactly in the middle growable area */
+#fullscreen-overlay.vertical .fs-split {
+    grid-row: 2; /* explicit placement */
+    height: 100%; /* fill the middle row */
+    align-self: stretch;
+    overflow: hidden; /* inner pieces control scrolling */
+}
+
+    /* details column scrolls if it overflows; header inside it will be sticky on mobile */
+    #fullscreen-overlay.vertical .fs-split .fs-header {
+        position: relative;
+        z-index: 10;
+        background: transparent; /* header remains visible against overlay */
+    }
+
+    /* details column is allowed to scroll vertically when content is long */
+    #fullscreen-overlay.vertical .fs-split .fs-header,
+    #fullscreen-overlay.vertical .fs-split .fs-left {
+        max-height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* media column: fill available height safely (no cropping) */
+    #fullscreen-overlay.vertical .fs-split .fs-media {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* embed-container inside split: fill column height (no padding-bottom aspect trick) */
+    #fullscreen-overlay.vertical .fs-split .embed-container {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 0; /* disable aspect padding inside split */
+        min-height: 320px; /* ensure a comfortable minimum */
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+    }
+
+        /* ensure the actual media keeps its aspect ratio and fits the column */
+        #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+        #fullscreen-overlay.vertical .fs-split .embed-container img,
+        #fullscreen-overlay.vertical .fs-split .embed-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 100%; /* fill the column height */
+            width: auto; /* scale width automatically */
+            max-width: 100%;
+            object-fit: contain; /* show entire video without cropping */
+        }
+
+        /* video element controls: respect box */
+        #fullscreen-overlay.vertical .fs-split .embed-container video {
+            max-height: 100%;
+        }
+
+/* ===== Mobile: keep header always visible =====
+   On mobile we stack splitted content; make header sticky so it never scrolls away.
+*/
+@media (max-width: 900px) {
+    /* make dialog full height on small screens so there's room for sticky header */
+    .fs-inner {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    /* when vertical, stack and allow split to scroll but keep header sticky */
+    #fullscreen-overlay.vertical .fs-split {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+
+        /* pin the header inside the split so it doesn't scroll away */
+        #fullscreen-overlay.vertical .fs-split .fs-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: linear-gradient(180deg, rgba(10,12,14,0.98), rgba(10,12,14,0.96));
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        /* details column (fs-left) can scroll under the sticky header */
+        #fullscreen-overlay.vertical .fs-split .fs-left {
+            overflow: auto;
+            max-height: calc(100vh - 120px); /* keep some room for media/thumbnails */
+        }
+
+        /* restore aspect-ratio sizing for media on mobile so thumbnails & controls fit */
+        #fullscreen-overlay.vertical .fs-split .embed-container {
+            height: 0;
+            padding-bottom: 177.7778%; /* vertical aspect */
+            min-height: 220px;
+        }
+
+            #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+            #fullscreen-overlay.vertical .fs-split .embed-container img,
+            #fullscreen-overlay.vertical .fs-split .embed-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+}
+
+/* Defensive: if header still gets covered by the mobile top bar, give extra top offset */
+/* (adjust the 56px if your mobile bar height changes) */
+@media (max-width: 900px) {
+    #fullscreen-overlay.vertical .fs-split .fs-header {
+        /* if you have a fixed mobile-bar of 56px at the top of the page, uncomment: */
+        /* top: 56px; */
+    }
+}
+
+/* End of file */

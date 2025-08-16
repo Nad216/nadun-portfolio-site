@@ -1,9 +1,4 @@
-﻿/* =========================
-   script.js — robust overlay fix (MutationObserver + focus guard)
-   Drop-in replacement — overwrite your existing script.js
-   ========================= */
-
-const DEBUG = true; // set to false later
+﻿/* script.js — production-ready overlay with fullscreen + vertical-split fixes */
 
 function onReady(fn) {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -14,7 +9,6 @@ function onReady(fn) {
 }
 
 onReady(() => {
-    /* ---------- NAV / SECTION HIGHLIGHT ---------- */
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.panel');
 
@@ -34,7 +28,6 @@ onReady(() => {
     if (mainContent) mainContent.addEventListener('scroll', updateActiveLink);
     window.addEventListener('load', updateActiveLink);
 
-    /* ---------- Built-with helper ---------- */
     function slugifyForLogo(name) {
         return String(name || '').trim().replace(/\s+/g, '').replace(/[^\w\-\.]/g, '');
     }
@@ -50,7 +43,7 @@ onReady(() => {
     `;
     }
 
-    /* ---------- Mobile menu ---------- */
+    /* Mobile menu */
     const menuBtn = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuBtn && mobileMenu) {
@@ -66,7 +59,7 @@ onReady(() => {
         });
     }
 
-    /* ---------- Helpers for YouTube / Drive / Instagram ---------- */
+    /* YouTube / Drive helpers */
     function parseYouTubeId(url) {
         if (!url) return null;
         const m = url.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_\-]{7,})/);
@@ -89,13 +82,8 @@ onReady(() => {
         if (q) return `https://drive.google.com/file/d/${q[1]}/preview`;
         return link;
     }
-    function instagramEmbedUrl(link) {
-        if (!link) return link;
-        const m = link.match(/instagram\.com\/p\/([^\/\?\s]+)/);
-        return m ? `https://www.instagram.com/p/${m[1]}/` : link;
-    }
 
-    /* ---------- Overlay singleton + focus guard + mutation observer ---------- */
+    /* Overlay singleton */
     function ensureOverlayExists() {
         let overlay = document.getElementById('fullscreen-overlay');
         if (overlay) return overlay;
@@ -103,7 +91,6 @@ onReady(() => {
         overlay = document.createElement('div');
         overlay.id = 'fullscreen-overlay';
         overlay.className = 'fullscreen-overlay';
-        // start hidden via aria-hidden (your CSS already hides [aria-hidden="true"])
         overlay.setAttribute('aria-hidden', 'true');
 
         overlay.innerHTML = `
@@ -111,10 +98,12 @@ onReady(() => {
         <button class="fs-close" aria-label="Close">✕</button>
         <div class="fs-content">
           <header class="fs-header">
-            <h2 class="fs-title"></h2>
-            <p class="fs-desc"></p>
-            <div class="fs-builtwith"></div>
-            <!-- removed Open original button on purpose -->
+            <div class="fs-left">
+              <h2 class="fs-title"></h2>
+              <p class="fs-desc"></p>
+              <div class="fs-builtwith"></div>
+            </div>
+            <div class="fs-actions"></div>
           </header>
           <main class="fs-media" aria-live="polite"></main>
           <footer class="fs-footer"><div class="fs-thumbs"></div></footer>
@@ -123,28 +112,20 @@ onReady(() => {
     `;
         document.body.appendChild(overlay);
 
-        // close button non-focusable while hidden
         const closeBtn = overlay.querySelector('.fs-close');
         if (closeBtn) closeBtn.setAttribute('tabindex', '-1');
 
-        // Focus guard: blur anything trying to focus inside while overlay is aria-hidden
         overlay.addEventListener('focusin', (ev) => {
             if (overlay.getAttribute('aria-hidden') === 'true') {
                 try { ev.target.blur(); } catch (e) { }
-                console.warn('[projects] prevented focus inside hidden overlay for', ev.target);
             }
         });
 
-        // MutationObserver: if some other code incorrectly toggles aria-hidden while overlay is open,
-        // fix it immediately (robust against other scripts).
         const mo = new MutationObserver((mutations) => {
             mutations.forEach(m => {
                 if (m.attributeName === 'aria-hidden') {
                     const val = overlay.getAttribute('aria-hidden');
-                    console.warn('[projects] MutationObserver noticed aria-hidden change ->', val);
-                    // if overlay is open but aria-hidden has been set to "true" -> remove the attribute
                     if (overlay.classList.contains('open') && val === 'true') {
-                        console.warn('[projects] overlay is open but aria-hidden="true" — forcing removal to avoid hiding focused descendants.');
                         overlay.removeAttribute('aria-hidden');
                     }
                 }
@@ -152,50 +133,79 @@ onReady(() => {
         });
         mo.observe(overlay, { attributes: true });
 
-        // defensive: if an element inside overlay somehow already had focus, blur it
-        try {
-            if (overlay.contains(document.activeElement)) document.activeElement.blur();
-        } catch (e) { }
+        try { if (overlay.contains(document.activeElement)) document.activeElement.blur(); } catch (e) { }
 
         return overlay;
     }
 
     const overlay = ensureOverlayExists();
     const fsInner = overlay.querySelector('.fs-inner');
+    const fsContent = overlay.querySelector('.fs-content');
     const fsTitle = overlay.querySelector('.fs-title');
     const fsDesc = overlay.querySelector('.fs-desc');
     const fsMedia = overlay.querySelector('.fs-media');
     const fsThumbs = overlay.querySelector('.fs-thumbs');
     const fsClose = overlay.querySelector('.fs-close');
     const fsBuiltWith = overlay.querySelector('.fs-builtwith');
-    // NOTE: removed fsOpenOriginal since the button was removed
+    const fsActions = overlay.querySelector('.fs-actions');
 
     if (fsClose) fsClose.addEventListener('click', () => closeOverlay());
+
+    /* fullscreen button */
+    function createFullscreenButton() {
+        if (!fsActions) return null;
+        let btn = fsActions.querySelector('.fs-fullscreen');
+        if (btn) return btn;
+
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'fs-fullscreen';
+        btn.setAttribute('aria-label', 'Toggle fullscreen');
+        btn.title = 'Toggle fullscreen';
+        btn.textContent = '⤢';
+        fsActions.appendChild(btn);
+
+        btn.addEventListener('click', () => {
+            const embed = fsContent.querySelector('.fs-split .embed-container') || fsMedia.querySelector('.embed-container') || fsInner;
+            if (!embed) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => { });
+            } else if (embed.requestFullscreen) {
+                embed.requestFullscreen().catch(() => { });
+            } else if (embed.webkitRequestFullscreen) {
+                embed.webkitRequestFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const isFull = !!document.fullscreenElement;
+            btn.setAttribute('aria-pressed', String(isFull));
+        });
+
+        return btn;
+    }
+
+    createFullscreenButton();
 
     let currentSlides = [];
     let currentIndex = 0;
     let currentProject = null;
 
-    /* ---------- Media builder (lazy insert) - unchanged logic, debug logs kept ---------- */
     function createMediaNodeWithoutIframe(project) {
         try {
-            console.log('[projects] createMediaNodeWithoutIframe for', project && project.title);
             const media = project.media || {};
             const wrapper = document.createElement('div');
-
-            // ensure wrapper gives the embed-container a width to fill
             wrapper.style.width = '100%';
-            wrapper.style.maxWidth = '1100px'; // matches .fs-inner max width
+            wrapper.style.maxWidth = '1100px';
             wrapper.style.boxSizing = 'border-box';
 
             const format = (media.format || project.format || 'horizontal');
             const cls = (format === 'vertical') ? 'embed-9-16' : (format === 'square' ? 'embed-1-1' : 'embed-16-9');
 
-            // images
             if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
                 const container = document.createElement('div');
                 container.className = `embed-container ${cls}`;
-                if (DEBUG) container.style.minHeight = '140px';
+                container.style.minHeight = '140px';
                 const img = document.createElement('img');
                 img.src = media.images[0];
                 img.alt = project.title || '';
@@ -205,12 +215,11 @@ onReady(() => {
                 return { node: wrapper, slides: media.images.slice() };
             }
 
-            // local video
             if ((media.source === 'local' || /\.mp4|\.webm|\.ogg$/i.test(media.link || project.link || '')) && (media.link || project.link)) {
                 const src = media.link || project.link;
                 const container = document.createElement('div');
                 container.className = `embed-container ${cls}`;
-                if (DEBUG) container.style.minHeight = '180px';
+                container.style.minHeight = '180px';
                 const video = document.createElement('video');
                 video.controls = true;
                 video.preload = 'metadata';
@@ -227,7 +236,6 @@ onReady(() => {
                 return { node: wrapper, slides: [] };
             }
 
-            // YouTube (poster -> create iframe when user clicks)
             if (media.source === 'youtube' || /youtube/.test(media.link || project.link || '')) {
                 const link = (media.link || project.link || '');
                 const id = parseYouTubeId(link);
@@ -235,7 +243,7 @@ onReady(() => {
 
                 const container = document.createElement('div');
                 container.className = `embed-container ${cls}`;
-                if (DEBUG) container.style.minHeight = '180px';
+                container.style.minHeight = '180px';
                 container.style.position = 'relative';
                 container.style.background = '#000';
                 container.style.cursor = 'pointer';
@@ -257,7 +265,6 @@ onReady(() => {
                 container.appendChild(play);
 
                 const insertYouTubeIframe = () => {
-                    console.log('[projects] insertYouTubeIframe called for', project.title, id);
                     if (!id) {
                         const w = youtubeWatchUrlFromLink(link) || link;
                         if (w) window.open(w, '_blank', 'noopener');
@@ -272,19 +279,6 @@ onReady(() => {
                     iframe.style.border = '0';
                     container.innerHTML = '';
                     container.appendChild(iframe);
-
-                    setTimeout(() => {
-                        const rect = container.getBoundingClientRect();
-                        if (rect.width === 0 || rect.height === 0) {
-                            console.warn('[projects] iframe inserted but zero size', project.title);
-                            const note = document.createElement('div');
-                            note.style.color = '#fff';
-                            note.textContent = 'If the player doesn’t appear, click "Open original".';
-                            wrapper.appendChild(note);
-                        } else {
-                            console.log('[projects] iframe appears ok', project.title, rect.width, rect.height);
-                        }
-                    }, 600);
                 };
 
                 play.addEventListener('click', (e) => { e.stopPropagation(); insertYouTubeIframe(); });
@@ -294,7 +288,6 @@ onReady(() => {
                 return { node: wrapper, slides: [] };
             }
 
-            // Drive (poster -> insert preview iframe)
             if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
                 const link = media.link || project.link || '';
                 const preview = drivePreviewUrl(link) || link;
@@ -302,7 +295,7 @@ onReady(() => {
 
                 const container = document.createElement('div');
                 container.className = `embed-container ${cls}`;
-                if (DEBUG) container.style.minHeight = '180px';
+                container.style.minHeight = '180px';
                 container.style.position = 'relative';
                 container.style.background = '#000';
                 container.style.cursor = 'pointer';
@@ -324,7 +317,6 @@ onReady(() => {
                 container.appendChild(play);
 
                 const insertDriveIframe = () => {
-                    console.log('[projects] insertDriveIframe called for', project.title, preview);
                     if (/\/file\/d\/[a-zA-Z0-9_-]+\/preview/.test(preview)) {
                         const iframe = document.createElement('iframe');
                         iframe.src = preview;
@@ -335,18 +327,6 @@ onReady(() => {
                         iframe.style.border = '0';
                         container.innerHTML = '';
                         container.appendChild(iframe);
-                        setTimeout(() => {
-                            const rect = container.getBoundingClientRect();
-                            if (rect.width === 0 || rect.height === 0) {
-                                console.warn('[projects] drive iframe inserted but zero size', project.title);
-                                const note = document.createElement('div');
-                                note.style.color = '#fff';
-                                note.textContent = 'If the preview doesn’t appear, click "Open original".';
-                                wrapper.appendChild(note);
-                            } else {
-                                console.log('[projects] drive iframe appears ok', project.title, rect.width, rect.height);
-                            }
-                        }, 600);
                     } else {
                         if (link) window.open(link, '_blank', 'noopener');
                     }
@@ -359,10 +339,9 @@ onReady(() => {
                 return { node: wrapper, slides: [] };
             }
 
-            // fallback poster
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
-            if (DEBUG) container.style.minHeight = '120px';
+            container.style.minHeight = '120px';
             const img = document.createElement('img');
             img.alt = project.title || '';
             img.loading = 'lazy';
@@ -375,134 +354,163 @@ onReady(() => {
             return { node: wrapper, slides: [] };
 
         } catch (err) {
-            console.error('createMediaNodeWithoutIframe error', err);
             const fallback = document.createElement('div');
             fallback.textContent = 'Preview unavailable';
             return { node: fallback, slides: [] };
         }
     }
 
-    /* ---------- Accessibility helpers ---------- */
     function setBackgroundInert(state) {
         const main = document.querySelector('.main-content');
         if (!main) return;
         if (state) {
-            try { main.setAttribute('inert', ''); } catch (e) { /* ignore */ }
+            try { main.setAttribute('inert', ''); } catch (e) { }
             main.setAttribute('aria-hidden', 'true');
         } else {
-            try { main.removeAttribute('inert'); } catch (e) { /* ignore */ }
+            try { main.removeAttribute('inert'); } catch (e) { }
             main.removeAttribute('aria-hidden');
         }
     }
 
-    /* ---------- Open / Close overlay (safe ordering) ---------- */
     function openOverlay(project) {
-        try {
-            console.log('[projects] openOverlay called for', project && project.title);
-            if (!project) return;
-            currentProject = project;
+        if (!project) return;
+        currentProject = project;
 
-            fsMedia.innerHTML = '';
-            fsThumbs.innerHTML = '';
-            fsBuiltWith.innerHTML = '';
+        // clean any previous split
+        const existingSplit = overlay.querySelector('.fs-split');
+        if (existingSplit) existingSplit.remove();
 
-            fsTitle.textContent = project.title || '';
-            fsDesc.textContent = project.description || '';
-            if (project.createdUsing && project.createdUsing.length) {
-                fsBuiltWith.innerHTML = generateLogosHTML(project.createdUsing);
-            }
+        fsMedia.innerHTML = '';
+        fsThumbs.innerHTML = '';
+        fsBuiltWith.innerHTML = '';
 
-            if (!project.media) {
-                const link = project.link || '';
-                let source = 'local';
-                if (/youtube/.test(link) || /youtu\.be/.test(link)) source = 'youtube';
-                else if (/drive\.google/.test(link)) source = 'drive';
-                else if (/instagram\.com/.test(link)) source = 'instagram';
-                project.media = { type: 'video', source, link, format: project.format || 'horizontal' };
-            }
-
-            const res = createMediaNodeWithoutIframe(project);
-            fsMedia.appendChild(res.node);
-            currentSlides = res.slides || [];
-            currentIndex = 0;
-
-            if (currentSlides.length) {
-                currentSlides.forEach((src, i) => {
-                    const t = document.createElement('img');
-                    t.src = src;
-                    t.loading = 'lazy';
-                    t.alt = `${project.title || ''} ${i + 1}`;
-                    if (i === 0) t.classList.add('active');
-                    t.addEventListener('click', () => {
-                        const container = fsMedia.querySelector('.embed-container');
-                        if (container) {
-                            const img = container.querySelector('img');
-                            if (img) img.src = src;
-                        }
-                        fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
-                        t.classList.add('active');
-                        currentIndex = i;
-                    });
-                    fsThumbs.appendChild(t);
-                });
-            }
-
-            // blur any focused element first (prevent aria-hidden focused-descendant warning)
-            try { document.activeElement && document.activeElement.blur(); } catch (e) { }
-
-            // Remove aria-hidden (show) then add .open — that ordering avoids the WAI-ARIA warning
-            overlay.removeAttribute('aria-hidden');
-            overlay.classList.add('open');
-
-            // make close button focusable now that overlay is visible
-            if (fsClose) fsClose.setAttribute('tabindex', '0');
-
-            // inert background and focus the dialog
-            setBackgroundInert(true);
-            window.requestAnimationFrame(() => { try { fsInner.focus(); } catch (e) { } });
-
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
-
-            document.addEventListener('keydown', overlayKeyHandler);
-        } catch (err) {
-            console.error('openOverlay error', err);
+        fsTitle.textContent = project.title || '';
+        fsDesc.textContent = project.description || '';
+        if (project.createdUsing && project.createdUsing.length) {
+            fsBuiltWith.innerHTML = generateLogosHTML(project.createdUsing);
         }
+
+        if (!project.media) {
+            const link = project.link || '';
+            let source = 'local';
+            if (/youtube/.test(link) || /youtu\.be/.test(link)) source = 'youtube';
+            else if (/drive\.google/.test(link)) source = 'drive';
+            else if (/instagram\.com/.test(link)) source = 'instagram';
+            project.media = { type: 'video', source, link, format: project.format || 'horizontal' };
+        }
+
+        const res = createMediaNodeWithoutIframe(project);
+        currentSlides = res.slides || [];
+        currentIndex = 0;
+
+        const fmt = (project.media && project.media.format) || project.format || 'horizontal';
+        const isVertical = fmt === 'vertical';
+
+        if (isVertical) {
+            // mark overlay to apply vertical-only CSS
+            overlay.classList.add('vertical');
+
+            // ensure fsMedia doesn't reserve visual space (CSS will hide it; clear content)
+            fsMedia.innerHTML = '';
+
+            // create split and ensure it occupies the middle grid row
+            const split = document.createElement('div');
+            split.className = 'fs-split';
+            split.style.gridRow = '2'; // ensure split is in the content middle row
+            split.style.width = '100%';
+
+            // move header into split
+            const header = overlay.querySelector('.fs-header');
+            if (header) {
+                header.parentElement && header.parentElement.removeChild(header);
+                split.appendChild(header);
+            }
+
+            // append media node into split
+            split.appendChild(res.node);
+
+            // append split as a child; the grid-row above ensures it fills middle row
+            fsContent.appendChild(split);
+
+        } else {
+            // normal (horizontal etc.)
+            overlay.classList.remove('vertical');
+            fsMedia.appendChild(res.node);
+        }
+
+        if (currentSlides.length) {
+            currentSlides.forEach((src, i) => {
+                const t = document.createElement('img');
+                t.src = src;
+                t.loading = 'lazy';
+                t.alt = `${project.title || ''} ${i + 1}`;
+                if (i === 0) t.classList.add('active');
+                t.addEventListener('click', () => {
+                    const container = fsContent.querySelector('.embed-container');
+                    if (container) {
+                        const img = container.querySelector('img');
+                        if (img) img.src = src;
+                    }
+                    fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
+                    t.classList.add('active');
+                    currentIndex = i;
+                });
+                fsThumbs.appendChild(t);
+            });
+        }
+
+        // show overlay
+        overlay.removeAttribute('aria-hidden');
+        overlay.classList.add('open');
+
+        if (fsClose) fsClose.setAttribute('tabindex', '0');
+
+        setBackgroundInert(true);
+        window.requestAnimationFrame(() => { try { fsInner.focus(); } catch (e) { } });
+
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', overlayKeyHandler);
     }
 
     function closeOverlay() {
-        try {
-            if (!overlay.classList.contains('open')) return;
+        if (!overlay.classList.contains('open')) return;
 
-            // restore focus to a safe element
-            const safe = document.getElementById('menu-toggle') || document.querySelector('.nav-link') || document.body;
-            try { safe.focus(); } catch (e) { }
+        const safe = document.getElementById('menu-toggle') || document.querySelector('.nav-link') || document.body;
+        try { safe.focus(); } catch (e) { }
 
-            // make close button non-focusable while hidden
-            if (fsClose) fsClose.setAttribute('tabindex', '-1');
+        if (fsClose) fsClose.setAttribute('tabindex', '-1');
 
-            setBackgroundInert(false);
+        setBackgroundInert(false);
 
-            // remove open class before hiding with aria-hidden to avoid race with MutationObserver
-            overlay.classList.remove('open');
-            overlay.setAttribute('aria-hidden', 'true');
-
-            document.documentElement.style.overflow = '';
-            document.body.style.overflow = '';
-
-            fsMedia.innerHTML = '';
-            fsThumbs.innerHTML = '';
-            fsBuiltWith.innerHTML = '';
-            fsTitle.textContent = '';
-            fsDesc.textContent = '';
-            currentSlides = [];
-            currentIndex = 0;
-            currentProject = null;
-
-            document.removeEventListener('keydown', overlayKeyHandler);
-        } catch (err) {
-            console.error('closeOverlay error', err);
+        // remove any split and restore header to original spot
+        const split = overlay.querySelector('.fs-split');
+        if (split) {
+            const header = split.querySelector('.fs-header');
+            if (header) {
+                // restore header to top of fsContent
+                fsContent.insertBefore(header, fsContent.firstChild);
+            }
+            split.remove();
         }
+
+        overlay.classList.remove('open');
+        overlay.classList.remove('vertical'); // important: remove vertical state
+        overlay.setAttribute('aria-hidden', 'true');
+
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+
+        fsMedia.innerHTML = '';
+        fsThumbs.innerHTML = '';
+        fsBuiltWith.innerHTML = '';
+        fsTitle.textContent = '';
+        fsDesc.textContent = '';
+        currentSlides = [];
+        currentIndex = 0;
+        currentProject = null;
+
+        document.removeEventListener('keydown', overlayKeyHandler);
     }
 
     function overlayKeyHandler(e) {
@@ -511,7 +519,7 @@ onReady(() => {
 
     overlay.addEventListener('click', (ev) => { if (ev.target === overlay) closeOverlay(); });
 
-    /* ---------- Robust project rendering (unchanged) ---------- */
+    /* Rendering projects from data */
     function findOrCreateCategoryContainer(categoryName) {
         const normalized = String(categoryName || '').trim().toLowerCase().replace(/\s+/g, '-');
         let container = document.querySelector(`#${normalized}-cards`);
