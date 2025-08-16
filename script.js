@@ -114,9 +114,7 @@ onReady(() => {
             <h2 class="fs-title"></h2>
             <p class="fs-desc"></p>
             <div class="fs-builtwith"></div>
-            <div class="fs-actions">
-              <button class="fs-open-original" type="button">Open original</button>
-            </div>
+            <!-- removed Open original button on purpose -->
           </header>
           <main class="fs-media" aria-live="polite"></main>
           <footer class="fs-footer"><div class="fs-thumbs"></div></footer>
@@ -170,7 +168,7 @@ onReady(() => {
     const fsThumbs = overlay.querySelector('.fs-thumbs');
     const fsClose = overlay.querySelector('.fs-close');
     const fsBuiltWith = overlay.querySelector('.fs-builtwith');
-    const fsOpenOriginal = overlay.querySelector('.fs-open-original');
+    // NOTE: removed fsOpenOriginal since the button was removed
 
     if (fsClose) fsClose.addEventListener('click', () => closeOverlay());
 
@@ -184,6 +182,11 @@ onReady(() => {
             console.log('[projects] createMediaNodeWithoutIframe for', project && project.title);
             const media = project.media || {};
             const wrapper = document.createElement('div');
+
+            // ensure wrapper gives the embed-container a width to fill
+            wrapper.style.width = '100%';
+            wrapper.style.maxWidth = '1100px'; // matches .fs-inner max width
+            wrapper.style.boxSizing = 'border-box';
 
             const format = (media.format || project.format || 'horizontal');
             const cls = (format === 'vertical') ? 'embed-9-16' : (format === 'square' ? 'embed-1-1' : 'embed-16-9');
@@ -212,9 +215,13 @@ onReady(() => {
                 video.controls = true;
                 video.preload = 'metadata';
                 video.src = src;
-                video.style.background = '#000';
+                video.poster = project.thumb || project.image || 'assets/placeholder.jpg';
                 video.setAttribute('playsinline', '');
                 video.autoplay = false;
+                video.style.background = '#000';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.maxHeight = 'calc(92vh - 260px)';
                 container.appendChild(video);
                 wrapper.appendChild(container);
                 return { node: wrapper, slides: [] };
@@ -246,7 +253,6 @@ onReady(() => {
                 play.type = 'button';
                 play.className = 'fs-play-button';
                 play.setAttribute('aria-label', 'Play video');
-                // style omitted for brevity; same as before
                 play.textContent = '▶';
                 container.appendChild(play);
 

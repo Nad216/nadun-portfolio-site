@@ -664,16 +664,6 @@ body, button, a {
     margin-top: 8px;
 }
 
-.fs-open-original {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.06);
-    color: var(--clr-light);
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
 /* main media area */
 .fs-media {
     padding: 12px 18px;
@@ -834,4 +824,30 @@ body, button, a {
     pointer-events: none;
 }
 
-/* End of CSS */
+/* End of original CSS content appended */
+
+/* ===== overlay media sizing fixes ===== */
+.fs-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    gap: 0;
+}
+
+    /* overlay-specific embed container sizing: fills available width, but caps so it doesn't overflow */
+    .fs-media .embed-container {
+        width: 100%;
+        max-width: 1100px; /* keep consistent with .fs-inner width */
+        box-sizing: border-box;
+        min-height: 180px; /* fallback if aspect padding fails for any reason */
+    }
+
+        /* ensure poster images and videos fit exactly */
+        .fs-media .embed-container img,
+        .fs-media .embed-container video,
+        .fs-media .embed-container iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
