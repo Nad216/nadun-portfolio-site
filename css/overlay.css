@@ -1,0 +1,351 @@
+/* overlay.css — fullscreen overlay, fs-split (vertical) and embed helpers */
+
+/* Fullscreen overlay (dialog) */
+#fullscreen-overlay,
+.fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+    padding: 28px;
+    box-sizing: border-box;
+}
+
+    #fullscreen-overlay.open, .fullscreen-overlay.open {
+        display: flex;
+    }
+
+    #fullscreen-overlay[aria-hidden="true"], .fullscreen-overlay[aria-hidden="true"] {
+        display: none !important;
+    }
+
+/* inner dialog */
+.fs-inner {
+    background: linear-gradient(180deg, rgba(15,20,25,0.98), rgba(10,12,14,0.98));
+    border-radius: 12px;
+    width: min(1100px, 98%);
+    max-height: 92vh;
+    overflow: hidden;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    height: var(--overlay-height-desktop);
+    max-height: var(--overlay-height-max);
+    box-sizing: border-box;
+}
+
+.fs-close {
+    position: absolute;
+    right: 18px;
+    top: 16px;
+    z-index: 10;
+    border: none;
+    background: transparent;
+    color: var(--clr-light);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px 10px;
+}
+
+/* fs-content grid */
+.fs-content {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+}
+
+/* header / actions */
+.fs-header {
+    padding: 18px 22px 6px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+    .fs-header .fs-left {
+        min-width: 0;
+    }
+
+.fs-actions {
+    margin-top: 8px;
+}
+
+/* media area */
+.fs-media {
+    padding: 12px 18px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    max-height: calc(92vh - 230px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.fs-footer {
+    padding: 12px 18px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+}
+
+/* thumbs */
+.fs-thumbs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+    .fs-thumbs img {
+        width: 72px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 6px;
+        cursor: pointer;
+        opacity: 0.9;
+        border: 2px solid transparent;
+    }
+
+        .fs-thumbs img.active {
+            border-color: var(--clr-primary);
+            opacity: 1;
+        }
+
+/* embed aspect helpers */
+.embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: #000;
+    border-radius: 10px;
+}
+
+.embed-16-9 {
+    padding-bottom: 56.25%;
+}
+
+.embed-9-16 {
+    padding-bottom: 177.7778%;
+}
+
+.embed-1-1 {
+    padding-bottom: 100%;
+}
+
+.embed-container iframe, .embed-container img, .embed-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #000;
+    object-fit: cover;
+}
+
+/* play button */
+.fs-play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+    .fs-play-button:hover {
+        transform: scale(1.04);
+    }
+
+    .fs-play-button:focus, .fs-close:focus {
+        outline: 3px solid rgba(28,183,169,0.24);
+        outline-offset: 2px;
+    }
+
+/* overlay media sizing niceties */
+.fs-media .embed-container {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 180px;
+    max-width: 1200px;
+}
+
+    .fs-media .embed-container img, .fs-media .embed-container video, .fs-media .embed-container iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+/* fullscreen button */
+.fs-fullscreen {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: var(--clr-light);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .fs-fullscreen:hover {
+        transform: translateY(-1px);
+    }
+
+    .fs-fullscreen:focus {
+        outline: 3px solid rgba(28,183,169,0.18);
+        outline-offset: 2px;
+    }
+
+/* VERTICAL SPLIT (desktop) - inserted by JS when needed */
+.fs-split {
+    display: flex;
+    gap: 18px;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0 18px 12px 18px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+}
+
+    .fs-split .fs-header {
+        flex: 1 1 40%;
+        max-width: 46%;
+        min-width: 260px;
+        padding: 18px 12px;
+        overflow-y: auto;
+        background: transparent;
+    }
+
+    .fs-split .fs-media {
+        flex: 1 1 58%;
+        max-width: 58%;
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .fs-split .embed-container {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 0;
+        min-height: 320px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+        .fs-split .embed-container iframe, .fs-split .embed-container img, .fs-split .embed-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .fs-split .embed-container video {
+            max-height: 100%;
+            box-sizing: border-box;
+        }
+
+/* small refinements for vertical mode */
+#fullscreen-overlay.vertical .fs-media {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#fullscreen-overlay .fs-split {
+    grid-row: 2;
+    height: 100%;
+    align-self: stretch;
+}
+
+#fullscreen-overlay.vertical .fs-content {
+    grid-template-rows: auto 1fr auto;
+    min-height: 0;
+}
+
+#fullscreen-overlay.vertical .fs-footer {
+    z-index: 2;
+}
+
+#fullscreen-overlay.vertical .fs-split .fs-header,
+#fullscreen-overlay.vertical .fs-split .fs-left {
+    max-height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#fullscreen-overlay.vertical .fs-split .fs-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+}
+
+#fullscreen-overlay.vertical .fs-split .embed-container {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 0;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+}
+
+    #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+    #fullscreen-overlay.vertical .fs-split .embed-container img,
+    #fullscreen-overlay.vertical .fs-split .embed-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    #fullscreen-overlay.vertical .fs-split .embed-container video {
+        max-height: 100%;
+    }
+
+/* keep overlay inner from being focusable when hidden */
+#fullscreen-overlay[aria-hidden="true"] .fs-inner {
+    pointer-events: none;
+}
+
+/* ensure thumbs smaller on large screens if needed */
+@media (min-width: 900px) {
+    .fs-thumbs img {
+        width: 64px;
+        height: 48px;
+    }
+}

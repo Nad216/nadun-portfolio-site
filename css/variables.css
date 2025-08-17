@@ -1,0 +1,13 @@
+/* variables.css — all custom properties in one place */
+
+:root {
+    --clr-primary: #ffd300;
+    --clr-bg: rgba(40,52,61,0.5);
+    --clr-dark: #000000;
+    --clr-accent: #8d7817;
+    --clr-light: #fff;
+    --sidebar-width: 250px;
+    /* overlay sizing */
+    --overlay-height-desktop: 90vh;
+    --overlay-height-max: 95vh;
+}

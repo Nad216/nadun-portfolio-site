@@ -1,285 +1,181 @@
-# README — JavaScript modules & `data/projects.json`
+# README — JavaScript modules, `data/projects.json`, and CSS file roles
 
-This README documents **only** the JavaScript modules and the `projects.json` format used by your portfolio. It explains what each JS file does, how they connect, the expected JSON shape, running notes, and troubleshooting. Drop this `README.md` next to your project for quick reference.
+This README documents **only** the JavaScript modules, the `data/projects.json` format, and the purpose of each CSS file in your project. It's written for quick reference so you (or a collaborator) can jump in, maintain, and edit parts of the site without confusion.
 
 ---
 
-# Table of contents
+## Table of contents
 - [Project structure (where files live)](#project-structure-where-files-live)  
 - [What each JS file does (summary + exports)](#what-each-js-file-does-summary--exports)  
-- [Lifecycle / initialization order](#lifecycle--initialization-order)  
-- [`projects.json` — schema & semantics](#projectsjson---schema--semantics)  
-- [Examples (JSON)](#examples-json)  
-- [How links are used (`project.link` vs `media.link`)](#how-links-are-used-projectlink-vs-medialink)  
-- [How to run locally / dev server](#how-to-run-locally--dev-server)  
-- [Common adjustments & where to change them](#common-adjustments--where-to-change-them)  
+- [`projects.json` — shape & what fields mean](#projectsjson---shape--what-fields-mean)  
+- [CSS files — purpose & what to edit where](#css-files---purpose--what-to-edit-where)  
+- [How to include the CSS (order matters)](#how-to-include-the-css-order-matters)  
+- [Lifecycle / initialization order (JS)](#lifecycle--initialization-order-js)  
 - [Troubleshooting checklist](#troubleshooting-checklist)  
-- [Developer tips / next steps](#developer-tips--next-steps)
+- [Quick edit guide: where to make common changes](#quick-edit-guide-where-to-make-common-changes)  
+- [Notes](#notes)
 
 ---
 
-# Project structure (where files live)
-
+## Project structure (where files live)
 ```
 /index.html
-/style.css
+/css/
+  ├─ variables.css      // CSS variables (tokens) used across all styles
+  ├─ reset.css          // reset + basic accessibility defaults
+  ├─ layout.css         // page layout: sidebar, main-content, mobile bar
+  ├─ components.css     // panels, panel-inner, titles, grids
+  ├─ cards.css          // featured cards, project cards, built-with logos
+  └─ overlay.css        // fullscreen overlay, fs-split, embed helpers
 /js/
-  ├─ main.js         // entrypoint (type="module")
-  ├─ utils.js        // helper functions
-  ├─ nav.js          // nav highlight logic
-  ├─ mobileMenu.js   // mobile hamburger logic
-  ├─ overlay.js      // overlay singleton & media handling
-  └─ projects.js     // fetch + render projects.json
+  ├─ main.js
+  ├─ utils.js
+  ├─ nav.js
+  ├─ mobileMenu.js
+  ├─ overlay.js
+  └─ projects.js
 /data/
-  └─ projects.json   // your projects data (consumed by projects.js)
-assets/
-  └─ logos/          // small logo images referenced by createdUsing
-  └─ ...             // thumbs, images, videos, etc.
+  └─ projects.json
+/assets/
+  └─ logos/, thumbs, images, videos...
 ```
 
 ---
 
-# What each JS file does (summary + exports)
+## What each JS file does (summary + exports)
 
-## `utils.js`
-**Purpose:** Pure helpers used by multiple modules.  
-**Exports / responsibilities:**
-- `slugifyForLogo(name)` — hostname/filename-safe string for logo file names.
-- `generateLogosHTML(softwareList)` — returns the “Built with” HTML for project cards and overlay.
-- YouTube helpers: `parseYouTubeId`, `youtubeWatchUrlFromLink`, `youtubeThumbnailUrl`.
-- `drivePreviewUrl(link)` — normalizes/returns Drive preview links where possible.
+**`utils.js`**
+- Helper functions used across modules.
+- Key helpers: string slugify for logos, YouTube ID extraction, Drive preview URL normalization, `generateLogosHTML()`.
 
-Edit this file to add new provider parsing or change logo naming.
+**`nav.js`**
+- Highlights `.nav-link` that corresponds to the currently-visible `.panel`.
+- Export: `initNav()` — attaches scroll/resize handlers and runs initial activation.
 
----
+**`mobileMenu.js`**
+- Controls the mobile hamburger and mobile menu open/close behavior.
+- Export: `initMobileMenu()` — wires the toggle and auto-close on link click.
 
-## `nav.js`
-**Purpose:** Keep sidebar/mobile nav `.nav-link` in sync with `.panel` as the user scrolls.  
-**Export:**
-- `initNav()` — wires `scroll` (on `.main-content`), `load`, and `resize` handlers.  
-**Key logic:** it marks the nav link whose section top is `<= window.innerHeight / 2`. Change that fraction to shift activation timing.
+**`overlay.js`**
+- Creates and manages a single overlay DOM node (`#fullscreen-overlay`).
+- Handles media previews (image galleries, local video files, YouTube, Google Drive).
+- Supports vertical split layout for tall media (`.fs-split`).
+- Exports: `initOverlay()`, `openOverlay(project)`, `closeOverlay()`.
 
----
+**`projects.js`**
+- Fetches `/data/projects.json` and renders project cards into category containers.
+- Differentiates featured and normal cards and attaches click handlers to call `openOverlay(project)`.
 
-## `mobileMenu.js`
-**Purpose:** Toggle mobile menu and close it when a link is clicked.  
-**Export:**
-- `initMobileMenu()` — toggles `#mobile-menu.open` and updates `aria-expanded` on `#menu-toggle`.  
-Add focus trapping or animations here if needed.
-
----
-
-## `overlay.js`
-**Purpose:** The overlay singleton — builds and controls project detail previews (images, local videos, YouTube, Drive), thumbnails, fullscreen, vertical-split layout, accessibility, and open/close lifecycle.  
-**Exports:**
-- `initOverlay()` — create overlay singleton and fullscreen button (call once).
-- `openOverlay(project)` — open the overlay for the given project object.
-- `closeOverlay()` — close and cleanup.
-
-**Notable behavior:**
-- Creates `#fullscreen-overlay` only once.
-- `createMediaNodeWithoutIframe(project)` supports:
-  - `media.type === 'images'` (gallery images array),
-  - local video files (`.mp4`/`.webm`/`.ogg`),
-  - YouTube (lazy iframe insertion on click),
-  - Google Drive preview (inserts iframe on click),
-  - fallback to `thumb`/`image`.
-- If `media.format === 'vertical'`, overlay uses a `.fs-split` vertical layout and adds `vertical` class.
-- Accessibility: toggles `aria-hidden`, attempts `inert`, focuses inner dialog, closes on Escape and backdrop click.
+**`main.js`**
+- Entrypoint: imports modules and calls their init functions in the required order.
 
 ---
 
-## `projects.js`
-**Purpose:** Load `data/projects.json` and render project cards (featured and normal).  
-**Export:**
-- `loadProjects()` — fetches JSON, finds/creates category containers, builds DOM for each project, and attaches click handler to call `openOverlay(project)` (unless modifier keys used).
+## `projects.json` — shape & what fields mean
 
-**Important:** `fetch('data/projects.json')` requires an HTTP server (not `file://`).
+Top-level is an object with category keys (`brand`, `animation`, `cgi`, etc.) — each value is an array of project objects.
 
----
+**Project fields used by the site**
+- `title`, `description`, `image`, `thumb` — displayed in cards and overlay.
+- `createdUsing` (array) — `"Built with"` logos; files expected at `assets/logos/<slug>.png`.
+- `featured` (boolean) — put in `#featured-cards`.
+- `keep` (boolean) — if `true` keep a small card in its category in addition to featured area.
+- `highlight` (boolean) — adds `.highlight-project` class.
+- `media` — object including:
+  - `type`: `'video'`, `'images'`, `'gallery'`.
+  - `source`: `'local'`, `'youtube'`, `'drive'`.
+  - `link`: URL or path for embedding.
+  - `format`: `'horizontal'`, `'vertical'`, `'square'`.
+  - `images`: array for galleries (the code looks for this).
 
-## `main.js`
-**Purpose:** Entrypoint that wires everything in the correct order.  
-**Behavior:** on `DOMContentLoaded` it calls:
-1. `initNav()`
-2. `initMobileMenu()`
-3. `initOverlay()`
-4. `loadProjects()`
-
-Order matters so `openOverlay()` is available before project cards attach click handlers.
-
----
-
-# Lifecycle / initialization order
-
-1. Browser loads `index.html` which includes `<script type="module" src="js/main.js"></script>`.  
-2. `main.js` imports modules and on `DOMContentLoaded` runs the initializers (nav, mobile menu, overlay, projects).  
-3. `initOverlay()` creates overlay DOM and fullscreen button so `openOverlay()` is ready.  
-4. `loadProjects()` fetches `projects.json` and renders cards. Each card’s click handler calls `openOverlay(project)`.
+**Important**: `projects.js` expects to fetch `data/projects.json` via HTTP. Use a local dev server; file:// won't work.
 
 ---
 
-# `projects.json` — schema & semantics
+## CSS files — purpose & what to edit where
 
-Top-level: an object where each key is a **category name** (e.g. `"brand"`, `"animation"`, `"cgi"`) and the value is an **array** of project objects.
+Below is a direct, practical explanation of what *each* CSS file contains and what you should edit there. This replaces the vague "split into files" advice — this is exact.
 
-### Project object fields
-- `title` *(string)* — shown on card and overlay header.  
-- `description` *(string)* — short description for card & overlay.  
-- `image` *(string, optional)* — hero image path (fallback).  
-- `thumb` *(string)* — thumbnail used in cards and as video poster.  
-- `createdUsing` *(array of strings)* — used by `generateLogosHTML()`; the helper will look for `assets/logos/<slug>.png` where slug = `slugifyForLogo(name)`.  
-- `featured` *(boolean)* — if true, project is rendered in `#featured-cards`.  
-- `keep` *(boolean)* — if true a featured project may also be placed into its category as a small card.  
-- `highlight` *(boolean)* — adds `.highlight-project` class for emphasis.  
-- `media` *(object)* — describes playable/preview content.
+### `variables.css`
+**Contains:** CSS custom properties (`:root`) — all color tokens, spacing tokens, sizes like `--sidebar-width`, overlay sizes.  
+**Edit when:** You want to change theme colors, global sizes (sidebar width, overlay height), or add color variants. This file should be first so every other stylesheet can use the variables.
 
-### `media` object fields
-- `type` *(string)* — `'video'`, `'images'`, or `'gallery'`. For image galleries, code expects `images` array.  
-- `source` *(string)* — `'local'`, `'youtube'`, `'drive'`, etc. Used to decide embedding behavior.  
-- `link` *(string)* — URL or local path used for embedding or opening in overlay.  
-- `format` *(string)* — `'horizontal'`, `'vertical'`, `'square'`. `'vertical'` triggers the overlay vertical/split layout.  
-- `images` *(array)* — gallery images (if `type` is `'images'` or `'gallery'`).
+### `reset.css`
+**Contains:** Browser reset rules and very small accessibility defaults (focus outlines, tap highlight).  
+**Edit when:** You want to change focus outlines or add additional global reset rules.
+
+### `layout.css`
+**Contains:** Desktop layout (fixed sidebar), `.main-content` scroll container, mobile bar base, and mobile menu positioning.  
+**Edit when:** You want to change overall page structure: sidebar width, fixed vs. overlay sidebar, mobile bar height, where `.main-content` scrolls from. Also adjust z-indexes for global stacking changes.
+
+### `components.css`
+**Contains:** Section/panel styles: `.panel`, `.panel-inner`, `.panel-content` (title areas), and the main grid container definitions (card grids and grid-template defaults).  
+**Edit when:** You want to change spacing of sections, typography for headings inside sections, or the grid defaults for content flow.
+
+### `cards.css`
+**Contains:** Card UI: `.featured-project`, `.project`, `.highlight-project`, built-with area, thumbnail sizing, hover states, small card layout.  
+**Edit when:** You change card visuals (rounded corners, shadows, thumbnail heights), decide to add badges or overlays on cards, or change how built-with logos look.
+
+### `overlay.css`
+**Contains:** The fullscreen overlay dialog, media containers (`.embed-container`, aspect helpers), `.fs-split` vertical layout, thumbs, play button, and responsive tweaks specific to the overlay.  
+**Edit when:** You alter overlay layout (e.g., different split widths), change aspect ratio helpers, or change how the thumbnails/play button behave. This is the most specialized file.
 
 ---
 
-# Examples (your JSON)
+## How to include the CSS (order matters)
 
-Your updated JSON (valid structure used by the code):
+Link files in this order (variables first so other files can use them):
 
-```json
-{
-  "brand": [
-    {
-      "title": "Brand Logo Design",
-      "description": "Visual identity design for top brand.",
-      "image": "assets/logo1.jpg",
-      "thumb": "assets/logo1.jpg",
-      "media": {
-        "type": "images",
-        "source": "local",
-        "link": "assets/logo1.jpg",
-        "format": "horizontal",
-        "images": [
-          "assets/logo1.jpg"
-        ]
-      }
-    }
-  ],
-  "animation": [
-    {
-      "title": "Company Promo Video",
-      "description": "Promotional video for international launch.",
-      "image": "assets/company-video.jpg",
-      "thumb": "assets/company-video.jpg",
-      "media": {
-        "type": "video",
-        "source": "drive",
-        "link": "https://drive.google.com/file/d/YourFileID/preview",
-        "format": "horizontal",
-        "images": []
-      }
-    }
-  ],
-  "cgi": [
-    {
-      "title": "Viral YouTube Song - Thoppi Welenda",
-      "description": "A stylized 3D animation...",
-      "image": "assets/thumbs/Toppi Welenda Thumb.jpg",
-      "thumb": "assets/thumbs/Toppi Welenda Thumb.jpg",
-      "featured": true,
-      "keep": true,
-      "highlight": true,
-      "createdUsing": ["3ds Max", "After Effects"],
-      "media": {
-        "type": "video",
-        "source": "youtube",
-        "link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
-        "format": "horizontal",
-        "images": [
-          "assets/thumbs/Toppi Welenda Thumb.jpg",
-          "assets/thumbs/Toppi Welenda Thumb.jpg",
-          "assets/thumbs/Toppi Welenda Thumb.jpg"
-        ]
-      }
-    }
-    // ... other projects
-  ]
-}
+```html
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/overlay.css">
 ```
 
----
+**Why order matters:** later files override earlier rules. You want `variables` available globally. `overlay.css` overrides some component defaults (e.g., hides legacy `.fs-media` when vertical), so it must be last.
 
-# How links are used (`project.link` vs `media.link`)
-
-- `projects.js` passes the whole `project` object into `openOverlay(project)`.  
-- `overlay.js` prefers `project.media.link` (when `media` exists) for embedding.  
-- If `project.media` is **missing**, `openOverlay()` will attempt to synthesize `project.media` from `project.link` as a fallback.  
-- **Conclusion:** You can keep either `project.link` or `project.media.link`. As long as **one** exists (or `thumb`/`image` exists), the overlay will display something. If both are missing, the overlay falls back to the thumbnail image (no embedded video).
+If you prefer a single file, concatenate them in the same order into `css/style.css` and include that.
 
 ---
 
-# How to run locally / dev server
+## Lifecycle / initialization order (JS)
 
-`fetch('data/projects.json')` will not work from `file://`. Use a lightweight local server:
+1. `main.js` runs on DOM ready and calls:
+   - `initNav()` — wires up nav highlight,
+   - `initMobileMenu()` — wires mobile interactions,
+   - `initOverlay()` — creates overlay and UI actions,
+   - `loadProjects()` — fetches JSON and renders cards.
 
-- Node (serve):  
-  ```bash
-  npx serve .
-  ```
-- Python 3:  
-  ```bash
-  python -m http.server 8000
-  ```
-- VSCode: use Live Server extension.
+2. `loadProjects()` attaches click handlers to cards which call `openOverlay(project)` provided by the overlay module.
 
-Then open `http://localhost:8000` (or the port your server shows) in your browser.
+**If you add GSAP / three.js:** initialize animation modules *after* `loadProjects()` or listen for an event like `projects:loaded`. Heavy libraries should be lazy-loaded.
 
 ---
 
-# Common adjustments & where to change them
+## Troubleshooting checklist
 
-- **Change logo filenames or slug rules:** `utils.js` → `slugifyForLogo`.
-- **Add new video provider (Vimeo, etc.):** `utils.js` (add parser) + `overlay.js` (`createMediaNodeWithoutIframe`) to handle embed insertion.
-- **Change featured card markup or styling:** `projects.js` where `.featured-project` is built.
-- **Change nav activation timing:** `nav.js` — adjust `window.innerHeight / 2`.
-- **Add focus trapping to overlay:** `overlay.js` — currently focuses `.fs-inner`. Add a focus trap if you want complete keyboard isolation.
-
----
-
-# Troubleshooting checklist
-
-1. **Blank projects area / fetch fails**  
-   - Open DevTools → Network → confirm `data/projects.json` 200. If 404 or blocked, run a local server (see above).
-
-2. **No thumbnails / gallery not showing**  
-   - Confirm `media.images` exists and is a non-empty array. Confirm file paths are correct (case-sensitive on many servers).
-
-3. **YouTube doesn't embed**  
-   - Ensure `media.link` is a valid YouTube URL (e.g. `https://www.youtube.com/watch?v=K7nV9zwF0nk` or `https://youtu.be/ID`).
-
-4. **Drive preview not working**  
-   - Prefer a preview URL like `/file/d/<id>/preview`, or ensure the link includes `id=`. Check the console for blocked mixed-content or CORS issues.
-
-5. **Logos not loading**  
-   - Put images into `assets/logos/` named with `slugifyForLogo(name)`. Example: `"After Effects"` → `assets/logos/AfterEffects.png`.
-
-6. **Overlay styles broken**  
-   - Ensure your CSS includes styles for `.fullscreen-overlay`, `.open`, `.vertical`, `.fs-split`, `.embed-container`, `.fs-thumbs`, etc.
+- Projects area is empty → open DevTools Network: check `data/projects.json` 200. If 404, check path & start a local server.  
+- Thumbnails missing → check paths & file names (case-sensitive).  
+- YouTube not embedding → media.link malformed; must include `watch?v=` or `youtu.be/`.  
+- Drive preview fails → prefer `/file/d/<id>/preview` or include `id=` in URL.  
+- Logos not showing → file names must match `slugifyForLogo(name)` and be placed in `assets/logos/`.  
+- Overlay behavior off → check `overlay.css` and `overlay.js` for `.vertical` and `.fs-split` logic.
 
 ---
 
-# Developer tips / next steps
+## Quick edit guide: where to make common changes
 
-- Keep `main.js` small — it’s just the wiring. All behavior changes belong in their respective modules.
-- Maintain consistent JSON field names (`media.images` used across all entries keeps code simple).
-- When adding new features (e.g. comments, ratings), prefer a new module (e.g. `comments.js`) and import it from `main.js`.
-- Use the browser console for the first error; it always points to the file/line to fix.
+- Want the sidebar narrower/wider? → `variables.css` (`--sidebar-width`) and `layout.css` for layout specifics.  
+- Change card thumbnail height? → `cards.css`, `.project img` rule.  
+- Change title sizes in sections? → `components.css`, `.panel-content h1/h2/h3`.  
+- Add Vimeo support? → `utils.js` (parser) + `overlay.js` (embed logic). No CSS change needed unless you want special controls.
 
 ---
 
-If you want, I can:
-- produce this README as a downloadable file, or
-- validate your current `data/projects.json` and return a cleaned/canonical copy ready to drop into `/data/`.
+## Notes
 
-Which would you like?
+- **No build step required.** The six CSS files can be used directly — just include in the order above. SCSS / bundling is optional and only needed if you prefer a build step for convenience.  
+- Keep CSS edits in the appropriate file to avoid accidental global overrides. If something looks wrong, check the CSS inclusion order and DevTools to see which rule wins.

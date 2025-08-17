@@ -1,0 +1,195 @@
+/* responsive.css — media queries & mobile adaptations */
+
+/* general breakpoint: hide sidebar, show mobile bar */
+@media (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-bar {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        padding-top: 56px;
+    }
+
+    .panel-inner {
+        padding: calc(56px + 1rem) 1rem 1.5rem;
+    }
+
+    .panel-content.top-left {
+        position: sticky;
+        left: 0;
+        padding: 0 0.5rem;
+        margin: 0;
+        z-index: 105;
+        background: transparent;
+    }
+
+    #featured-cards {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    #brand-cards, #animation-cards, #cgi-cards {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .panel-content h1 {
+        font-size: 3rem;
+    }
+
+    .panel-content h2 {
+        font-size: 2rem;
+    }
+
+    .panel-content h3 {
+        font-size: 2rem;
+    }
+
+    .panel-content p {
+        font-size: 1rem;
+    }
+
+    #featured-cards .built-with-logos img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .fs-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .fs-content {
+        gap: 6px;
+    }
+
+    .fs-header {
+        padding: 12px;
+    }
+
+    .fs-media {
+        padding: 8px 12px;
+        max-height: calc(100vh - 200px);
+    }
+
+    .fs-thumbs img {
+        width: 56px;
+        height: 40px;
+    }
+}
+
+/* small screens adjustments */
+@media (max-width: 768px) {
+    #featured-cards {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .featured-project {
+        flex-direction: column;
+        max-width: 100%;
+        padding: .1rem;
+        margin: 1rem 0;
+    }
+
+        .featured-project img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            transform: none !important;
+        }
+}
+
+/* vertical split stacked behavior on mobile */
+@media (max-width: 900px) {
+    .fs-split {
+        flex-direction: column;
+        padding: 8px 12px;
+        height: auto;
+    }
+
+        .fs-split .fs-header {
+            order: 0;
+            max-width: 100%;
+            width: 100%;
+            padding: 12px 0;
+            max-height: none;
+        }
+
+        .fs-split .fs-media {
+            order: 1;
+            max-width: 100%;
+            width: 100%;
+            padding: 8px 0 12px;
+            height: auto;
+        }
+
+        .fs-split .embed-container {
+            height: 0;
+            padding-bottom: 177.7778%;
+            min-height: 220px;
+        }
+
+            .fs-split .embed-container iframe, .fs-split .embed-container img, .fs-split .embed-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+    /* mobile: keep header sticky when vertical */
+    #fullscreen-overlay.vertical .fs-split {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+
+        #fullscreen-overlay.vertical .fs-split .fs-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: linear-gradient(180deg, rgba(10,12,14,0.98), rgba(10,12,14,0.96));
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        #fullscreen-overlay.vertical .fs-split .fs-left {
+            overflow: auto;
+            max-height: calc(100vh - 120px);
+        }
+
+        #fullscreen-overlay.vertical .fs-split .embed-container {
+            height: 0;
+            padding-bottom: 177.7778%;
+            min-height: 220px;
+        }
+}
+
+/* very large screens tweak */
+@media (min-width: 1600px) {
+    :root {
+        --overlay-height-desktop: 92vh;
+        --overlay-height-max: 95vh;
+    }
+}
+
+/* minor tweak for tiniest screens */
+@media (max-width: 360px) {
+    .mobile-brand {
+        font-size: 0.85rem;
+        max-width: 50%;
+    }
+}

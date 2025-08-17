@@ -1,0 +1,21 @@
+/* reset.css — minimal reset and useful defaults */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* small accessibility defaults */
+a:focus, button:focus {
+    outline: 2px solid rgba(255,255,255,0.15);
+    outline-offset: 3px;
+}
+
+body, button, a {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
