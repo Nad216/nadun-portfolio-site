@@ -136,6 +136,7 @@ function createMediaNodeWithoutIframe(project) {
             img.src = media.images[0];
             img.alt = project.title || '';
             img.loading = 'lazy';
+            img.style.objectFit = 'contain'; // fit gallery images
             container.appendChild(img);
             wrapper.appendChild(container);
             return { node: wrapper, slides: media.images.slice() };
@@ -157,6 +158,7 @@ function createMediaNodeWithoutIframe(project) {
             video.style.width = '100%';
             video.style.height = '100%';
             video.style.maxHeight = 'calc(92vh - 260px)';
+            video.style.objectFit = 'contain'; // important for mobile poster/video
             container.appendChild(video);
             wrapper.appendChild(container);
             return { node: wrapper, slides: [] };
@@ -179,7 +181,7 @@ function createMediaNodeWithoutIframe(project) {
             img.loading = 'lazy';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'cover';
+            img.style.objectFit = 'contain'; // changed so thumbnail fits inside
             img.src = thumbUrl;
             container.appendChild(img);
 
@@ -231,7 +233,7 @@ function createMediaNodeWithoutIframe(project) {
             img.loading = 'lazy';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'cover';
+            img.style.objectFit = 'contain'; // changed to contain
             img.src = thumbUrl;
             container.appendChild(img);
 
@@ -273,7 +275,7 @@ function createMediaNodeWithoutIframe(project) {
         img.loading = 'lazy';
         img.style.width = '100%';
         img.style.height = '100%';
-        img.style.objectFit = 'cover';
+        img.style.objectFit = 'contain'; // fallback image uses contain
         img.src = project.thumb || project.image || 'assets/placeholder.jpg';
         container.appendChild(img);
         wrapper.appendChild(container);
@@ -308,12 +310,13 @@ export function openOverlay(project) {
     if (!project) return;
     currentProject = project;
 
+    // remove any previous split
     const existingSplit = overlay.querySelector('.fs-split');
     if (existingSplit) existingSplit.remove();
 
-    fsMedia.innerHTML = '';
-    fsThumbs.innerHTML = '';
-    fsBuiltWith.innerHTML = '';
+    if (fsMedia) fsMedia.innerHTML = '';
+    if (fsThumbs) fsThumbs.innerHTML = '';
+    if (fsBuiltWith) fsBuiltWith.innerHTML = '';
 
     fsTitle.textContent = project.title || '';
     fsDesc.textContent = project.description || '';
@@ -338,9 +341,13 @@ export function openOverlay(project) {
     const isVertical = fmt === 'vertical';
 
     if (isVertical) {
+        // mark overlay to apply vertical-only CSS
         overlay.classList.add('vertical');
-        fsMedia.innerHTML = '';
 
+        // ensure fsMedia doesn't reserve visual space (CSS will hide it; clear content)
+        if (fsMedia) fsMedia.innerHTML = '';
+
+        // create split and ensure it occupies the middle grid row
         const split = document.createElement('div');
         split.className = 'fs-split';
         split.style.gridRow = '2';
@@ -348,21 +355,46 @@ export function openOverlay(project) {
 
         const header = overlay.querySelector('.fs-header');
         const isDesktop = window.innerWidth >= 900;
+
         if (header && isDesktop) {
             header.parentElement && header.parentElement.removeChild(header);
             split.appendChild(header);
-            console.log('openOverlay: moved header into fs-split for desktop', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
+            // console log for debug
+            // console.log('openOverlay: moved header into fs-split for desktop', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
         } else {
-            console.log('openOverlay: keeping header in top row for mobile', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
+            // keep header in top row for mobile (no move)
+            // console.log('openOverlay: keeping header in top row for mobile', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
         }
 
         split.appendChild(res.node);
         fsContent.appendChild(split);
 
-        console.log('openOverlay: fs-split appended?', !!fsContent.querySelector('.fs-split'), fsContent.querySelector('.fs-split'));
+        // --- MOBILE: clamp embed height so header remains visible ---
+        // Only apply when NOT moving header into split (mobile)
+        if (!isDesktop) {
+            const embedContainer = split.querySelector('.embed-container') || split.querySelector('div');
+            function setEmbedMaxHeight() {
+                const headerEl = fsContent.querySelector('.fs-header');
+                const footerEl = overlay.querySelector('.fs-footer');
+                const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
+                const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
+                // breathing room for gaps; tweak if you want more/less
+                const padding = 48;
+                const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
+                if (embedContainer) {
+                    embedContainer.style.maxHeight = avail + 'px';
+                    embedContainer.style.height = 'auto';
+                }
+            }
+            // run immediately and on resize/orientation change
+            setEmbedMaxHeight();
+            overlay._verticalResizeHandler = setEmbedMaxHeight;
+            window.addEventListener('resize', overlay._verticalResizeHandler);
+        }
+
     } else {
         overlay.classList.remove('vertical');
-        fsMedia.appendChild(res.node);
+        if (fsMedia) fsMedia.appendChild(res.node);
     }
 
     if (currentSlides.length) {
@@ -413,6 +445,7 @@ export function closeOverlay() {
 
     setBackgroundInert(false);
 
+    // remove split and restore header to original spot
     const split = overlay.querySelector('.fs-split');
     if (split) {
         const header = split.querySelector('.fs-header');
@@ -420,6 +453,12 @@ export function closeOverlay() {
             fsContent.insertBefore(header, fsContent.firstChild);
         }
         split.remove();
+    }
+
+    // remove resize handler if set
+    if (overlay && overlay._verticalResizeHandler) {
+        try { window.removeEventListener('resize', overlay._verticalResizeHandler); } catch (e) { }
+        overlay._verticalResizeHandler = null;
     }
 
     overlay.classList.remove('open');

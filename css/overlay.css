@@ -1,4 +1,4 @@
-/* overlay.css — fullscreen overlay, fs-split (vertical) and embed helpers */
+/* overlay.css — fullscreen overlay, fs-split (desktop) and embed helpers */
 
 /* Fullscreen overlay (dialog) */
 #fullscreen-overlay,
@@ -68,7 +68,7 @@
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
-    position: static; /* ensure not sticky by default */
+    position: static;
 }
 
     .fs-header .fs-left {
@@ -97,7 +97,7 @@
     background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
 }
 
-/* thumbs */
+/* thumbs - preferred img */
 .fs-thumbs {
     display: flex;
     gap: 8px;
@@ -116,12 +116,27 @@
         border: 2px solid transparent;
     }
 
-        .fs-thumbs img.active {
+    /* thumb fallback using background-image (for old mobile browsers where object-fit fails) */
+    .fs-thumbs .thumb-bg {
+        display: inline-block;
+        width: 72px;
+        height: 48px;
+        border-radius: 6px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        opacity: 0.95;
+        border: 2px solid transparent;
+    }
+
+        .fs-thumbs img.active,
+        .fs-thumbs .thumb-bg.active {
             border-color: var(--clr-primary);
             opacity: 1;
         }
 
-/* embed aspect helpers */
+/* embed aspect helpers (base) */
 .embed-container {
     position: relative;
     width: 100%;
@@ -143,7 +158,10 @@
     padding-bottom: 100%;
 }
 
-.embed-container iframe, .embed-container img, .embed-container video {
+/* IMPORTANT: Default for embed children = CONTAIN (desktop/web friendly) */
+.embed-container iframe,
+.embed-container img,
+.embed-container video {
     position: absolute;
     top: 0;
     left: 0;
@@ -152,7 +170,7 @@
     border: 0;
     display: block;
     background: #000;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /* play button */
@@ -185,12 +203,6 @@
     min-height: 180px;
     max-width: 1200px;
 }
-
-    .fs-media .embed-container img, .fs-media .embed-container video, .fs-media .embed-container iframe {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 
 /* fullscreen button */
 .fs-fullscreen {
@@ -248,6 +260,7 @@
         overflow: hidden;
     }
 
+    /* inside desktop split, embed should fill the slot but use contain so whole media is visible */
     .fs-split .embed-container {
         width: 100%;
         height: 100%;
@@ -257,15 +270,14 @@
         overflow: hidden;
     }
 
-        /* unified rule to avoid translate-centering/cropping; fill the slot & letterbox via contain */
         .fs-split .embed-container iframe,
         .fs-split .embed-container img,
         .fs-split .embed-container video {
             position: absolute;
-            top: 0;
-            left: 0;
-            transform: none;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
             height: 100%;
             max-width: 100%;
             object-fit: contain;
@@ -276,7 +288,7 @@
             box-sizing: border-box;
         }
 
-/* small refinements for vertical mode */
+/* small refinements when overlay has vertical class */
 #fullscreen-overlay.vertical .fs-media {
     display: none !important;
     height: 0 !important;
@@ -327,14 +339,13 @@
     #fullscreen-overlay.vertical .fs-split .embed-container iframe,
     #fullscreen-overlay.vertical .fs-split .embed-container img,
     #fullscreen-overlay.vertical .fs-split .embed-container video {
-        /* NOTE: Desktop/vertical split uses object-fit:contain above.
-       Mobile vertical layout will override below inside media query. */
         position: absolute;
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         height: 100%;
+        width: auto;
+        max-width: 100%;
         object-fit: contain;
     }
 
@@ -347,59 +358,14 @@
     pointer-events: none;
 }
 
-/* Mobile-specific rules for stacked vertical split: header above media, aspect ratio preserved */
-@media (max-width: 900px) {
-    #fullscreen-overlay.vertical .fs-split {
-        flex-direction: column;
-        padding: 8px 12px;
-        height: auto;
-        overflow: auto;
-    }
-
-        #fullscreen-overlay.vertical .fs-split .fs-header {
-            order: 0;
-            max-width: 100%;
-            width: 100%;
-            padding: 12px 0;
-            position: relative; /* not sticky */
-            top: auto;
-        }
-
-        #fullscreen-overlay.vertical .fs-split .embed-container {
-            height: 0;
-            padding-bottom: 177.7778%;
-            min-height: 220px;
-            position: relative;
-        }
-
-            #fullscreen-overlay.vertical .fs-split .embed-container iframe,
-            #fullscreen-overlay.vertical .fs-split .embed-container img,
-            #fullscreen-overlay.vertical .fs-split .embed-container video {
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform: none;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-    /* ensure the dialog fills mobile so header is visible */
-    .fs-inner {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        max-height: 100vh;
-    }
-
-    .fs-content {
-        gap: 6px;
-    }
-}
-
-/* ensure thumbs smaller on large screens if needed */
+/* ensure thumbs slightly smaller on large screens if needed */
 @media (min-width: 900px) {
     .fs-thumbs img {
+        width: 64px;
+        height: 48px;
+    }
+
+    .fs-thumbs .thumb-bg {
         width: 64px;
         height: 48px;
     }

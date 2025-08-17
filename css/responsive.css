@@ -1,4 +1,6 @@
-/* responsive.css — media queries & mobile adaptations */
+/* responsive.css — media queries & mobile adaptations
+   IMPORTANT: load this file AFTER overlay.css so these overrides win.
+*/
 
 /* general breakpoint: hide sidebar, show mobile bar */
 @media (max-width: 900px) {
@@ -61,6 +63,7 @@
         height: 18px;
     }
 
+    /* DIALOG / OVERLAY MOBILE ADJUSTMENTS */
     .fs-inner {
         width: 100%;
         height: 100%;
@@ -76,14 +79,24 @@
         padding: 12px;
     }
 
+    /* non-split media area */
     .fs-media {
         padding: 8px 12px;
         max-height: calc(100vh - 200px);
+        box-sizing: border-box;
     }
 
-    .fs-thumbs img {
+    /* reduce thumb sizes on mobile */
+    .fs-thumbs img, .fs-thumbs .thumb-bg {
         width: 56px;
         height: 40px;
+    }
+
+    /* ensure embed children on normal non-split overlays fill area (cover) on mobile */
+    .fs-media .embed-container iframe,
+    .fs-media .embed-container img,
+    .fs-media .embed-container video {
+        object-fit: cover;
     }
 }
 
@@ -110,55 +123,27 @@
         }
 }
 
-/* vertical split stacked behavior on mobile */
+/* vertical split stacked behavior on mobile
+   When JS inserts .fs-split and overlay has .vertical class we want:
+   - header above media (stack)
+   - header sticky so user always sees title/controls
+   - media area uses aspect-ratio technique and object-fit: cover (so playing video fills)
+*/
 @media (max-width: 900px) {
-    .fs-split {
+    #fullscreen-overlay.vertical .fs-split {
+        display: flex;
         flex-direction: column;
         padding: 8px 12px;
-        height: auto;
-    }
-
-        .fs-split .fs-header {
-            order: 0;
-            max-width: 100%;
-            width: 100%;
-            padding: 12px 0;
-            max-height: none;
-        }
-
-        .fs-split .fs-media {
-            order: 1;
-            max-width: 100%;
-            width: 100%;
-            padding: 8px 0 12px;
-            height: auto;
-        }
-
-        .fs-split .embed-container {
-            height: 0;
-            padding-bottom: 177.7778%;
-            min-height: 220px;
-        }
-
-            .fs-split .embed-container iframe, .fs-split .embed-container img, .fs-split .embed-container video {
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform: none;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-    /* mobile: keep header sticky when vertical */
-    #fullscreen-overlay.vertical .fs-split {
-        flex-direction: column;
         height: auto;
         overflow: auto;
     }
 
         #fullscreen-overlay.vertical .fs-split .fs-header {
-            position: sticky;
+            order: 0;
+            max-width: 100%;
+            width: 100%;
+            padding: 12px 0;
+            position: sticky; /* keep header visible while scrolling the details / thumbs */
             top: 0;
             z-index: 30;
             background: linear-gradient(180deg, rgba(10,12,14,0.98), rgba(10,12,14,0.96));
@@ -171,11 +156,31 @@
             max-height: calc(100vh - 120px);
         }
 
+        /* stacked aspect ratio for the media slot; fills width and maintains vertical aspect */
         #fullscreen-overlay.vertical .fs-split .embed-container {
             height: 0;
             padding-bottom: 177.7778%;
             min-height: 220px;
+            position: relative;
+            overflow: hidden;
         }
+
+            #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+            #fullscreen-overlay.vertical .fs-split .embed-container img,
+            #fullscreen-overlay.vertical .fs-split .embed-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* mobile: cover so the playing video fills the area properly */
+            }
+
+    /* ensure footer/thumbs remain visible (z-index) */
+    #fullscreen-overlay.vertical .fs-footer {
+        z-index: 2;
+    }
 }
 
 /* very large screens tweak */
