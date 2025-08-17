@@ -68,6 +68,7 @@
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
+    position: static; /* ensure not sticky by default */
 }
 
     .fs-header .fs-left {
@@ -256,12 +257,15 @@
         overflow: hidden;
     }
 
-        .fs-split .embed-container iframe, .fs-split .embed-container img, .fs-split .embed-container video {
+        /* unified rule to avoid translate-centering/cropping; fill the slot & letterbox via contain */
+        .fs-split .embed-container iframe,
+        .fs-split .embed-container img,
+        .fs-split .embed-container video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
+            top: 0;
+            left: 0;
+            transform: none;
+            width: 100%;
             height: 100%;
             max-width: 100%;
             object-fit: contain;
@@ -323,13 +327,14 @@
     #fullscreen-overlay.vertical .fs-split .embed-container iframe,
     #fullscreen-overlay.vertical .fs-split .embed-container img,
     #fullscreen-overlay.vertical .fs-split .embed-container video {
+        /* NOTE: Desktop/vertical split uses object-fit:contain above.
+       Mobile vertical layout will override below inside media query. */
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
         height: 100%;
-        width: auto;
-        max-width: 100%;
         object-fit: contain;
     }
 
@@ -340,6 +345,56 @@
 /* keep overlay inner from being focusable when hidden */
 #fullscreen-overlay[aria-hidden="true"] .fs-inner {
     pointer-events: none;
+}
+
+/* Mobile-specific rules for stacked vertical split: header above media, aspect ratio preserved */
+@media (max-width: 900px) {
+    #fullscreen-overlay.vertical .fs-split {
+        flex-direction: column;
+        padding: 8px 12px;
+        height: auto;
+        overflow: auto;
+    }
+
+        #fullscreen-overlay.vertical .fs-split .fs-header {
+            order: 0;
+            max-width: 100%;
+            width: 100%;
+            padding: 12px 0;
+            position: relative; /* not sticky */
+            top: auto;
+        }
+
+        #fullscreen-overlay.vertical .fs-split .embed-container {
+            height: 0;
+            padding-bottom: 177.7778%;
+            min-height: 220px;
+            position: relative;
+        }
+
+            #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+            #fullscreen-overlay.vertical .fs-split .embed-container img,
+            #fullscreen-overlay.vertical .fs-split .embed-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+    /* ensure the dialog fills mobile so header is visible */
+    .fs-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .fs-content {
+        gap: 6px;
+    }
 }
 
 /* ensure thumbs smaller on large screens if needed */
