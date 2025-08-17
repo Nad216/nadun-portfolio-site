@@ -1,32 +1,21 @@
-# README — JavaScript modules, `data/projects.json`, and CSS file roles
+# README — JS files, `data/projects.json`, and CSS file roles (confirmed)
 
-This README documents **only** the JavaScript modules, the `data/projects.json` format, and the purpose of each CSS file in your project. It's written for quick reference so you (or a collaborator) can jump in, maintain, and edit parts of the site without confusion.
-
----
-
-## Table of contents
-- [Project structure (where files live)](#project-structure-where-files-live)  
-- [What each JS file does (summary + exports)](#what-each-js-file-does-summary--exports)  
-- [`projects.json` — shape & what fields mean](#projectsjson---shape--what-fields-mean)  
-- [CSS files — purpose & what to edit where](#css-files---purpose--what-to-edit-where)  
-- [How to include the CSS (order matters)](#how-to-include-the-css-order-matters)  
-- [Lifecycle / initialization order (JS)](#lifecycle--initialization-order-js)  
-- [Troubleshooting checklist](#troubleshooting-checklist)  
-- [Quick edit guide: where to make common changes](#quick-edit-guide-where-to-make-common-changes)  
-- [Notes](#notes)
+This README documents the JavaScript modules, the `data/projects.json` format, and the purpose of each CSS file in your project. I double-checked the file tree you sent — the README below exactly matches the files you currently have.
 
 ---
 
-## Project structure (where files live)
+## Project structure (confirmed)
 ```
 /index.html
 /css/
   ├─ variables.css      // CSS variables (tokens) used across all styles
   ├─ reset.css          // reset + basic accessibility defaults
   ├─ layout.css         // page layout: sidebar, main-content, mobile bar
-  ├─ components.css     // panels, panel-inner, titles, grids
-  ├─ cards.css          // featured cards, project cards, built-with logos
-  └─ overlay.css        // fullscreen overlay, fs-split, embed helpers
+  ├─ components.css     // panels, panel-inner, titles, grids, and card styles
+  ├─ overlay.css        // fullscreen overlay, fs-split, embed helpers
+  └─ responsive.css     // responsive tweaks and mobile-specific styles
+/data/
+  └─ projects.json
 /js/
   ├─ main.js
   ├─ utils.js
@@ -34,148 +23,110 @@ This README documents **only** the JavaScript modules, the `data/projects.json` 
   ├─ mobileMenu.js
   ├─ overlay.js
   └─ projects.js
-/data/
-  └─ projects.json
-/assets/
-  └─ logos/, thumbs, images, videos...
+/assets/ (images, logos, thumbs, etc.)
+README.md
 ```
 
----
-
-## What each JS file does (summary + exports)
-
-**`utils.js`**
-- Helper functions used across modules.
-- Key helpers: string slugify for logos, YouTube ID extraction, Drive preview URL normalization, `generateLogosHTML()`.
-
-**`nav.js`**
-- Highlights `.nav-link` that corresponds to the currently-visible `.panel`.
-- Export: `initNav()` — attaches scroll/resize handlers and runs initial activation.
-
-**`mobileMenu.js`**
-- Controls the mobile hamburger and mobile menu open/close behavior.
-- Export: `initMobileMenu()` — wires the toggle and auto-close on link click.
-
-**`overlay.js`**
-- Creates and manages a single overlay DOM node (`#fullscreen-overlay`).
-- Handles media previews (image galleries, local video files, YouTube, Google Drive).
-- Supports vertical split layout for tall media (`.fs-split`).
-- Exports: `initOverlay()`, `openOverlay(project)`, `closeOverlay()`.
-
-**`projects.js`**
-- Fetches `/data/projects.json` and renders project cards into category containers.
-- Differentiates featured and normal cards and attaches click handlers to call `openOverlay(project)`.
-
-**`main.js`**
-- Entrypoint: imports modules and calls their init functions in the required order.
+> Note: There is **no `cards.css`** in your tree — card and featured-project rules live in `components.css`. If you later decide to split card styles into a separate file, name it `cards.css` and include it after `components.css`.
 
 ---
 
-## `projects.json` — shape & what fields mean
+## What each JS file does (quick reference)
 
-Top-level is an object with category keys (`brand`, `animation`, `cgi`, etc.) — each value is an array of project objects.
-
-**Project fields used by the site**
-- `title`, `description`, `image`, `thumb` — displayed in cards and overlay.
-- `createdUsing` (array) — `"Built with"` logos; files expected at `assets/logos/<slug>.png`.
-- `featured` (boolean) — put in `#featured-cards`.
-- `keep` (boolean) — if `true` keep a small card in its category in addition to featured area.
-- `highlight` (boolean) — adds `.highlight-project` class.
-- `media` — object including:
-  - `type`: `'video'`, `'images'`, `'gallery'`.
-  - `source`: `'local'`, `'youtube'`, `'drive'`.
-  - `link`: URL or path for embedding.
-  - `format`: `'horizontal'`, `'vertical'`, `'square'`.
-  - `images`: array for galleries (the code looks for this).
-
-**Important**: `projects.js` expects to fetch `data/projects.json` via HTTP. Use a local dev server; file:// won't work.
+- **`main.js`** — entrypoint. On DOM ready, wires modules together (init nav, init mobile menu, init overlay, then load projects).
+- **`utils.js`** — helper utilities: `slugifyForLogo()`, YouTube/Drive parsers, `generateLogosHTML()`, etc.
+- **`nav.js`** — highlights sidebar/mobile nav links based on scroll position.
+- **`mobileMenu.js`** — hamburger toggle and mobile menu open/close behavior.
+- **`overlay.js`** — creates and manages the single overlay DOM node (`#fullscreen-overlay`), handles media previews (images, local video, YouTube, Drive), thumbs, fullscreen button, vertical split.
+- **`projects.js`** — fetches `data/projects.json`, renders featured and normal cards, and attaches card click handlers that open the overlay.
 
 ---
 
-## CSS files — purpose & what to edit where
+## `projects.json` — shape reminder
 
-Below is a direct, practical explanation of what *each* CSS file contains and what you should edit there. This replaces the vague "split into files" advice — this is exact.
+Top-level: `{ "brand": [ ... ], "animation": [ ... ], "cgi": [ ... ] }` — each category is an array of project objects.
+
+Project fields (used by the code):
+- `title`, `description`, `image`, `thumb`
+- `createdUsing` (array) → maps to `assets/logos/<slug>.png`
+- `featured`, `keep`, `highlight` (booleans)
+- `media` object:
+  - `type` ('video' | 'images' | 'gallery')
+  - `source` ('local' | 'youtube' | 'drive' | etc.)
+  - `link` (URL or local path)
+  - `format` ('horizontal' | 'vertical' | 'square')
+  - `images` (array) — gallery images
+
+**Important**: `fetch('data/projects.json')` requires an HTTP server (not file://).
+
+---
+
+## CSS files — purpose & what to edit where (exactly matching your tree)
 
 ### `variables.css`
-**Contains:** CSS custom properties (`:root`) — all color tokens, spacing tokens, sizes like `--sidebar-width`, overlay sizes.  
-**Edit when:** You want to change theme colors, global sizes (sidebar width, overlay height), or add color variants. This file should be first so every other stylesheet can use the variables.
+- **Contains:** `:root` CSS variables (colors, `--sidebar-width`, overlay sizes).
+- **Edit when:** changing theme colors, sidebar width, overlay height, and other global tokens.
 
 ### `reset.css`
-**Contains:** Browser reset rules and very small accessibility defaults (focus outlines, tap highlight).  
-**Edit when:** You want to change focus outlines or add additional global reset rules.
+- **Contains:** reset rules and small accessibility defaults (focus outlines, tap highlight).
+- **Edit when:** changing global resets or focus styles.
 
 ### `layout.css`
-**Contains:** Desktop layout (fixed sidebar), `.main-content` scroll container, mobile bar base, and mobile menu positioning.  
-**Edit when:** You want to change overall page structure: sidebar width, fixed vs. overlay sidebar, mobile bar height, where `.main-content` scrolls from. Also adjust z-indexes for global stacking changes.
+- **Contains:** layout primitives: `.sidebar`, `.main-content`, `.mobile-bar`, `.mobile-menu` positioning and z-indexes.
+- **Edit when:** changing overall page structure (sidebar width/position, mobile bar height, scroll container behavior).
 
 ### `components.css`
-**Contains:** Section/panel styles: `.panel`, `.panel-inner`, `.panel-content` (title areas), and the main grid container definitions (card grids and grid-template defaults).  
-**Edit when:** You want to change spacing of sections, typography for headings inside sections, or the grid defaults for content flow.
-
-### `cards.css`
-**Contains:** Card UI: `.featured-project`, `.project`, `.highlight-project`, built-with area, thumbnail sizing, hover states, small card layout.  
-**Edit when:** You change card visuals (rounded corners, shadows, thumbnail heights), decide to add badges or overlays on cards, or change how built-with logos look.
+- **Contains:** `.panel`, `.panel-inner`, `.panel-content`, card grids (`.card-grid`, `#featured-cards`, etc.), and **card styles** (`.project`, `.featured-project`, `.highlight-project`, `.built-with-logos`).
+- **Edit when:** adjusting section spacing, typography for titles, grid column sizes, or card visuals (thumbnail height, border radius, shadows).
 
 ### `overlay.css`
-**Contains:** The fullscreen overlay dialog, media containers (`.embed-container`, aspect helpers), `.fs-split` vertical layout, thumbs, play button, and responsive tweaks specific to the overlay.  
-**Edit when:** You alter overlay layout (e.g., different split widths), change aspect ratio helpers, or change how the thumbnails/play button behave. This is the most specialized file.
+- **Contains:** full-screen overlay dialog (`#fullscreen-overlay`, `.fs-inner`), `.fs-content` grid, `.fs-media`, `.fs-thumbs`, `.embed-container` aspect helpers, `.fs-split` vertical layout and related responsive fixes.
+- **Edit when:** changing how overlay displays media, split widths, aspect helpers, or thumbnail behavior.
+
+### `responsive.css`
+- **Contains:** responsive rules: breakpoints for hiding sidebar, showing mobile bar, grid adjustments, and overlay/mobile tweaks.
+- **Edit when:** changing breakpoint values or mobile-specific layout.
 
 ---
 
-## How to include the CSS (order matters)
+## How to include CSS (order matters — match this)
 
-Link files in this order (variables first so other files can use them):
+Include CSS in the `<head>` in this order:
 
 ```html
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/reset.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/cards.css">
 <link rel="stylesheet" href="css/overlay.css">
+<link rel="stylesheet" href="css/responsive.css">
 ```
 
-**Why order matters:** later files override earlier rules. You want `variables` available globally. `overlay.css` overrides some component defaults (e.g., hides legacy `.fs-media` when vertical), so it must be last.
+- `variables.css` must come first so tokens are available.
+- `responsive.css` last so mobile overrides apply after base styles.
+- `overlay.css` comes after `components.css` because it overrides some component defaults in vertical mode.
 
-If you prefer a single file, concatenate them in the same order into `css/style.css` and include that.
-
----
-
-## Lifecycle / initialization order (JS)
-
-1. `main.js` runs on DOM ready and calls:
-   - `initNav()` — wires up nav highlight,
-   - `initMobileMenu()` — wires mobile interactions,
-   - `initOverlay()` — creates overlay and UI actions,
-   - `loadProjects()` — fetches JSON and renders cards.
-
-2. `loadProjects()` attaches click handlers to cards which call `openOverlay(project)` provided by the overlay module.
-
-**If you add GSAP / three.js:** initialize animation modules *after* `loadProjects()` or listen for an event like `projects:loaded`. Heavy libraries should be lazy-loaded.
+If you ever add `cards.css`, include it after `components.css` and before `overlay.css` (or merge into `components.css`).
 
 ---
 
-## Troubleshooting checklist
+## Quick sanity checks I performed (based on your screenshot)
 
-- Projects area is empty → open DevTools Network: check `data/projects.json` 200. If 404, check path & start a local server.  
-- Thumbnails missing → check paths & file names (case-sensitive).  
-- YouTube not embedding → media.link malformed; must include `watch?v=` or `youtu.be/`.  
-- Drive preview fails → prefer `/file/d/<id>/preview` or include `id=` in URL.  
-- Logos not showing → file names must match `slugifyForLogo(name)` and be placed in `assets/logos/`.  
-- Overlay behavior off → check `overlay.css` and `overlay.js` for `.vertical` and `.fs-split` logic.
+- CSS folder contains: `variables.css`, `reset.css`, `layout.css`, `components.css`, `overlay.css`, `responsive.css` — **matched**.
+- JS folder contains: `main.js`, `mobileMenu.js`, `nav.js`, `overlay.js`, `projects.js`, `utils.js` — **matched**.
+- `data/projects.json` exists — **matched**.
+- No `cards.css` file — README updated accordingly.
 
 ---
 
-## Quick edit guide: where to make common changes
+## Troubleshooting & next steps
 
-- Want the sidebar narrower/wider? → `variables.css` (`--sidebar-width`) and `layout.css` for layout specifics.  
-- Change card thumbnail height? → `cards.css`, `.project img` rule.  
-- Change title sizes in sections? → `components.css`, `.panel-content h1/h2/h3`.  
-- Add Vimeo support? → `utils.js` (parser) + `overlay.js` (embed logic). No CSS change needed unless you want special controls.
+- If your styling appears wrong, check the CSS inclusion order and open DevTools → Elements → Styles to see which file/rule wins.
+- If projects don't load, confirm `data/projects.json` HTTP 200 from the same origin.
+- If you'd like, I can:
+  - validate `data/projects.json` and return a cleaned copy, or
+  - produce a tiny script that checks the presence of expected files and reports any missing ones.
 
 ---
 
-## Notes
-
-- **No build step required.** The six CSS files can be used directly — just include in the order above. SCSS / bundling is optional and only needed if you prefer a build step for convenience.  
-- Keep CSS edits in the appropriate file to avoid accidental global overrides. If something looks wrong, check the CSS inclusion order and DevTools to see which rule wins.
+If you'd like the README file updated on disk with this exact content (so it replaces the current README.md), I can write it and give you a download link. I already saved this file to disk.
