@@ -7,7 +7,7 @@
 			"thumb": "assets/thumbs/Iflix_stall.jpg",
 			"media": {
 				"type": "gallery",
-				"source": "drive",
+				"source": "local",
 				"link": "https://drive.google.com/uc?export=view&id=1-eodq3PQGuyB-Y2If8mWkdLdsu3xu8kd",
 				"format": "horizontal",
 				"images": [
