@@ -41,21 +41,50 @@ export function drivePreviewUrl(link) {
     return link;
 }
 
-/**
- * normalizeDriveImage(link)
- * - Converts common Google Drive share/preview URLs into a direct image URL:
- *   https://drive.google.com/uc?export=view&id=FILEID
- * - If the URL doesn't look like Drive or already is fine, returns it unchanged.
- */
 export function normalizeDriveImage(link) {
     if (!link || typeof link !== 'string') return link;
-    // if already a uc?export=view we can return
     if (/\/uc\?export=view/i.test(link)) return link;
-    // match /file/d/FILEID/...
     const m = link.match(/\/file\/d\/([A-Za-z0-9_-]+)/);
     if (m && m[1]) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-    // match ?id=FILEID
     const q = link.match(/[?&]id=([A-Za-z0-9_-]+)/);
     if (q && q[1]) return `https://drive.google.com/uc?export=view&id=${q[1]}`;
     return link;
+}
+
+// NEW IMGUR FUNCTIONS - ADD THESE:
+export function looksLikeImgurUrl(url) {
+    return /imgur\.com/.test(String(url || ''));
+}
+
+export function parseImgurId(url) {
+    if (!url) return null;
+    // Match gallery URLs like: https://imgur.com/gallery/lorem-ipsum-9ycACCn
+    const galleryMatch = url.match(/imgur\.com\/gallery\/([a-zA-Z0-9_-]+)/);
+    if (galleryMatch) return galleryMatch[1];
+
+    // Match direct image URLs like: https://imgur.com/1MLcYii
+    const directMatch = url.match(/imgur\.com\/([a-zA-Z0-9_-]+)/);
+    if (directMatch) return directMatch[1];
+
+    return null;
+}
+
+export function imgurDirectImageUrl(url) {
+    if (!url || !looksLikeImgurUrl(url)) return url;
+
+    const id = parseImgurId(url);
+    if (!id) return url;
+
+    // Return direct image URL - Imgur serves images directly via i.imgur.com
+    return `https://i.imgur.com/${id}.jpg`;
+}
+
+export function imgurThumbnailUrl(url) {
+    if (!url || !looksLikeImgurUrl(url)) return url;
+
+    const id = parseImgurId(url);
+    if (!id) return url;
+
+    // Return thumbnail URL - 'b' suffix gives you a large thumbnail
+    return `https://i.imgur.com/${id}b.jpg`;
 }

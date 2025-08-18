@@ -4,7 +4,11 @@
     youtubeThumbnailUrl,
     drivePreviewUrl,
     generateLogosHTML,
-    normalizeDriveImage
+    normalizeDriveImage,
+    looksLikeImgurUrl,
+    parseImgurId,
+    imgurDirectImageUrl,
+    imgurThumbnailUrl
 } from './utils.js';
 
 let overlay, fsInner, fsContent, fsTitle, fsDesc, fsMedia, fsThumbs, fsClose, fsBuiltWith, fsActions;
@@ -134,11 +138,12 @@ function createMediaNodeWithoutIframe(project) {
 
         // ---------- IMAGE / GALLERY ----------
         if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
-            // If images are Drive-hosted, DO NOT set them as <img src="drive..."> (CORB risk).
+            // Check for Drive or Imgur images
             const anyDrive = media.images.some(i => looksLikeDriveUrl(i) || media.source === 'drive');
+            const anyImgur = media.images.some(i => looksLikeImgurUrl(i) || media.source === 'imgur');
 
             if (anyDrive) {
-                // show a safe poster (use project.thumb if safe, else placeholder)
+                // Keep existing Drive handling exactly the same
                 const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
                 const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
@@ -172,19 +177,42 @@ function createMediaNodeWithoutIframe(project) {
                 wrapper.appendChild(container);
                 // return slides unchanged (we will make thumbnail clicks open preview)
                 return { node: wrapper, slides: media.images.slice() };
-            }
 
-            // not drive-hosted — safe to embed
-            const container = document.createElement('div');
-            container.className = `embed-container ${cls}`;
-            container.style.minHeight = '140px';
-            const img = document.createElement('img');
-            img.src = media.images[0];
-            img.alt = project.title || '';
-            img.loading = 'lazy';
-            container.appendChild(img);
-            wrapper.appendChild(container);
-            return { node: wrapper, slides: media.images.slice() };
+            } else if (anyImgur) {
+                // NEW: Handle Imgur galleries - convert URLs to direct image URLs
+                const convertedImages = media.images.map(url => {
+                    if (looksLikeImgurUrl(url)) {
+                        return imgurDirectImageUrl(url);
+                    }
+                    return url;
+                });
+
+                const container = document.createElement('div');
+                container.className = `embed-container ${cls}`;
+                container.style.minHeight = '140px';
+
+                const img = document.createElement('img');
+                img.src = convertedImages[0];
+                img.alt = project.title || '';
+                img.loading = 'lazy';
+                container.appendChild(img);
+
+                wrapper.appendChild(container);
+                return { node: wrapper, slides: convertedImages };
+
+            } else {
+                // not drive-hosted or imgur — safe to embed
+                const container = document.createElement('div');
+                container.className = `embed-container ${cls}`;
+                container.style.minHeight = '140px';
+                const img = document.createElement('img');
+                img.src = media.images[0];
+                img.alt = project.title || '';
+                img.loading = 'lazy';
+                container.appendChild(img);
+                wrapper.appendChild(container);
+                return { node: wrapper, slides: media.images.slice() };
+            }
         }
 
         // ---------- LOCAL VIDEO FILE ----------
@@ -380,6 +408,7 @@ export function openOverlay(project) {
         let source = 'local';
         if (/youtube/.test(link) || /youtu\.be/.test(link)) source = 'youtube';
         else if (/drive\.google/.test(link)) source = 'drive';
+        else if (/imgur\.com/.test(link)) source = 'imgur';
         else if (/instagram\.com/.test(link)) source = 'instagram';
         project.media = { type: 'video', source, link, format: project.format || 'horizontal' };
     }
@@ -434,43 +463,71 @@ export function openOverlay(project) {
         if (fsMedia) fsMedia.appendChild(res.node);
     }
 
-    // Build thumbnails: if slide looks like Drive link, make clicking it open preview in new tab
+    // Build thumbnails: handle Drive and Imgur links
     if (currentSlides.length) {
         currentSlides.forEach((src, i) => {
             const t = document.createElement('img');
             const isDriveSlide = looksLikeDriveUrl(src) || (project.media && project.media.source === 'drive');
+            const isImgurSlide = looksLikeImgurUrl(src) || (project.media && project.media.source === 'imgur');
+
             if (isDriveSlide) {
                 // use placeholder or a normalized safe thumb if available
                 const safeThumb = (project.thumb && !looksLikeDriveUrl(project.thumb)) ? project.thumb : 'assets/placeholder.jpg';
                 t.src = safeThumb;
                 t.setAttribute('data-drive-link', src);
+            } else if (isImgurSlide) {
+                // NEW: Handle Imgur thumbnails
+                t.src = imgurThumbnailUrl(src);
+                t.setAttribute('data-imgur-link', src);
             } else {
                 t.src = src;
             }
+
             t.loading = 'lazy';
             t.alt = `${project.title || ''} ${i + 1}`;
             if (i === 0) t.classList.add('active');
+
             t.addEventListener('click', () => {
                 const container = fsContent.querySelector('.embed-container');
                 if (!container) return;
                 const img = container.querySelector('img');
+
                 const driveLink = t.getAttribute('data-drive-link');
+                const imgurLink = t.getAttribute('data-imgur-link');
+
                 if (driveLink) {
                     // open drive preview in a new tab instead of trying to set the <img src>
                     const preview = driveLink;
                     window.open(preview, '_blank', 'noopener');
                     return;
-                }
-                if (img) {
-                    img.src = src;
+                } else if (imgurLink) {
+                    // NEW: Handle Imgur - show the direct image
+                    const directUrl = imgurDirectImageUrl(imgurLink);
+                    if (img) {
+                        img.src = directUrl;
+                    } else {
+                        container.innerHTML = '';
+                        const newImg = document.createElement('img');
+                        newImg.src = directUrl;
+                        newImg.alt = project.title || '';
+                        newImg.style.width = '100%';
+                        newImg.style.height = '100%';
+                        newImg.style.objectFit = 'contain';
+                        container.appendChild(newImg);
+                    }
                 } else {
-                    // fallback: replace embed-container contents with a simple image
-                    container.innerHTML = '';
-                    const newImg = document.createElement('img');
-                    newImg.src = src;
-                    newImg.alt = project.title || '';
-                    container.appendChild(newImg);
+                    if (img) {
+                        img.src = src;
+                    } else {
+                        // fallback: replace embed-container contents with a simple image
+                        container.innerHTML = '';
+                        const newImg = document.createElement('img');
+                        newImg.src = src;
+                        newImg.alt = project.title || '';
+                        container.appendChild(newImg);
+                    }
                 }
+
                 fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
                 t.classList.add('active');
                 currentIndex = i;
