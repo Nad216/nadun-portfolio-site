@@ -1,11 +1,10 @@
-﻿// overlay.js
-import {
+﻿import {
     parseYouTubeId,
     youtubeWatchUrlFromLink,
     youtubeThumbnailUrl,
     drivePreviewUrl,
     generateLogosHTML,
-    // optional: normalizeDriveImage if you keep it in utils
+    normalizeDriveImage
 } from './utils.js';
 
 let overlay, fsInner, fsContent, fsTitle, fsDesc, fsMedia, fsThumbs, fsClose, fsBuiltWith, fsActions;
@@ -118,12 +117,8 @@ function createFullscreenButton() {
     return btn;
 }
 
-// small helpers
 function looksLikeDriveUrl(url) {
     return /drive\.google\.com|\/file\/d\/|[?&]id=/.test(String(url || ''));
-}
-function proxiedUrl(url) {
-    return '/.netlify/functions/proxy-drive?url=' + encodeURIComponent(url);
 }
 
 function createMediaNodeWithoutIframe(project) {
@@ -139,12 +134,13 @@ function createMediaNodeWithoutIframe(project) {
 
         // ---------- IMAGE / GALLERY ----------
         if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
-            // If images are Drive-hosted, we fallback to showing a poster and opening preview externally
+            // If images are Drive-hosted, DO NOT set them as <img src="drive..."> (CORB risk).
             const anyDrive = media.images.some(i => looksLikeDriveUrl(i) || media.source === 'drive');
 
             if (anyDrive) {
+                // show a safe poster (use project.thumb if safe, else placeholder)
                 const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
-                const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : posterCandidate;
+                const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
                 const container = document.createElement('div');
                 container.className = `embed-container ${cls}`;
@@ -156,6 +152,7 @@ function createMediaNodeWithoutIframe(project) {
                 posterImg.src = safePoster;
                 container.appendChild(posterImg);
 
+                // Add an explicit "Open gallery" button — opens the project's media.link (Drive preview)
                 const openBtn = document.createElement('button');
                 openBtn.type = 'button';
                 openBtn.className = 'fs-play-button';
@@ -166,15 +163,18 @@ function createMediaNodeWithoutIframe(project) {
                 openBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const preview = media.link || project.link || '';
-                    if (preview) window.open(preview, '_blank', 'noopener');
+                    if (preview) {
+                        // open preview in new tab — avoids embedding Drive HTML in <img>
+                        window.open(preview, '_blank', 'noopener');
+                    }
                 });
 
                 wrapper.appendChild(container);
-                // return slides array unchanged to build thumbnails (we will proxy them when shown)
+                // return slides unchanged (we will make thumbnail clicks open preview)
                 return { node: wrapper, slides: media.images.slice() };
             }
 
-            // not drive-hosted — safe to embed normally
+            // not drive-hosted — safe to embed
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
             container.style.minHeight = '140px';
@@ -187,7 +187,7 @@ function createMediaNodeWithoutIframe(project) {
             return { node: wrapper, slides: media.images.slice() };
         }
 
-        // ---------- LOCAL VIDEO ----------
+        // ---------- LOCAL VIDEO FILE ----------
         if ((media.source === 'local' || /\.mp4|\.webm|\.ogg$/i.test(media.link || project.link || '')) && (media.link || project.link)) {
             const src = media.link || project.link;
             const container = document.createElement('div');
@@ -267,8 +267,9 @@ function createMediaNodeWithoutIframe(project) {
         if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
             const link = media.link || project.link || '';
             const preview = drivePreviewUrl(link) || link;
+            // try to normalize poster, but avoid embedding drive images directly if they are not safe
             const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
-            const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : posterCandidate;
+            const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
@@ -433,32 +434,40 @@ export function openOverlay(project) {
         if (fsMedia) fsMedia.appendChild(res.node);
     }
 
-    // Build thumbnails and preloads
+    // Build thumbnails: if slide looks like Drive link, make clicking it open preview in new tab
     if (currentSlides.length) {
         currentSlides.forEach((src, i) => {
             const t = document.createElement('img');
-
             const isDriveSlide = looksLikeDriveUrl(src) || (project.media && project.media.source === 'drive');
-            t.src = isDriveSlide ? proxiedUrl(src) : src;
+            if (isDriveSlide) {
+                // use placeholder or a normalized safe thumb if available
+                const safeThumb = (project.thumb && !looksLikeDriveUrl(project.thumb)) ? project.thumb : 'assets/placeholder.jpg';
+                t.src = safeThumb;
+                t.setAttribute('data-drive-link', src);
+            } else {
+                t.src = src;
+            }
             t.loading = 'lazy';
             t.alt = `${project.title || ''} ${i + 1}`;
             if (i === 0) t.classList.add('active');
-
-            // preload
-            const pre = new Image();
-            pre.src = t.src;
-
             t.addEventListener('click', () => {
                 const container = fsContent.querySelector('.embed-container');
                 if (!container) return;
                 const img = container.querySelector('img');
-                const newSrc = isDriveSlide ? proxiedUrl(src) : src;
+                const driveLink = t.getAttribute('data-drive-link');
+                if (driveLink) {
+                    // open drive preview in a new tab instead of trying to set the <img src>
+                    const preview = driveLink;
+                    window.open(preview, '_blank', 'noopener');
+                    return;
+                }
                 if (img) {
-                    img.src = newSrc;
+                    img.src = src;
                 } else {
+                    // fallback: replace embed-container contents with a simple image
                     container.innerHTML = '';
                     const newImg = document.createElement('img');
-                    newImg.src = newSrc;
+                    newImg.src = src;
                     newImg.alt = project.title || '';
                     container.appendChild(newImg);
                 }
@@ -497,6 +506,7 @@ export function closeOverlay() {
 
     setBackgroundInert(false);
 
+    // remove split and restore header to original spot
     const split = overlay.querySelector('.fs-split');
     if (split) {
         const header = split.querySelector('.fs-header');
@@ -506,6 +516,7 @@ export function closeOverlay() {
         split.remove();
     }
 
+    // remove resize handler if set
     if (overlay && overlay._verticalResizeHandler) {
         try { window.removeEventListener('resize', overlay._verticalResizeHandler); } catch (e) { }
         overlay._verticalResizeHandler = null;
