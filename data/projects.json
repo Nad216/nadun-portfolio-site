@@ -11,9 +11,13 @@
 				"link": "https://drive.google.com/uc?export=view&id=1-eodq3PQGuyB-Y2If8mWkdLdsu3xu8kd",
 				"format": "horizontal",
 				"images": [
-					"https://imgur.com/Skq9iP6",
-					"https://imgur.com/6QiEE5c",
-					"https://imgur.com/1WmnHIU"
+					"assets/projects/IFlix/1.jpg",
+					"assets/projects/IFlix/2.jpg",
+					"assets/projects/IFlix/3.jpg",
+					"assets/projects/IFlix/4.jpg",
+					"assets/projects/IFlix/5.jpg",
+					"assets/projects/IFlix/6.jpg",
+					"assets/projects/IFlix/7.jpg"
 				]
 			}
 		}
