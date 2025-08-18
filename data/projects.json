@@ -6,7 +6,7 @@
 			"image": "assets/thumbs/Iflix_stall.jpg",
 			"thumb": "assets/thumbs/Iflix_stall.jpg",
 			"media": {
-				"type": "gallery",
+				"type": "images",
 				"source": "drive",
 				"link": "https://drive.google.com/file/d/1-eodq3PQGuyB-Y2If8mWkdLdsu3xu8kd/preview",
 				"format": "horizontal",
