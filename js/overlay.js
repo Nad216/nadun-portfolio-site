@@ -1,10 +1,10 @@
-﻿// overlay.js
-import {
+﻿import {
     parseYouTubeId,
     youtubeWatchUrlFromLink,
     youtubeThumbnailUrl,
     drivePreviewUrl,
-    generateLogosHTML
+    generateLogosHTML,
+    normalizeDriveImage
 } from './utils.js';
 
 let overlay, fsInner, fsContent, fsTitle, fsDesc, fsMedia, fsThumbs, fsClose, fsBuiltWith, fsActions;
@@ -117,6 +117,10 @@ function createFullscreenButton() {
     return btn;
 }
 
+function looksLikeDriveUrl(url) {
+    return /drive\.google\.com|\/file\/d\/|[?&]id=/.test(String(url || ''));
+}
+
 function createMediaNodeWithoutIframe(project) {
     try {
         const media = project.media || {};
@@ -128,35 +132,62 @@ function createMediaNodeWithoutIframe(project) {
         const format = (media.format || project.format || 'horizontal');
         const cls = (format === 'vertical') ? 'embed-9-16' : (format === 'square' ? 'embed-1-1' : 'embed-16-9');
 
-        // ---------- NEW: Drive image normalization helper ----------
-        const normalizeDriveImage = (url) => {
-            if (typeof url !== 'string') return url;
-            // match /file/d/FILEID/...
-            const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)/);
-            if (m && m[1]) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-            // match ?id=FILEID
-            const q = url.match(/[?&]id=([A-Za-z0-9_-]+)/);
-            if (q && q[1]) return `https://drive.google.com/uc?export=view&id=${q[1]}`;
-            return url; // leave as-is
-        };
-        // ----------------------------------------------------------
-
+        // ---------- IMAGE / GALLERY ----------
         if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
-            // normalize all slides (convert Drive preview links into uc?export=view where possible)
-            const slides = media.images.map(normalizeDriveImage);
+            // If images are Drive-hosted, DO NOT set them as <img src="drive..."> (CORB risk).
+            const anyDrive = media.images.some(i => looksLikeDriveUrl(i) || media.source === 'drive');
 
+            if (anyDrive) {
+                // show a safe poster (use project.thumb if safe, else placeholder)
+                const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
+                const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
+
+                const container = document.createElement('div');
+                container.className = `embed-container ${cls}`;
+                container.style.minHeight = '140px';
+
+                const posterImg = document.createElement('img');
+                posterImg.alt = project.title || '';
+                posterImg.loading = 'lazy';
+                posterImg.src = safePoster;
+                container.appendChild(posterImg);
+
+                // Add an explicit "Open gallery" button — opens the project's media.link (Drive preview)
+                const openBtn = document.createElement('button');
+                openBtn.type = 'button';
+                openBtn.className = 'fs-play-button';
+                openBtn.setAttribute('aria-label', 'Open gallery preview');
+                openBtn.textContent = '▶';
+                container.appendChild(openBtn);
+
+                openBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const preview = media.link || project.link || '';
+                    if (preview) {
+                        // open preview in new tab — avoids embedding Drive HTML in <img>
+                        window.open(preview, '_blank', 'noopener');
+                    }
+                });
+
+                wrapper.appendChild(container);
+                // return slides unchanged (we will make thumbnail clicks open preview)
+                return { node: wrapper, slides: media.images.slice() };
+            }
+
+            // not drive-hosted — safe to embed
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
             container.style.minHeight = '140px';
             const img = document.createElement('img');
-            img.src = slides[0];
+            img.src = media.images[0];
             img.alt = project.title || '';
             img.loading = 'lazy';
             container.appendChild(img);
             wrapper.appendChild(container);
-            return { node: wrapper, slides };
+            return { node: wrapper, slides: media.images.slice() };
         }
 
+        // ---------- LOCAL VIDEO FILE ----------
         if ((media.source === 'local' || /\.mp4|\.webm|\.ogg$/i.test(media.link || project.link || '')) && (media.link || project.link)) {
             const src = media.link || project.link;
             const container = document.createElement('div');
@@ -166,9 +197,7 @@ function createMediaNodeWithoutIframe(project) {
             video.controls = true;
             video.preload = 'metadata';
             video.src = src;
-            // normalize poster if it's a Drive link
-            const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
-            video.poster = normalizeDriveImage(posterCandidate);
+            video.poster = project.thumb || project.image || 'assets/placeholder.jpg';
             video.setAttribute('playsinline', '');
             video.autoplay = false;
             video.style.background = '#000';
@@ -181,6 +210,7 @@ function createMediaNodeWithoutIframe(project) {
             return { node: wrapper, slides: [] };
         }
 
+        // ---------- YOUTUBE ----------
         if (media.source === 'youtube' || /youtube/.test(media.link || project.link || '')) {
             const link = (media.link || project.link || '');
             const id = parseYouTubeId(link);
@@ -233,11 +263,13 @@ function createMediaNodeWithoutIframe(project) {
             return { node: wrapper, slides: [] };
         }
 
+        // ---------- DRIVE preview (video / preview) ----------
         if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
             const link = media.link || project.link || '';
             const preview = drivePreviewUrl(link) || link;
-            // normalize thumb image if needed:
-            const thumbUrl = normalizeDriveImage(project.thumb || project.image || 'assets/placeholder.jpg');
+            // try to normalize poster, but avoid embedding drive images directly if they are not safe
+            const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
+            const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
@@ -252,7 +284,7 @@ function createMediaNodeWithoutIframe(project) {
             img.style.width = '100%';
             img.style.height = '100%';
             img.style.objectFit = 'contain';
-            img.src = thumbUrl;
+            img.src = safePoster;
             container.appendChild(img);
 
             const play = document.createElement('button');
@@ -285,6 +317,7 @@ function createMediaNodeWithoutIframe(project) {
             return { node: wrapper, slides: [] };
         }
 
+        // ---------- FALLBACK IMAGE ----------
         const container = document.createElement('div');
         container.className = `embed-container ${cls}`;
         container.style.minHeight = '120px';
@@ -359,13 +392,9 @@ export function openOverlay(project) {
     const isVertical = fmt === 'vertical';
 
     if (isVertical) {
-        // mark overlay to apply vertical-only CSS
         overlay.classList.add('vertical');
+        fsMedia.innerHTML = '';
 
-        // ensure fsMedia doesn't reserve visual space (CSS will hide it; clear content)
-        if (fsMedia) fsMedia.innerHTML = '';
-
-        // create split and ensure it occupies the middle grid row
         const split = document.createElement('div');
         split.className = 'fs-split';
         split.style.gridRow = '2';
@@ -373,19 +402,14 @@ export function openOverlay(project) {
 
         const header = overlay.querySelector('.fs-header');
         const isDesktop = window.innerWidth >= 900;
-
         if (header && isDesktop) {
             header.parentElement && header.parentElement.removeChild(header);
             split.appendChild(header);
-        } else {
-            // keep header in top row for mobile (no move)
         }
 
         split.appendChild(res.node);
         fsContent.appendChild(split);
 
-        // --- MOBILE: clamp embed height so header remains visible ---
-        // Only apply when NOT moving header into split (mobile)
         if (!isDesktop) {
             const embedContainer = split.querySelector('.embed-container') || split.querySelector('div');
             function setEmbedMaxHeight() {
@@ -393,7 +417,6 @@ export function openOverlay(project) {
                 const footerEl = overlay.querySelector('.fs-footer');
                 const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
                 const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
-                // breathing room for gaps; tweak if you want more/less
                 const padding = 48;
                 const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
                 if (embedContainer) {
@@ -401,7 +424,6 @@ export function openOverlay(project) {
                     embedContainer.style.height = 'auto';
                 }
             }
-            // run immediately and on resize/orientation change
             setEmbedMaxHeight();
             overlay._verticalResizeHandler = setEmbedMaxHeight;
             window.addEventListener('resize', overlay._verticalResizeHandler);
@@ -412,18 +434,42 @@ export function openOverlay(project) {
         if (fsMedia) fsMedia.appendChild(res.node);
     }
 
+    // Build thumbnails: if slide looks like Drive link, make clicking it open preview in new tab
     if (currentSlides.length) {
         currentSlides.forEach((src, i) => {
             const t = document.createElement('img');
-            t.src = src;
+            const isDriveSlide = looksLikeDriveUrl(src) || (project.media && project.media.source === 'drive');
+            if (isDriveSlide) {
+                // use placeholder or a normalized safe thumb if available
+                const safeThumb = (project.thumb && !looksLikeDriveUrl(project.thumb)) ? project.thumb : 'assets/placeholder.jpg';
+                t.src = safeThumb;
+                t.setAttribute('data-drive-link', src);
+            } else {
+                t.src = src;
+            }
             t.loading = 'lazy';
             t.alt = `${project.title || ''} ${i + 1}`;
             if (i === 0) t.classList.add('active');
             t.addEventListener('click', () => {
                 const container = fsContent.querySelector('.embed-container');
-                if (container) {
-                    const img = container.querySelector('img');
-                    if (img) img.src = src;
+                if (!container) return;
+                const img = container.querySelector('img');
+                const driveLink = t.getAttribute('data-drive-link');
+                if (driveLink) {
+                    // open drive preview in a new tab instead of trying to set the <img src>
+                    const preview = driveLink;
+                    window.open(preview, '_blank', 'noopener');
+                    return;
+                }
+                if (img) {
+                    img.src = src;
+                } else {
+                    // fallback: replace embed-container contents with a simple image
+                    container.innerHTML = '';
+                    const newImg = document.createElement('img');
+                    newImg.src = src;
+                    newImg.alt = project.title || '';
+                    container.appendChild(newImg);
                 }
                 fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
                 t.classList.add('active');

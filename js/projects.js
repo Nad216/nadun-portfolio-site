@@ -1,5 +1,4 @@
-// projects.js
-import { generateLogosHTML } from './utils.js';
+import { generateLogosHTML, normalizeDriveImage } from './utils.js';
 import { openOverlay } from './overlay.js';
 
 function findOrCreateCategoryContainer(categoryName) {
@@ -54,26 +53,47 @@ export function loadProjects() {
                         projects.forEach(project => {
                             try {
                                 const isFeatured = !!project.featured;
-                                const thumb = project.thumb || project.image || 'assets/placeholder.jpg';
+
+                                // detect Drive-style thumbs and avoid setting them directly as <img src>
+                                const rawThumb = project.thumb || project.image || 'assets/placeholder.jpg';
+                                const looksLikeDrive = /drive\.google\.com|\/file\/d\/|[?&]id=/.test(String(rawThumb || ''));
+                                const thumb = looksLikeDrive ? 'assets/placeholder.jpg' : normalizeDriveImage(rawThumb);
+
+                                // optional drive preview link to attach (preview page)
+                                let drivePreview = '';
+                                if (looksLikeDrive) {
+                                    // attempt to create a preview URL for opening in a new tab/iframe
+                                    // prefer file/d/ID/preview; normalizeDriveImage gives uc?export=view so we try to convert
+                                    const maybeUc = normalizeDriveImage(rawThumb);
+                                    const m = maybeUc.match(/id=([A-Za-z0-9_-]+)/);
+                                    if (m && m[1]) drivePreview = `https://drive.google.com/file/d/${m[1]}/preview`;
+                                    else drivePreview = rawThumb;
+                                }
+
                                 const builtWithHtml = generateLogosHTML(project.createdUsing);
+
+                                const makeCardAnchor = (href) => {
+                                    const a = document.createElement('a');
+                                    a.href = href || project.link || '#';
+                                    a.target = '_blank';
+                                    a.rel = 'noopener noreferrer';
+                                    a.innerHTML = `<img src="${thumb}" alt="${project.title || ''}">`;
+                                    if (looksLikeDrive && drivePreview) a.setAttribute('data-drive-preview', drivePreview);
+                                    a.addEventListener('click', (e) => {
+                                        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
+                                        e.preventDefault();
+                                        // open overlay; overlay will handle drive content gracefully
+                                        openOverlay(project);
+                                    });
+                                    return a;
+                                };
 
                                 if (isFeatured && featuredContainer) {
                                     const bigCard = document.createElement('div');
                                     bigCard.className = 'featured-project';
                                     if (project.highlight) bigCard.classList.add('highlight-project');
 
-                                    const anchor = document.createElement('a');
-                                    anchor.href = project.link || '#';
-                                    anchor.target = '_blank';
-                                    anchor.rel = 'noopener noreferrer';
-                                    anchor.innerHTML = `<img src="${thumb}" alt="${project.title || ''}">`;
-
-                                    anchor.addEventListener('click', (e) => {
-                                        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
-                                        e.preventDefault();
-                                        openOverlay(project);
-                                    });
-
+                                    const anchor = makeCardAnchor(project.link);
                                     const details = document.createElement('div');
                                     details.className = 'details';
                                     details.innerHTML = `<p><strong>${project.title || ''}</strong><br>${project.description || ''}</p>${builtWithHtml}`;
@@ -87,17 +107,8 @@ export function loadProjects() {
                                         smallCard.className = 'project small-cards';
                                         if (project.highlight) smallCard.classList.add('highlight-project');
 
-                                        const smallAnchor = document.createElement('a');
-                                        smallAnchor.href = project.link || '#';
-                                        smallAnchor.target = '_blank';
-                                        smallAnchor.rel = 'noopener noreferrer';
-                                        smallAnchor.innerHTML = `<img src="${thumb}" alt="${project.title || ''}"><p><strong>${project.title || ''}</strong><br>${project.description || ''}</p>${builtWithHtml}`;
-
-                                        smallAnchor.addEventListener('click', (e) => {
-                                            if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
-                                            e.preventDefault();
-                                            openOverlay(project);
-                                        });
+                                        const smallAnchor = makeCardAnchor(project.link);
+                                        smallAnchor.innerHTML += `<p><strong>${project.title || ''}</strong><br>${project.description || ''}</p>${builtWithHtml}`;
 
                                         smallCard.appendChild(smallAnchor);
                                         categorySection.appendChild(smallCard);
@@ -107,17 +118,8 @@ export function loadProjects() {
                                     normalCard.className = 'project small-cards';
                                     if (project.highlight) normalCard.classList.add('highlight-project');
 
-                                    const a = document.createElement('a');
-                                    a.href = project.link || '#';
-                                    a.target = '_blank';
-                                    a.rel = 'noopener noreferrer';
-                                    a.innerHTML = `<img src="${thumb}" alt="${project.title || ''}"><p><strong>${project.title || ''}</strong><br>${project.description || ''}</p>${builtWithHtml}`;
-
-                                    a.addEventListener('click', (e) => {
-                                        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
-                                        e.preventDefault();
-                                        openOverlay(project);
-                                    });
+                                    const a = makeCardAnchor(project.link);
+                                    a.innerHTML += `<p><strong>${project.title || ''}</strong><br>${project.description || ''}</p>${builtWithHtml}`;
 
                                     normalCard.appendChild(a);
                                     categorySection.appendChild(normalCard);
