@@ -128,18 +128,33 @@ function createMediaNodeWithoutIframe(project) {
         const format = (media.format || project.format || 'horizontal');
         const cls = (format === 'vertical') ? 'embed-9-16' : (format === 'square' ? 'embed-1-1' : 'embed-16-9');
 
+        // ---------- NEW: Drive image normalization helper ----------
+        const normalizeDriveImage = (url) => {
+            if (typeof url !== 'string') return url;
+            // match /file/d/FILEID/...
+            const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)/);
+            if (m && m[1]) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+            // match ?id=FILEID
+            const q = url.match(/[?&]id=([A-Za-z0-9_-]+)/);
+            if (q && q[1]) return `https://drive.google.com/uc?export=view&id=${q[1]}`;
+            return url; // leave as-is
+        };
+        // ----------------------------------------------------------
+
         if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
+            // normalize all slides (convert Drive preview links into uc?export=view where possible)
+            const slides = media.images.map(normalizeDriveImage);
+
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
             container.style.minHeight = '140px';
             const img = document.createElement('img');
-            img.src = media.images[0];
+            img.src = slides[0];
             img.alt = project.title || '';
             img.loading = 'lazy';
-            img.style.objectFit = 'contain'; // fit gallery images
             container.appendChild(img);
             wrapper.appendChild(container);
-            return { node: wrapper, slides: media.images.slice() };
+            return { node: wrapper, slides };
         }
 
         if ((media.source === 'local' || /\.mp4|\.webm|\.ogg$/i.test(media.link || project.link || '')) && (media.link || project.link)) {
@@ -151,14 +166,16 @@ function createMediaNodeWithoutIframe(project) {
             video.controls = true;
             video.preload = 'metadata';
             video.src = src;
-            video.poster = project.thumb || project.image || 'assets/placeholder.jpg';
+            // normalize poster if it's a Drive link
+            const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
+            video.poster = normalizeDriveImage(posterCandidate);
             video.setAttribute('playsinline', '');
             video.autoplay = false;
             video.style.background = '#000';
             video.style.width = '100%';
             video.style.height = '100%';
             video.style.maxHeight = 'calc(92vh - 260px)';
-            video.style.objectFit = 'contain'; // important for mobile poster/video
+            video.style.objectFit = 'contain';
             container.appendChild(video);
             wrapper.appendChild(container);
             return { node: wrapper, slides: [] };
@@ -181,7 +198,7 @@ function createMediaNodeWithoutIframe(project) {
             img.loading = 'lazy';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'contain'; // changed so thumbnail fits inside
+            img.style.objectFit = 'contain';
             img.src = thumbUrl;
             container.appendChild(img);
 
@@ -219,7 +236,8 @@ function createMediaNodeWithoutIframe(project) {
         if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
             const link = media.link || project.link || '';
             const preview = drivePreviewUrl(link) || link;
-            const thumbUrl = project.thumb || project.image || 'assets/placeholder.jpg';
+            // normalize thumb image if needed:
+            const thumbUrl = normalizeDriveImage(project.thumb || project.image || 'assets/placeholder.jpg');
 
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
@@ -233,7 +251,7 @@ function createMediaNodeWithoutIframe(project) {
             img.loading = 'lazy';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'contain'; // changed to contain
+            img.style.objectFit = 'contain';
             img.src = thumbUrl;
             container.appendChild(img);
 
@@ -245,7 +263,7 @@ function createMediaNodeWithoutIframe(project) {
             container.appendChild(play);
 
             const insertDriveIframe = () => {
-                if (/\/file\/d\/[a-zA-Z0-9_-]+\/preview/.test(preview)) {
+                if (/\/file\/d\/[a-zA-Z0-9_-]+\/preview/.test(preview) || /\/uc\?export=view/.test(preview)) {
                     const iframe = document.createElement('iframe');
                     iframe.src = preview;
                     iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
@@ -275,7 +293,7 @@ function createMediaNodeWithoutIframe(project) {
         img.loading = 'lazy';
         img.style.width = '100%';
         img.style.height = '100%';
-        img.style.objectFit = 'contain'; // fallback image uses contain
+        img.style.objectFit = 'contain';
         img.src = project.thumb || project.image || 'assets/placeholder.jpg';
         container.appendChild(img);
         wrapper.appendChild(container);
@@ -359,11 +377,8 @@ export function openOverlay(project) {
         if (header && isDesktop) {
             header.parentElement && header.parentElement.removeChild(header);
             split.appendChild(header);
-            // console log for debug
-            // console.log('openOverlay: moved header into fs-split for desktop', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
         } else {
             // keep header in top row for mobile (no move)
-            // console.log('openOverlay: keeping header in top row for mobile', { title: project.title, windowSize: [window.innerWidth, window.innerHeight] });
         }
 
         split.appendChild(res.node);
