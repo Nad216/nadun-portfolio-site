@@ -79,20 +79,31 @@
 			}
 		},
 		{
-			"title": "3D Animation Reel",
-			"description": "Showcase of my 3D animation works.",
-			"image": "assets/cgi-animation.jpg",
-			"thumb": "assets/cgi-animation.jpg",
+			"title": "S-LON Stall Concept",
+			"description": "Iflix Stall Concept for BMICH Exhibition.",
+			"image": "assets/projects/S-lon/1.jpg",
+			"thumb": "assets/projects/S-lon/1.jpg",
 			"createdUsing": [
 				"3ds Max",
 				"After Effects"
 			],
 			"media": {
-				"type": "video",
-				"source": "drive",
-				"link": "https://drive.google.com/file/d/YourFileID/preview",
-				"format": "horizontal",
-				"images": []
+				"type": "mixed",
+				"video": {
+					"source": "drive",
+					"link": "https://drive.google.com/file/d/10HqqWoGdXn4LWbgQ7tGUoH-4-dA5GjDD/preview",
+					"format": "horizontal"
+				},
+				"images": [
+					"assets/projects/S-lon/1.jpg",
+					"assets/projects/S-lon/2.jpg",
+					"assets/projects/S-lon/3.jpg",
+					"assets/projects/S-lon/4.jpg",
+					"assets/projects/S-lon/5.jpg",
+					"assets/projects/S-lon/6.jpg",
+					"assets/projects/S-lon/7.jpg",
+					"assets/projects/S-lon/8.jpg"
+				]
 			}
 		}
 	]

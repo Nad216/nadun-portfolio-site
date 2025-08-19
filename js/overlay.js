@@ -1,12 +1,13 @@
-﻿import {
+﻿// overlay.js
+import {
     parseYouTubeId,
     youtubeWatchUrlFromLink,
     youtubeThumbnailUrl,
     drivePreviewUrl,
     generateLogosHTML,
     normalizeDriveImage,
+    // optional imgur helpers if present in your utils.js (no error if not used)
     looksLikeImgurUrl,
-    parseImgurId,
     imgurDirectImageUrl,
     imgurThumbnailUrl
 } from './utils.js';
@@ -121,10 +122,96 @@ function createFullscreenButton() {
     return btn;
 }
 
+/* small helpers used in this file */
 function looksLikeDriveUrl(url) {
     return /drive\.google\.com|\/file\/d\/|[?&]id=/.test(String(url || ''));
 }
+function isSafeDriveUc(url) {
+    // treat explicit uc?export=view as safe to embed
+    return /\/uc\?export=view/i.test(String(url || ''));
+}
 
+function createYouTubeIframe(id) {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`;
+    iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = '0';
+    return iframe;
+}
+
+function insertVideoIntoContainer(container, videoObj, posterCandidate) {
+    // videoObj may be: a string (link) or an object { source, link, format }
+    const link = typeof videoObj === 'string' ? videoObj : (videoObj.link || '');
+    const source = typeof videoObj === 'object' && videoObj.source ? videoObj.source : '';
+
+    // try to detect youtube
+    if (/youtube/.test(link) || (source === 'youtube')) {
+        const id = parseYouTubeId(link);
+        if (id) {
+            container.innerHTML = '';
+            container.appendChild(createYouTubeIframe(id));
+            return;
+        } else {
+            // fallback to watch URL
+            const w = youtubeWatchUrlFromLink(link) || link;
+            if (w) {
+                window.open(w, '_blank', 'noopener');
+                return;
+            }
+        }
+    }
+
+    // drive preview embedding (iframe) if preview or uc link available
+    if (looksLikeDriveUrl(link) || source === 'drive') {
+        const preview = drivePreviewUrl(link) || link;
+        // if it's a uc?export=view or /file/d/.../preview we can embed safely
+        if (/\/file\/d\/[a-zA-Z0-9_-]+\/preview/.test(preview) || /\/uc\?export=view/.test(preview)) {
+            const iframe = document.createElement('iframe');
+            iframe.src = preview;
+            iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = '0';
+            container.innerHTML = '';
+            container.appendChild(iframe);
+            return;
+        } else {
+            // if not embeddable, open preview in new tab
+            window.open(preview || link, '_blank', 'noopener');
+            return;
+        }
+    }
+
+    // local video file (mp4/webm/ogg) - create <video>
+    if (/\.mp4|\.webm|\.ogg$/i.test(link) || source === 'local') {
+        const videoEl = document.createElement('video');
+        videoEl.controls = true;
+        videoEl.preload = 'metadata';
+        videoEl.src = link;
+        videoEl.poster = posterCandidate || '';
+        videoEl.setAttribute('playsinline', '');
+        videoEl.autoplay = false;
+        videoEl.style.width = '100%';
+        videoEl.style.height = '100%';
+        videoEl.style.objectFit = 'contain';
+        container.innerHTML = '';
+        container.appendChild(videoEl);
+        return;
+    }
+
+    // last resort: open link in new tab
+    if (link) {
+        window.open(link, '_blank', 'noopener');
+    } else {
+        container.innerHTML = '<div style="padding:1rem;color:#fff">Video unavailable</div>';
+    }
+}
+
+/* main renderer */
 function createMediaNodeWithoutIframe(project) {
     try {
         const media = project.media || {};
@@ -136,14 +223,13 @@ function createMediaNodeWithoutIframe(project) {
         const format = (media.format || project.format || 'horizontal');
         const cls = (format === 'vertical') ? 'embed-9-16' : (format === 'square' ? 'embed-1-1' : 'embed-16-9');
 
-        // ---------- IMAGE / GALLERY ----------
+        // ---------- IMAGE / GALLERY / GALLERY (local/imgur/normal) ----------
         if ((media.type === 'images' || media.type === 'gallery') && Array.isArray(media.images) && media.images.length) {
-            // Check for Drive or Imgur images
             const anyDrive = media.images.some(i => looksLikeDriveUrl(i) || media.source === 'drive');
-            const anyImgur = media.images.some(i => looksLikeImgurUrl(i) || media.source === 'imgur');
+            const anyImgur = typeof looksLikeImgurUrl === 'function' && media.images.some(i => looksLikeImgurUrl(i) || media.source === 'imgur');
 
             if (anyDrive) {
-                // Keep existing Drive handling exactly the same
+                // show safe poster and let thumbnails open preview externally (avoid CORB)
                 const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
                 const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
@@ -155,9 +241,11 @@ function createMediaNodeWithoutIframe(project) {
                 posterImg.alt = project.title || '';
                 posterImg.loading = 'lazy';
                 posterImg.src = safePoster;
+                posterImg.style.width = '100%';
+                posterImg.style.height = '100%';
+                posterImg.style.objectFit = 'contain';
                 container.appendChild(posterImg);
 
-                // Add an explicit "Open gallery" button — opens the project's media.link (Drive preview)
                 const openBtn = document.createElement('button');
                 openBtn.type = 'button';
                 openBtn.className = 'fs-play-button';
@@ -168,51 +256,122 @@ function createMediaNodeWithoutIframe(project) {
                 openBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const preview = media.link || project.link || '';
-                    if (preview) {
-                        // open preview in new tab — avoids embedding Drive HTML in <img>
-                        window.open(preview, '_blank', 'noopener');
-                    }
+                    if (preview) window.open(preview, '_blank', 'noopener');
                 });
 
-                wrapper.appendChild(container);
-                // return slides unchanged (we will make thumbnail clicks open preview)
-                return { node: wrapper, slides: media.images.slice() };
-
-            } else if (anyImgur) {
-                // NEW: Handle Imgur galleries - convert URLs to direct image URLs
-                const convertedImages = media.images.map(url => {
-                    if (looksLikeImgurUrl(url)) {
-                        return imgurDirectImageUrl(url);
-                    }
-                    return url;
-                });
-
-                const container = document.createElement('div');
-                container.className = `embed-container ${cls}`;
-                container.style.minHeight = '140px';
-
-                const img = document.createElement('img');
-                img.src = convertedImages[0];
-                img.alt = project.title || '';
-                img.loading = 'lazy';
-                container.appendChild(img);
-
-                wrapper.appendChild(container);
-                return { node: wrapper, slides: convertedImages };
-
-            } else {
-                // not drive-hosted or imgur — safe to embed
-                const container = document.createElement('div');
-                container.className = `embed-container ${cls}`;
-                container.style.minHeight = '140px';
-                const img = document.createElement('img');
-                img.src = media.images[0];
-                img.alt = project.title || '';
-                img.loading = 'lazy';
-                container.appendChild(img);
                 wrapper.appendChild(container);
                 return { node: wrapper, slides: media.images.slice() };
             }
+
+            if (anyImgur) {
+                // convert imgur urls to direct i.imgur.com links (if utils support it)
+                const converted = media.images.map(u => (typeof imgurDirectImageUrl === 'function' && looksLikeImgurUrl(u)) ? imgurDirectImageUrl(u) : u);
+
+                const container = document.createElement('div');
+                container.className = `embed-container ${cls}`;
+                container.style.minHeight = '140px';
+
+                const img = document.createElement('img');
+                img.src = converted[0];
+                img.alt = project.title || '';
+                img.loading = 'lazy';
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                container.appendChild(img);
+
+                // preload others
+                converted.slice(1).forEach(s => { if (s) new Image().src = s; });
+
+                wrapper.appendChild(container);
+                return { node: wrapper, slides: converted };
+            }
+
+            // normal (local or CDN) images
+            const container = document.createElement('div');
+            container.className = `embed-container ${cls}`;
+            container.style.minHeight = '140px';
+            const img = document.createElement('img');
+            img.src = media.images[0];
+            img.alt = project.title || '';
+            img.loading = 'lazy';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            container.appendChild(img);
+
+            // preload the rest
+            media.images.slice(1).forEach(s => { if (s) new Image().src = s; });
+
+            wrapper.appendChild(container);
+            return { node: wrapper, slides: media.images.slice() };
+        }
+
+        // ---------- MIXED (video + images) ----------
+        if (media.type === 'mixed' && (Array.isArray(media.images) || media.video)) {
+            const images = Array.isArray(media.images) ? media.images.map(url => {
+                try {
+                    if (typeof url !== 'string') return url;
+                    if (typeof looksLikeImgurUrl === 'function' && looksLikeImgurUrl(url)) {
+                        return (typeof imgurDirectImageUrl === 'function') ? imgurDirectImageUrl(url) : url;
+                    }
+                    if (looksLikeDriveUrl(url)) {
+                        // prefer normalized uc link if available, but thumbnails may still be placeholder
+                        return normalizeDriveImage(url) || url;
+                    }
+                    return url;
+                } catch (e) { return url; }
+            }) : [];
+
+            const videoObj = media.video || null;
+
+            const posterCandidate = project.thumb || images[0] || project.image || 'assets/placeholder.jpg';
+            const safePoster = (looksLikeDriveUrl(posterCandidate) && !isSafeDriveUc(posterCandidate))
+                ? 'assets/placeholder.jpg'
+                : (normalizeDriveImage(posterCandidate) || posterCandidate);
+
+            const container = document.createElement('div');
+            container.className = `embed-container ${cls}`;
+            container.style.minHeight = '180px';
+            container.style.position = 'relative';
+            container.style.background = '#000';
+
+            const mainImg = document.createElement('img');
+            mainImg.alt = project.title || '';
+            mainImg.loading = 'lazy';
+            mainImg.style.width = '100%';
+            mainImg.style.height = '100%';
+            mainImg.style.objectFit = 'contain';
+            mainImg.src = images[0] || safePoster;
+            container.appendChild(mainImg);
+
+            if (videoObj && (videoObj.link || videoObj.source)) {
+                const play = document.createElement('button');
+                play.type = 'button';
+                play.className = 'fs-play-button';
+                play.setAttribute('aria-label', 'Play video');
+                play.textContent = '▶';
+                container.appendChild(play);
+
+                play.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    insertVideoIntoContainer(container, videoObj, safePoster);
+                });
+            }
+
+            // preload images
+            images.forEach(s => { if (s) new Image().src = s; });
+
+            wrapper.appendChild(container);
+
+            // build slides array: a video sentinel first (if present) then image urls
+            const slides = [];
+            if (videoObj && (videoObj.link || videoObj.source)) {
+                slides.push({ __video: true, video: videoObj, poster: safePoster });
+            }
+            images.forEach(i => slides.push(i));
+
+            return { node: wrapper, slides };
         }
 
         // ---------- LOCAL VIDEO FILE ----------
@@ -238,7 +397,7 @@ function createMediaNodeWithoutIframe(project) {
             return { node: wrapper, slides: [] };
         }
 
-        // ---------- YOUTUBE ----------
+        // ---------- YOUTUBE (single video) ----------
         if (media.source === 'youtube' || /youtube/.test(media.link || project.link || '')) {
             const link = (media.link || project.link || '');
             const id = parseYouTubeId(link);
@@ -273,15 +432,8 @@ function createMediaNodeWithoutIframe(project) {
                     if (w) window.open(w, '_blank', 'noopener');
                     return;
                 }
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`;
-                iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
-                iframe.setAttribute('allowfullscreen', '');
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = '0';
                 container.innerHTML = '';
-                container.appendChild(iframe);
+                container.appendChild(createYouTubeIframe(id));
             };
 
             play.addEventListener('click', (e) => { e.stopPropagation(); insertYouTubeIframe(); });
@@ -295,7 +447,6 @@ function createMediaNodeWithoutIframe(project) {
         if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
             const link = media.link || project.link || '';
             const preview = drivePreviewUrl(link) || link;
-            // try to normalize poster, but avoid embedding drive images directly if they are not safe
             const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
             const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
@@ -422,7 +573,7 @@ export function openOverlay(project) {
 
     if (isVertical) {
         overlay.classList.add('vertical');
-        fsMedia.innerHTML = '';
+        if (fsMedia) fsMedia.innerHTML = '';
 
         const split = document.createElement('div');
         split.className = 'fs-split';
@@ -463,75 +614,79 @@ export function openOverlay(project) {
         if (fsMedia) fsMedia.appendChild(res.node);
     }
 
-    // Build thumbnails: handle Drive and Imgur links
+    // Build thumbnails
     if (currentSlides.length) {
-        currentSlides.forEach((src, i) => {
+        currentSlides.forEach((item, i) => {
             const t = document.createElement('img');
-            const isDriveSlide = looksLikeDriveUrl(src) || (project.media && project.media.source === 'drive');
-            const isImgurSlide = looksLikeImgurUrl(src) || (project.media && project.media.source === 'imgur');
+            let isVideoSentinel = false;
+            let thumbSrc = '';
 
-            if (isDriveSlide) {
-                // use placeholder or a normalized safe thumb if available
-                const safeThumb = (project.thumb && !looksLikeDriveUrl(project.thumb)) ? project.thumb : 'assets/placeholder.jpg';
-                t.src = safeThumb;
-                t.setAttribute('data-drive-link', src);
-            } else if (isImgurSlide) {
-                // NEW: Handle Imgur thumbnails
-                t.src = imgurThumbnailUrl(src);
-                t.setAttribute('data-imgur-link', src);
+            // slide item can be: string (image URL) OR object { __video: true, video: {...}, poster }
+            if (typeof item === 'object' && item !== null && item.__video) {
+                isVideoSentinel = true;
+                thumbSrc = item.poster || project.thumb || project.image || 'assets/placeholder.jpg';
             } else {
-                t.src = src;
+                // normal image slide
+                thumbSrc = item;
             }
 
+            // Handle Imgur thumbnail generation if utility exists
+            if (!thumbSrc && typeof item === 'string' && typeof imgurThumbnailUrl === 'function') {
+                thumbSrc = imgurThumbnailUrl(item);
+            }
+
+            // for drive slides we may not want to embed a drive image; show project thumb or placeholder
+            if (looksLikeDriveUrl(thumbSrc)) {
+                // if it's safe uc link we can show normalized uc, otherwise fallback to project thumb or placeholder
+                if (isSafeDriveUc(thumbSrc)) {
+                    // use normalized uc link
+                    thumbSrc = normalizeDriveImage(thumbSrc) || thumbSrc;
+                } else {
+                    thumbSrc = project.thumb || 'assets/placeholder.jpg';
+                }
+            }
+
+            t.src = thumbSrc || 'assets/placeholder.jpg';
             t.loading = 'lazy';
             t.alt = `${project.title || ''} ${i + 1}`;
+
             if (i === 0) t.classList.add('active');
 
             t.addEventListener('click', () => {
                 const container = fsContent.querySelector('.embed-container');
                 if (!container) return;
-                const img = container.querySelector('img');
 
-                const driveLink = t.getAttribute('data-drive-link');
-                const imgurLink = t.getAttribute('data-imgur-link');
-
-                if (driveLink) {
-                    // open drive preview in a new tab instead of trying to set the <img src>
-                    const preview = driveLink;
-                    window.open(preview, '_blank', 'noopener');
-                    return;
-                } else if (imgurLink) {
-                    // NEW: Handle Imgur - show the direct image
-                    const directUrl = imgurDirectImageUrl(imgurLink);
-                    if (img) {
-                        img.src = directUrl;
+                // click handler: if video sentinel -> play video; if normal -> swap image
+                if (isVideoSentinel) {
+                    const vid = item.video;
+                    // try to insert video inline
+                    insertVideoIntoContainer(container, vid, item.poster || project.thumb);
+                } else {
+                    // normal image slide: attempt to set <img> inside container
+                    const imgEl = container.querySelector('img');
+                    if (imgEl) {
+                        imgEl.src = item;
                     } else {
+                        // container may have video iframe; replace with a simple <img>
                         container.innerHTML = '';
                         const newImg = document.createElement('img');
-                        newImg.src = directUrl;
+                        newImg.src = item;
                         newImg.alt = project.title || '';
                         newImg.style.width = '100%';
                         newImg.style.height = '100%';
                         newImg.style.objectFit = 'contain';
                         container.appendChild(newImg);
                     }
-                } else {
-                    if (img) {
-                        img.src = src;
-                    } else {
-                        // fallback: replace embed-container contents with a simple image
-                        container.innerHTML = '';
-                        const newImg = document.createElement('img');
-                        newImg.src = src;
-                        newImg.alt = project.title || '';
-                        container.appendChild(newImg);
-                    }
                 }
 
-                fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
-                t.classList.add('active');
+                // mark active
+                if (fsThumbs) {
+                    fsThumbs.querySelectorAll('img').forEach(im => im.classList.remove('active'));
+                    t.classList.add('active');
+                }
                 currentIndex = i;
             });
+
             fsThumbs.appendChild(t);
         });
     }
