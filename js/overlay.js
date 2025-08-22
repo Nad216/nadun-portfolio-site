@@ -280,6 +280,8 @@ function createMediaNodeWithoutIframe(project) {
             container.style.position = 'relative';
             container.style.background = '#000';
             container.style.cursor = 'pointer';
+            container.style.width = '100%';
+            container.style.boxSizing = 'border-box';
 
             // main poster img
             const mainImg = document.createElement('img');
@@ -364,6 +366,8 @@ function createMediaNodeWithoutIframe(project) {
             const container = document.createElement('div');
             container.className = `embed-container ${cls}`;
             container.style.minHeight = '140px';
+            container.style.width = '100%';
+            container.style.boxSizing = 'border-box';
 
             // display first slide if it's an image (drive-image opens in new tab)
             const first = slides[0];
@@ -769,6 +773,24 @@ export function openOverlay(project) {
 
             fsThumbs.appendChild(t);
         });
+    }
+
+    // Set max-width and padding-left for mixed/gallery/images overlays only
+    if (
+      project.media &&
+      (project.media.type === 'mixed' ||
+       project.media.type === 'gallery' ||
+       project.media.type === 'images')
+    ) {
+      if (fsMedia) {
+        fsMedia.style.maxWidth = '90vw';
+        fsMedia.style.paddingLeft = 'revert';
+      }
+    } else {
+      if (fsMedia) {
+        fsMedia.style.maxWidth = '';
+        fsMedia.style.paddingLeft = '';
+      }
     }
 
     overlay.removeAttribute('aria-hidden');
