@@ -69,6 +69,9 @@
     gap: 8px;
     align-items: flex-start;
     position: static;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .fs-header .fs-left {
@@ -85,12 +88,13 @@
     display: block;
     align-items: center;
     justify-content: center;
-    min-height: 0; /* Fix: Remove excessive min-height for web overlay */
+    min-height: 0;
     max-height: calc(92vh - 230px);
     box-sizing: border-box;
     overflow: hidden;
 }
 
+/* footer area */
 .fs-footer {
     padding: 12px 18px;
     border-top: 1px solid rgba(255,255,255,0.03);
@@ -247,6 +251,7 @@
     padding: 18px 12px;
     overflow-y: auto;
     background: transparent;
+    box-sizing: border-box;
 }
 
 .fs-split .fs-media {
