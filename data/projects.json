@@ -1,5 +1,5 @@
 {
-	"brand": [
+	"digitalCreativeArts": [
 		{
 			"title": "Iflix Stall Concept",
 			"description": "Iflix Stall Concept for BMICH Exhibition.",
@@ -30,7 +30,7 @@
 			}
 		}
 	],
-	"animation": [
+	"animationMotion": [
 		{
 			"title": "Company Promo Video",
 			"description": "Promotional video for international launch.",
@@ -53,7 +53,7 @@
 			}
 		}
 	],
-	"cgi": [
+	"threeDCreations": [
 		{
 			"title": "Viral YouTube Song - Thoppi Welenda",
 			"description": "A stylized 3D animation made in 3ds Max. This video focuses on humor and timing, with hand-keyed character animation and simple environment design.",

@@ -1,10 +1,10 @@
-# README — JS files, `data/projects.json`, and CSS file roles (confirmed)
+# README — JS files, `data/projects.json`, and CSS file roles (updated for new category names)
 
-This README documents the JavaScript modules, the `data/projects.json` format, and the purpose of each CSS file in your project. I double-checked the file tree you sent — the README below exactly matches the files you currently have.
+This README documents the JavaScript modules, the `data/projects.json` format (with updated category keys), and the purpose of each CSS file in your project. It matches your current file tree and naming conventions.
 
 ---
 
-## Project structure (confirmed)
+## Project structure
 ```
 /index.html
 /css/
@@ -27,8 +27,6 @@ This README documents the JavaScript modules, the `data/projects.json` format, a
 README.md
 ```
 
-> Note: There is **no `cards.css`** in your tree — card and featured-project rules live in `components.css`. If you later decide to split card styles into a separate file, name it `cards.css` and include it after `components.css`.
-
 ---
 
 ## What each JS file does (quick reference)
@@ -42,14 +40,15 @@ README.md
 
 ---
 
-## `projects.json` — shape reminder
+## `projects.json` — shape reminder (UPDATED)
 
-Top-level: `{ "brand": [ ... ], "animation": [ ... ], "cgi": [ ... ] }` — each category is an array of project objects.
+Top-level: `{ "digitalCreativeArts": [ ... ], "animationMotion": [ ... ], "threeDCreations": [ ... ] }` — each category is an array of project objects.
 
 Project fields (used by the code):
 - `title`, `description`, `image`, `thumb`
 - `createdUsing` (array) → maps to `assets/logos/<slug>.png`
 - `featured`, `keep`, `highlight` (booleans)
+- `dateCreated` (string, ISO format: YYYY-MM-DD)
 - `media` object:
   - `type` ('video' | 'images' | 'gallery')
   - `source` ('local' | 'youtube' | 'drive' | etc.)
@@ -61,7 +60,7 @@ Project fields (used by the code):
 
 ---
 
-## CSS files — purpose & what to edit where (exactly matching your tree)
+## CSS files — purpose & what to edit where
 
 ### `variables.css`
 - **Contains:** `:root` CSS variables (colors, `--sidebar-width`, overlay sizes).
@@ -89,7 +88,7 @@ Project fields (used by the code):
 
 ---
 
-## How to include CSS (order matters — match this)
+## How to include CSS (order matters)
 
 Include CSS in the `<head>` in this order:
 
@@ -106,27 +105,24 @@ Include CSS in the `<head>` in this order:
 - `responsive.css` last so mobile overrides apply after base styles.
 - `overlay.css` comes after `components.css` because it overrides some component defaults in vertical mode.
 
-If you ever add `cards.css`, include it after `components.css` and before `overlay.css` (or merge into `components.css`).
-
 ---
 
-## Quick sanity checks I performed (based on your screenshot)
+## Quick sanity checks
 
 - CSS folder contains: `variables.css`, `reset.css`, `layout.css`, `components.css`, `overlay.css`, `responsive.css` — **matched**.
 - JS folder contains: `main.js`, `mobileMenu.js`, `nav.js`, `overlay.js`, `projects.js`, `utils.js` — **matched**.
-- `data/projects.json` exists — **matched**.
-- No `cards.css` file — README updated accordingly.
+- `data/projects.json` exists and uses new keys — **matched**.
 
 ---
 
 ## Troubleshooting & next steps
 
 - If your styling appears wrong, check the CSS inclusion order and open DevTools → Elements → Styles to see which file/rule wins.
-- If projects don't load, confirm `data/projects.json` HTTP 200 from the same origin.
+- If projects don't load, confirm `data/projects.json` HTTP 200 from the same origin and that keys match the new names.
 - If you'd like, I can:
   - validate `data/projects.json` and return a cleaned copy, or
   - produce a tiny script that checks the presence of expected files and reports any missing ones.
 
 ---
 
-If you'd like the README file updated on disk with this exact content (so it replaces the current README.md), I can write it and give you a download link. I already saved this file to disk.
+If you'd like the README file updated on disk with this exact content, it's now up to date.
