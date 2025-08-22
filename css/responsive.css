@@ -83,7 +83,10 @@
     .fs-media {
         padding: 8px 12px;
         max-height: calc(100vh - 200px);
+        width: 100%;
+        max-width: 95vw;
         box-sizing: border-box;
+        /* margin: 0 auto; */
     }
 
     /* reduce thumb sizes on mobile */
@@ -102,7 +105,7 @@
     /* Ensure all overlays (vertical and horizontal) embed containers fill width */
     #fullscreen-overlay .embed-container {
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 95vw !important;
         min-width: 0 !important;
         margin: 0 auto;
         border-radius: 0;
@@ -119,6 +122,30 @@
         object-fit: contain;
         display: block;
         margin: 0 auto;
+    }
+
+    /* Fix fullscreen button stacking and visibility */
+    .fs-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+
+    .fs-fullscreen {
+        position: relative;
+        z-index: 10;
+        margin-left: auto;
+        margin-right: 0;
+        background: rgba(0,0,0,0.12);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: #fff;
+        font-size: 18px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
     }
 }
 
