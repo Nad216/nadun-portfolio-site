@@ -51,7 +51,7 @@
     padding: 6px 10px;
 }
 
-/* fs-content grid */
+/* --- Overlay core layout: restore original, remove conflicts --- */
 .fs-content {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -60,7 +60,6 @@
     min-height: 0;
 }
 
-/* header / actions */
 .fs-header {
     padding: 18px 22px 6px 22px;
     border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -74,15 +73,16 @@
     box-sizing: border-box;
 }
 
-.fs-header .fs-left {
-    min-width: 0;
+.fs-split .fs-header {
+    flex: 1 1 40%;
+    max-width: 46%;
+    min-width: 260px;
+    padding: 18px 12px;
+    overflow-y: auto;
+    background: transparent;
+    box-sizing: border-box;
 }
 
-.fs-actions {
-    margin-top: 8px;
-}
-
-/* media area */
 .fs-media {
     padding: 12px 18px;
     display: block;
@@ -94,7 +94,6 @@
     overflow: hidden;
 }
 
-/* footer area */
 .fs-footer {
     padding: 12px 18px;
     border-top: 1px solid rgba(255,255,255,0.03);

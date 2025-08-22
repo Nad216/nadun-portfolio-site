@@ -620,20 +620,29 @@ export function openOverlay(project) {
 
         function setEmbedMaxHeight() {
             if (!embedContainer) return;
-            const headerEl = fsContent.querySelector('.fs-header');
-            const footerEl = overlay.querySelector('.fs-footer');
-            const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
-            const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
-            const padding = 48;
-            const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
-            embedContainer.classList.remove('embed-9-16','embed-16-9','embed-1-1');
-            embedContainer.style.paddingBottom = '0';
-            embedContainer.style.height = avail + 'px';
-            embedContainer.style.maxHeight = avail + 'px';
+            // Only set height for mobile overlays (if needed)
+            if (window.innerWidth < 900) {
+                const headerEl = fsContent.querySelector('.fs-header');
+                const footerEl = overlay.querySelector('.fs-footer');
+                const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
+                const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
+                const padding = 48;
+                const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
+                embedContainer.classList.remove('embed-9-16','embed-16-9','embed-1-1');
+                embedContainer.style.paddingBottom = '0';
+                embedContainer.style.height = avail + 'px';
+                embedContainer.style.maxHeight = avail + 'px';
+            } else {
+                // Desktop: let CSS handle sizing, remove inline height/max-height
+                embedContainer.style.height = '';
+                embedContainer.style.maxHeight = '';
+            }
         }
 
         window.requestAnimationFrame(() => {
             setEmbedMaxHeight();
+            // Fix: call again after short delay to ensure correct sizing
+            setTimeout(setEmbedMaxHeight, 60);
         });
         overlay._verticalResizeHandler = setEmbedMaxHeight;
         window.addEventListener('resize', overlay._verticalResizeHandler);
