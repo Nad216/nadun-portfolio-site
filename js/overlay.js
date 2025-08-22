@@ -560,7 +560,6 @@ export function openOverlay(project) {
     if (fsMedia) fsMedia.innerHTML = '';
     if (fsThumbs) fsThumbs.innerHTML = '';
     if (fsBuiltWith) fsBuiltWith.innerHTML = '';
-    if (fsActions) fsActions.innerHTML = '';
 
     fsTitle.textContent = project.title || '';
     fsDesc.textContent = project.description || '';
