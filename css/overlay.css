@@ -292,3 +292,61 @@
 #fullscreen-overlay[aria-hidden="true"] .fs-inner {
     pointer-events: none;
 }
+
+/* Gallery navigation buttons for overlay - improved design */
+.fs-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(30,30,30,0.18);
+    color: #fff;
+    border: none;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fs-media:hover .fs-nav-btn,
+.fs-media:focus-within .fs-nav-btn {
+    opacity: 1;
+}
+.fs-nav-btn:focus {
+    background: rgba(30,183,169,0.18);
+    outline: 2px solid #1cb7a9;
+    opacity: 1;
+}
+.fs-nav-left {
+    left: 12px;
+}
+.fs-nav-right {
+    right: 12px;
+}
+.fs-nav-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+@media (max-width: 900px) {
+    .fs-nav-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+        left: 6px;
+        right: 6px;
+        opacity: 1;
+    }
+    .fs-nav-left {
+        left: 6px;
+    }
+    .fs-nav-right {
+        right: 6px;
+    }
+}
