@@ -10,10 +10,18 @@
     imgurThumbnailUrl
 } from './utils.js';
 
-let overlay, fsInner, fsContent, fsTitle, fsDesc, fsMedia, fsThumbs, fsClose, fsBuiltWith, fsActions;
+let overlay, fsInner, fsContent, fsTitle, fsDesc, fsMedia, fsThumbs, fsClose, fsBuiltWith, fsActions, fsDate;
 let currentSlides = [];
 let currentIndex = 0;
 let currentProject = null;
+
+/* helper to format date input (ISO string / timestamp / Date) */
+function formatDate(input) {
+    if (!input && input !== 0) return '';
+    const d = (input instanceof Date) ? input : new Date(input);
+    if (isNaN(d.getTime())) return String(input);
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+}
 
 function ensureOverlayExists() {
     if (overlay) return overlay;
@@ -36,6 +44,7 @@ function ensureOverlayExists() {
           <div class="fs-left">
             <h2 class="fs-title"></h2>
             <p class="fs-desc"></p>
+            <p class="fs-date built-with-label"></p>
             <div class="fs-builtwith"></div>
           </div>
           <div class="fs-actions"></div>
@@ -78,6 +87,7 @@ function setupRefs() {
     fsContent = overlay.querySelector('.fs-content');
     fsTitle = overlay.querySelector('.fs-title');
     fsDesc = overlay.querySelector('.fs-desc');
+    fsDate = overlay.querySelector('.fs-date');
     fsMedia = overlay.querySelector('.fs-media');
     fsThumbs = overlay.querySelector('.fs-thumbs');
     fsClose = overlay.querySelector('.fs-close');
@@ -553,6 +563,16 @@ export function openOverlay(project) {
 
     fsTitle.textContent = project.title || '';
     fsDesc.textContent = project.description || '';
+
+    // populate date under description (small text)
+    if (fsDate) {
+        if (project.dateCreated) {
+            fsDate.textContent = `Created: ${formatDate(project.dateCreated)}`;
+        } else {
+            fsDate.textContent = '';
+        }
+    }
+
     if (project.createdUsing && project.createdUsing.length) {
         fsBuiltWith.innerHTML = generateLogosHTML(project.createdUsing);
     }
@@ -778,6 +798,7 @@ export function closeOverlay() {
     if (fsBuiltWith) fsBuiltWith.innerHTML = '';
     if (fsTitle) fsTitle.textContent = '';
     if (fsDesc) fsDesc.textContent = '';
+    if (fsDate) fsDate.textContent = '';
 
     currentSlides = [];
     currentIndex = 0;

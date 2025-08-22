@@ -5,6 +5,14 @@
 			"description": "Iflix Stall Concept for BMICH Exhibition.",
 			"image": "assets/thumbs/Iflix_stall.jpg",
 			"thumb": "assets/thumbs/Iflix_stall.jpg",
+			"createdUsing": [
+				"3DS Max",
+				"Photoshop"
+			],
+			"dateCreated": "2021-03-15",
+			"featured": false,
+			"keep": false,
+			"highlight": false,
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -28,6 +36,14 @@
 			"description": "Promotional video for international launch.",
 			"image": "assets/company-video.jpg",
 			"thumb": "assets/company-video.jpg",
+			"createdUsing": [
+				"After Effects",
+				"Premiere Pro"
+			],
+			"dateCreated": "2022-09-01",
+			"featured": false,
+			"keep": false,
+			"highlight": false,
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -50,12 +66,17 @@
 				"3ds Max",
 				"After Effects"
 			],
+			"dateCreated": "2019-11-20",
 			"media": {
 				"type": "video",
 				"source": "youtube",
 				"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
 				"format": "horizontal",
-				"images": [ "assets/thumbs/Toppi Welenda Thumb.jpg", "assets/thumbs/Toppi Welenda Thumb.jpg", "assets/thumbs/Toppi Welenda Thumb.jpg" ]
+				"images": [
+					"assets/thumbs/Toppi Welenda Thumb.jpg",
+					"assets/thumbs/Toppi Welenda Thumb.jpg",
+					"assets/thumbs/Toppi Welenda Thumb.jpg"
+				]
 			}
 		},
 		{
@@ -70,6 +91,7 @@
 				"Blender",
 				"After Effects"
 			],
+			"dateCreated": "2020-06-10",
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -87,6 +109,10 @@
 				"3ds Max",
 				"After Effects"
 			],
+			"dateCreated": "2021-08-05",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
 			"media": {
 				"type": "mixed",
 				"video": {
