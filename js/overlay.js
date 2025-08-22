@@ -594,6 +594,8 @@ export function openOverlay(project) {
     const fmt = (project.media && project.media.format) || project.format || 'horizontal';
     const isVertical = fmt === 'vertical';
 
+    let embedContainer = null;
+
     if (isVertical) {
         overlay.classList.add('vertical');
         if (fsMedia) fsMedia.innerHTML = '';
@@ -614,25 +616,29 @@ export function openOverlay(project) {
         split.appendChild(res.node);
         fsContent.appendChild(split);
 
-        if (!isDesktop) {
-            const embedContainer = split.querySelector('.embed-container') || split.querySelector('div');
-            function setEmbedMaxHeight() {
-                const headerEl = fsContent.querySelector('.fs-header');
-                const footerEl = overlay.querySelector('.fs-footer');
-                const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
-                const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
-                const padding = 48;
-                const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
-                if (embedContainer) {
-                    embedContainer.style.maxHeight = avail + 'px';
-                    embedContainer.style.height = 'auto';
-                }
-            }
-            setEmbedMaxHeight();
-            overlay._verticalResizeHandler = setEmbedMaxHeight;
-            window.addEventListener('resize', overlay._verticalResizeHandler);
+        embedContainer = split.querySelector('.embed-container');
+
+        // --- FIX: Remove aspect-ratio class and set height to match split ---
+        function setEmbedMaxHeight() {
+            if (!embedContainer) return;
+            const headerEl = fsContent.querySelector('.fs-header');
+            const footerEl = overlay.querySelector('.fs-footer');
+            const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
+            const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
+            const padding = 48;
+            const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
+            embedContainer.classList.remove('embed-9-16','embed-16-9','embed-1-1');
+            embedContainer.style.paddingBottom = '0';
+            embedContainer.style.height = avail + 'px';
+            embedContainer.style.maxHeight = avail + 'px';
         }
 
+        // Initial calculation after overlay is visible
+        window.requestAnimationFrame(() => {
+            setEmbedMaxHeight();
+        });
+        overlay._verticalResizeHandler = setEmbedMaxHeight;
+        window.addEventListener('resize', overlay._verticalResizeHandler);
     } else {
         overlay.classList.remove('vertical');
         if (fsMedia) fsMedia.appendChild(res.node);
@@ -711,6 +717,21 @@ export function openOverlay(project) {
                 if (s.type === 'video') {
                     // play video inline (or via iframe)
                     playSlide(s, container);
+                    // Remove aspect-ratio class for video/iframe on mobile vertical overlay
+                    if (window.innerWidth < 900 && overlay.classList.contains('vertical')) {
+                        container.classList.remove('embed-9-16','embed-16-9','embed-1-1');
+                        container.style.paddingBottom = '0';
+                        window.requestAnimationFrame(() => {
+                            const headerEl = fsContent.querySelector('.fs-header');
+                            const footerEl = overlay.querySelector('.fs-footer');
+                            const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
+                            const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
+                            const padding = 48;
+                            const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
+                            container.style.height = avail + 'px';
+                            container.style.maxHeight = avail + 'px';
+                        });
+                    }
                     return;
                 }
 
@@ -749,7 +770,20 @@ export function openOverlay(project) {
     if (fsClose) fsClose.setAttribute('tabindex', '0');
 
     setBackgroundInert(true);
-    window.requestAnimationFrame(() => { try { fsInner.focus(); } catch (e) { } });
+    window.requestAnimationFrame(() => {
+        try { fsInner.focus(); } catch (e) { }
+        // Recalculate embed height after overlay is visible
+        if (isVertical && embedContainer) {
+            const headerEl = fsContent.querySelector('.fs-header');
+            const footerEl = overlay.querySelector('.fs-footer');
+            const headerH = headerEl ? headerEl.getBoundingClientRect().height : 0;
+            const footerH = footerEl ? footerEl.getBoundingClientRect().height : 0;
+            const padding = 48;
+            const avail = Math.max(160, window.innerHeight - headerH - footerH - padding);
+            embedContainer.style.height = avail + 'px';
+            embedContainer.style.maxHeight = avail + 'px';
+        }
+    });
 
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';

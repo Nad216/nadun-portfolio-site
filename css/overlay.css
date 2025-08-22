@@ -85,7 +85,7 @@
     display: block;
     align-items: center;
     justify-content: center;
-    min-height: 220px;
+    min-height: 0; /* Fix: Remove excessive min-height for web overlay */
     max-height: calc(92vh - 230px);
     box-sizing: border-box;
     overflow: hidden;
