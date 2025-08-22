@@ -84,10 +84,9 @@
         padding: 8px 12px;
         max-height: calc(100vh - 200px);
         width: 100%;
-        max-width: 92vw;
+        max-width: 95vw;
         box-sizing: border-box;
-        margin-right: auto;
-        /* margin-left: auto; */
+        /* margin: 0 auto; */
     }
 
     /* reduce thumb sizes on mobile */
@@ -106,10 +105,9 @@
     /* Ensure all overlays (vertical and horizontal) embed containers fill width */
     #fullscreen-overlay .embed-container {
         width: 100% !important;
-        max-width: 92vw !important;
+        max-width: 95vw !important;
         min-width: 0 !important;
-        margin-right: auto !important;
-        /* margin-left: auto !important; */
+        margin: 0 auto;
         border-radius: 0;
         overflow: hidden;
     }
@@ -123,8 +121,7 @@
         height: 100%;
         object-fit: contain;
         display: block;
-        margin-right: auto;
-        /* margin-left: auto; */
+        margin: 0 auto;
     }
 
     /* Fix fullscreen button stacking and visibility */
