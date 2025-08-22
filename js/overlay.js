@@ -460,7 +460,7 @@ function createMediaNodeWithoutIframe(project) {
         if (media.source === 'drive' || /drive\.google/.test(media.link || project.link || '')) {
             const link = media.link || project.link || '';
             const preview = drivePreviewUrl(link) || link;
-            const posterCandidate = projectthumb || project.image || 'assets/placeholder.jpg';
+            const posterCandidate = project.thumb || project.image || 'assets/placeholder.jpg';
             const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizeDriveImage(posterCandidate);
 
             const container = document.createElement('div');
@@ -591,59 +591,6 @@ export function openOverlay(project) {
     const res = createMediaNodeWithoutIframe(project);
     currentSlides = res.slides || [];
     currentIndex = 0;
-
-    // --- Add left/right navigation buttons if more than 1 slide ---
-    let navLeftBtn = null, navRightBtn = null;
-    if (currentSlides.length > 1 && fsMedia) {
-        navLeftBtn = document.createElement('button');
-        navLeftBtn.className = 'fs-nav-btn fs-nav-left';
-        navLeftBtn.setAttribute('aria-label', 'Previous');
-        navLeftBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-        navRightBtn = document.createElement('button');
-        navRightBtn.className = 'fs-nav-btn fs-nav-right';
-        navRightBtn.setAttribute('aria-label', 'Next');
-        navRightBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.5 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-        // Navigation logic
-        navLeftBtn.onclick = () => {
-            currentIndex = (currentIndex - 1 + currentSlides.length) % currentSlides.length;
-            showSlide(currentIndex);
-        };
-        navRightBtn.onclick = () => {
-            currentIndex = (currentIndex + 1) % currentSlides.length;
-            showSlide(currentIndex);
-        };
-
-        // Insert buttons into media area
-        fsMedia.style.position = 'relative';
-        fsMedia.appendChild(navLeftBtn);
-        fsMedia.appendChild(navRightBtn);
-    }
-
-    // Helper to show a slide by index
-    function showSlide(idx) {
-        const slide = currentSlides[idx];
-        const container = fsContent.querySelector('.embed-container');
-        if (!container) return;
-        if (typeof slide === 'string') {
-            container.innerHTML = '';
-            container.appendChild(createImgEl(slide, project.title || ''));
-        } else if (slide.type === 'video') {
-            playSlide(slide, container);
-        } else if (slide.type === 'image') {
-            container.innerHTML = '';
-            container.appendChild(createImgEl(slide.src, project.title || ''));
-        } else if (slide.type === 'drive-image') {
-            const preview = slide.link || slide.src;
-            if (preview) window.open(preview, '_blank', 'noopener');
-        }
-        // Update active thumb
-        fsThumbs.querySelectorAll('img').forEach((im, i) => {
-            if (i === idx) im.classList.add('active'); else im.classList.remove('active');
-        });
-        currentIndex = idx;
-    }
 
     const fmt = (project.media && project.media.format) || project.format || 'horizontal';
     const isVertical = fmt === 'vertical';
