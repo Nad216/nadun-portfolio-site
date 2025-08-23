@@ -101,15 +101,41 @@
 			}
 		},
 		{
+			"title": "LOT Fahaheel Opening",
+			"description": "LOT Kuwait Fahaheel Store Opening Promotion Video. in English, Arabic and Malayalam Languages",
+			"image": "assets/thumbs/LOT Fahaheel Opening.png",
+			"thumb": "assets/thumbs/LOT Fahaheel Opening.png",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"createdUsing": [ "After Effects" ],
+			"media": {
+				"type": "mixed",
+				"source": "drive",
+				"format": "vertical",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=11yHjT3OVBflyNL5e949S9znM8j9mFKLt",
+					"https://drive.google.com/uc?export=download&id=1LZm4rF6yDHVnrlt5rW7vHWdEj_wpYLzV",
+					"https://drive.google.com/uc?export=download&id=1HJ7RwTrYM9_o7xT91sxXAG0UDsBuFaWB"
+				],
+				"images": [
+					"assets/thumbs/LOT Fahaheel Opening.png",
+					"assets/thumbs/LOT Fahaheel Opening.png",
+					"assets/thumbs/LOT Fahaheel Opening.png"
+				]
+			}
+		},
+		{
 			"title": "S-LON Stall Concept",
 			"description": "Iflix Stall Concept for BMICH Exhibition.",
 			"image": "assets/projects/S-lon/1.jpg",
 			"thumb": "assets/projects/S-lon/1.jpg",
 			"createdUsing": [
 				"3ds Max",
-				"After Effects"
+				"After Effects",
+				"Photoshop"
 			],
-			"dateCreated": "2021-08-05",
+			"dateCreated": "2016-06-15",
 			"featured": false,
 			"keep": true,
 			"highlight": false,

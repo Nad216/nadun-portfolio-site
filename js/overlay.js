@@ -268,9 +268,28 @@ function createMediaNodeWithoutIframe(project) {
         };
 
         // ---------- MIXED (video + images) ----------
-        if (media.type === 'mixed' && (Array.isArray(media.images) || media.video)) {
+        if (media.type === 'mixed' && (Array.isArray(media.images) || media.video || Array.isArray(media.links))) {
             const images = Array.isArray(media.images) ? media.images.slice() : [];
-            const videoObj = media.video || null;
+            // Support multiple videos via links array
+            let videoSlides = [];
+            // Get video thumbs if available
+            const videoThumbs = Array.isArray(media.videoThumbs) ? media.videoThumbs : [];
+            if (Array.isArray(media.links)) {
+                videoSlides = media.links.map((link, idx) => ({
+                    type: 'video',
+                    source: media.source || (looksLikeDriveUrl(link) ? 'drive' : (/(youtube|youtu\.be)/.test(String(link)) ? 'youtube' : 'local')),
+                    link,
+                    poster: videoThumbs[idx] || project.thumb || project.image || images[idx] || 'assets/placeholder.jpg'
+                }));
+            } else if (media.video) {
+                const videoObj = media.video;
+                videoSlides = [{
+                    type: 'video',
+                    source: videoObj.source || (looksLikeDriveUrl(videoObj.link || '') ? 'drive' : (/(youtube|youtu\.be)/.test(String(videoObj.link || '')) ? 'youtube' : 'local')),
+                    link: videoObj.link || videoObj.src || '',
+                    poster: videoThumbs[0] || project.thumb || project.image || images[0] || 'assets/placeholder.jpg'
+                }];
+            }
             const posterCandidate = project.thumb || project.image || images[0] || 'assets/placeholder.jpg';
             const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizePotentialImageSrc(posterCandidate);
 
@@ -293,8 +312,8 @@ function createMediaNodeWithoutIframe(project) {
             mainImg.src = safePoster;
             container.appendChild(mainImg);
 
-            // If there's a video, show a play button
-            if (videoObj && (videoObj.link || videoObj.source || videoObj.src)) {
+            // If there are video slides, show a play button for the first video
+            if (videoSlides.length > 0) {
                 const play = document.createElement('button');
                 play.type = 'button';
                 play.className = 'fs-play-button';
@@ -302,55 +321,33 @@ function createMediaNodeWithoutIframe(project) {
                 play.textContent = '▶';
                 container.appendChild(play);
 
-                // prepare slide object
-                const videoSlide = {
-                    type: 'video',
-                    source: videoObj.source || (looksLikeDriveUrl(videoObj.link || '') ? 'drive' : (/(youtube|youtu\.be)/.test(String(videoObj.link || '')) ? 'youtube' : 'local')),
-                    link: videoObj.link || videoObj.src || '',
-                    poster: safePoster
-                };
-
-                // wire play
+                // wire play for first video
                 play.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    playSlide(videoSlide, container);
+                    playSlide(videoSlides[0], container);
                 });
 
-                // clicking the poster should also play the video
+                // clicking the poster should also play the first video
                 container.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    playSlide(videoSlide, container);
+                    playSlide(videoSlides[0], container);
                 });
-
-                // build slides array: video first, then images
-                const slides = [videoSlide].concat(images.map(imgSrc => {
-                    if (looksLikeDriveUrl(imgSrc)) return { type: 'drive-image', link: imgSrc };
-                    if (looksLikeImgurUrl(imgSrc)) return { type: 'image', src: imgurDirectImageUrl(imgSrc) };
-                    return { type: 'image', src: normalizePotentialImageSrc(imgSrc) };
-                }));
-
-                wrapper.appendChild(container);
-                return { node: wrapper, slides };
-            } else {
-                // no video, treat as regular gallery fallback (first image shown)
-                const slides = images.map(imgSrc => {
-                    if (looksLikeDriveUrl(imgSrc)) return { type: 'drive-image', link: imgSrc };
-                    if (looksLikeImgurUrl(imgSrc)) return { type: 'image', src: imgurDirectImageUrl(imgSrc) };
-                    return { type: 'image', src: normalizePotentialImageSrc(imgSrc) };
-                });
-
-                if (slides.length) {
-                    // if first slide is an image, set mainImg to that image
-                    const first = slides[0];
-                    if (first.type === 'image') mainImg.src = first.src;
-                    wrapper.appendChild(container);
-                    return { node: wrapper, slides };
-                } else {
-                    // nothing in mixed, fallback to placeholder
-                    wrapper.appendChild(container);
-                    return { node: wrapper, slides: [] };
-                }
             }
+
+            // build slides array: all videos, then images
+            const slides = videoSlides.concat(images.map(imgSrc => {
+                if (looksLikeDriveUrl(imgSrc)) return { type: 'drive-image', link: imgSrc };
+                if (looksLikeImgurUrl(imgSrc)) return { type: 'image', src: imgurDirectImageUrl(imgSrc) };
+                return { type: 'image', src: normalizePotentialImageSrc(imgSrc) };
+            }));
+
+            // --- NEW: build thumbnail gallery for all video slides ---
+            if (slides.length > 1) {
+                container.classList.add('multi-video');
+            }
+
+            wrapper.appendChild(container);
+            return { node: wrapper, slides };
         }
 
         // ---------- IMAGE / GALLERY ----------

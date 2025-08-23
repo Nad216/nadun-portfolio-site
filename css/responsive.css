@@ -252,3 +252,24 @@
         height: 48px;
     }
 }
+
+/* Responsive: multi-video overlay support */
+@media (max-width: 900px) {
+  .fs-media .embed-container.multi-video {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 180px;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 520px) {
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 120px;
+    margin-bottom: 2px;
+  }
+}
