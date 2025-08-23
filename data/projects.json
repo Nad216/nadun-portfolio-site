@@ -9,7 +9,7 @@
 				"3DS Max",
 				"Photoshop"
 			],
-			"dateCreated": "2021-03-15",
+			"dateCreated": "2016-08-17",
 			"featured": false,
 			"keep": false,
 			"highlight": false,
@@ -51,6 +51,25 @@
 				"format": "horizontal",
 				"images": []
 			}
+		},
+		{
+			"title": "Gaja TV News Promo",
+			"description": "Gaja TV News Promotion that included all team members. shoutout to Local news reporters",
+			"image": "assets/thumbs/Gaja TV News Promo.png",
+			"thumb": "assets/thumbs/Gaja TV News Promo.png",
+			"featured": true,
+			"keep": true,
+			"Highlight": true,
+			"dateCreated": "45145",
+			"createdUsing": [ "After Effects", "Photoshop", "Premiere Pro", "3ds Max" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1aEDSfv0gG79J-s8DWDS8ZtFqmVxBPuu-",
+				"format": "horizontal",
+				"images": [					
+				]
+			}
 		}
 	],
 	"threeDCreations": [
@@ -82,11 +101,11 @@
 		{
 			"title": "Lulu 60 Min Free Delivery Video",
 			"description": "A stylized 3D animation made in Blender. This short focuses on delivery process happening in 60 min from a different perspective.",
-			"image": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
-			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
-			"featured": false,
+			"image": "assets/thumbs/Lulu 60 Min Delivery Video.png",
+			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.png",
+			"featured": true,
 			"keep": true,
-			"highlight": false,
+			"highlight": true,
 			"createdUsing": [
 				"Blender",
 				"After Effects"
@@ -95,19 +114,20 @@
 			"media": {
 				"type": "video",
 				"source": "drive",
-				"link": "https://drive.google.com/file/d/1FRiMEof6Voneic9bmgcwKa38eYZo5FUO/preview",
+				"link": "https://drive.google.com/uc?export=download&id=1FRiMEof6Voneic9bmgcwKa38eYZo5FUO",
 				"format": "vertical",
 				"images": []
 			}
 		},
 		{
 			"title": "LOT Fahaheel Opening",
-			"description": "LOT Kuwait Fahaheel Store Opening Promotion Video. in English, Arabic and Malayalam Languages",
-			"image": "assets/thumbs/LOT Fahaheel Opening.png",
-			"thumb": "assets/thumbs/LOT Fahaheel Opening.png",
+			"description": "LOT Kuwait Fahaheel Store Opening Promotion Video. in English, Hindi and Malayalam Languages",
+			"image": "assets/thumbs/LOT Fahaheel Opening EN.png",
+			"thumb": "assets/thumbs/LOT Fahaheel Opening EN.png",
 			"featured": false,
 			"keep": true,
 			"highlight": true,
+			"dateCreated": "2025-06-02",
 			"createdUsing": [ "After Effects" ],
 			"media": {
 				"type": "mixed",
@@ -119,15 +139,15 @@
 					"https://drive.google.com/uc?export=download&id=1HJ7RwTrYM9_o7xT91sxXAG0UDsBuFaWB"
 				],
 				"images": [
-					"assets/thumbs/LOT Fahaheel Opening.png",
-					"assets/thumbs/LOT Fahaheel Opening.png",
-					"assets/thumbs/LOT Fahaheel Opening.png"
+					"assets/thumbs/LOT Fahaheel Opening EN.png",
+					"assets/thumbs/LOT Fahaheel Opening HIN.png",
+					"assets/thumbs/LOT Fahaheel Opening MAL.png"
 				]
 			}
 		},
 		{
 			"title": "S-LON Stall Concept",
-			"description": "Iflix Stall Concept for BMICH Exhibition.",
+			"description": "S-LON Stall Concept for BMICH Exhibition. One of my earliest 3D Video",
 			"image": "assets/projects/S-lon/1.jpg",
 			"thumb": "assets/projects/S-lon/1.jpg",
 			"createdUsing": [
