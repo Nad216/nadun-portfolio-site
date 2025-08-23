@@ -1,4 +1,4 @@
-# README — JS files, `data/projects.json`, and CSS file roles (updated for new category names)
+# README — JS files, `data/projects.json`, and CSS file roles (updated for new category names and overlay thumbnail logic)
 
 This README documents the JavaScript modules, the `data/projects.json` format (with updated category keys), and the purpose of each CSS file in your project. It matches your current file tree and naming conventions.
 
@@ -32,10 +32,10 @@ README.md
 ## What each JS file does (quick reference)
 
 - **`main.js`** — entrypoint. On DOM ready, wires modules together (init nav, init mobile menu, init overlay, then load projects).
-- **`utils.js`** — helper utilities: `slugifyForLogo()`, YouTube/Drive parsers, `generateLogosHTML()`, etc.
+- **`utils.js`** — helper utilities: `slugifyForLogo()`, YouTube/Drive/Imgur parsers, `generateLogosHTML()`, etc.
 - **`nav.js`** — highlights sidebar/mobile nav links based on scroll position.
 - **`mobileMenu.js`** — hamburger toggle and mobile menu open/close behavior.
-- **`overlay.js`** — creates and manages the single overlay DOM node (`#fullscreen-overlay`), handles media previews (images, local video, YouTube, Drive), thumbs, fullscreen button, vertical split.
+- **`overlay.js`** — creates and manages the single overlay DOM node (`#fullscreen-overlay`), handles media previews (images, local video, YouTube, Drive), thumbs, fullscreen button, vertical split, and thumbnail mapping for mixed media.
 - **`projects.js`** — fetches `data/projects.json`, renders featured and normal cards, and attaches card click handlers that open the overlay.
 
 ---
@@ -50,13 +50,20 @@ Project fields (used by the code):
 - `featured`, `keep`, `highlight` (booleans)
 - `dateCreated` (string, ISO format: YYYY-MM-DD)
 - `media` object:
-  - `type` ('video' | 'images' | 'gallery')
+  - `type` ('video' | 'images' | 'gallery' | 'mixed')
   - `source` ('local' | 'youtube' | 'drive' | etc.)
   - `link` (URL or local path)
+  - `links` (array of video URLs for mixed type)
   - `format` ('horizontal' | 'vertical' | 'square')
-  - `images` (array) — gallery images
+  - `images` (array) — gallery images and/or video thumbnails
 
 **Important**: `fetch('data/projects.json')` requires an HTTP server (not file://).
+
+### Overlay thumbnail logic for mixed media
+- If `media.type` is `"mixed"` and there are multiple video links (`links` array), the first N images in `images` are used as thumbnails and preload images for the N videos.
+- Any additional images (after the first N) are shown as image slides/thumbnails in the overlay gallery.
+- For a single video, the first image is used as its thumbnail/preload.
+- This logic ensures correct mapping of video thumbnails and gallery images in overlays.
 
 ---
 
