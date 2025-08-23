@@ -270,27 +270,31 @@ function createMediaNodeWithoutIframe(project) {
         // ---------- MIXED (video + images) ----------
         if (media.type === 'mixed' && (Array.isArray(media.images) || media.video || Array.isArray(media.links))) {
             const images = Array.isArray(media.images) ? media.images.slice() : [];
-            // Support multiple videos via links array
             let videoSlides = [];
-            // Get video thumbs if available
-            const videoThumbs = Array.isArray(media.videoThumbs) ? media.videoThumbs : [];
+            const numVideos = Array.isArray(media.links) ? media.links.length : (media.video ? 1 : 0);
+            // Use first N images as video thumbs/posters
             if (Array.isArray(media.links)) {
                 videoSlides = media.links.map((link, idx) => ({
                     type: 'video',
                     source: media.source || (looksLikeDriveUrl(link) ? 'drive' : (/(youtube|youtu\.be)/.test(String(link)) ? 'youtube' : 'local')),
                     link,
-                    poster: videoThumbs[idx] || project.thumb || project.image || images[idx] || 'assets/placeholder.jpg'
+                    poster: images[idx] || project.thumb || project.image || 'assets/placeholder.jpg'
                 }));
             } else if (media.video) {
-                const videoObj = media.video;
                 videoSlides = [{
                     type: 'video',
-                    source: videoObj.source || (looksLikeDriveUrl(videoObj.link || '') ? 'drive' : (/(youtube|youtu\.be)/.test(String(videoObj.link || '')) ? 'youtube' : 'local')),
-                    link: videoObj.link || videoObj.src || '',
-                    poster: videoThumbs[0] || project.thumb || project.image || images[0] || 'assets/placeholder.jpg'
+                    source: media.video.source || (looksLikeDriveUrl(media.video.link || '') ? 'drive' : (/(youtube|youtu\.be)/.test(String(media.video.link || '')) ? 'youtube' : 'local')),
+                    link: media.video.link || media.video.src || '',
+                    poster: images[0] || project.thumb || project.image || 'assets/placeholder.jpg'
                 }];
             }
-            const posterCandidate = project.thumb || project.image || images[0] || 'assets/placeholder.jpg';
+            // Remaining images are image slides
+            const imageSlides = images.slice(numVideos).map(imgSrc => {
+                if (looksLikeDriveUrl(imgSrc)) return { type: 'drive-image', link: imgSrc };
+                if (looksLikeImgurUrl(imgSrc)) return { type: 'image', src: imgurDirectImageUrl(imgSrc) };
+                return { type: 'image', src: normalizePotentialImageSrc(imgSrc) };
+            });
+            const posterCandidate = videoSlides[0] ? videoSlides[0].poster : (project.thumb || project.image || images[0] || 'assets/placeholder.jpg');
             const safePoster = looksLikeDriveUrl(posterCandidate) ? 'assets/placeholder.jpg' : normalizePotentialImageSrc(posterCandidate);
 
             const container = document.createElement('div');
@@ -335,13 +339,8 @@ function createMediaNodeWithoutIframe(project) {
             }
 
             // build slides array: all videos, then images
-            const slides = videoSlides.concat(images.map(imgSrc => {
-                if (looksLikeDriveUrl(imgSrc)) return { type: 'drive-image', link: imgSrc };
-                if (looksLikeImgurUrl(imgSrc)) return { type: 'image', src: imgurDirectImageUrl(imgSrc) };
-                return { type: 'image', src: normalizePotentialImageSrc(imgSrc) };
-            }));
+            const slides = videoSlides.concat(imageSlides);
 
-            // --- NEW: build thumbnail gallery for all video slides ---
             if (slides.length > 1) {
                 container.classList.add('multi-video');
             }
