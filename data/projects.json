@@ -59,15 +59,15 @@
 			"thumb": "assets/thumbs/Gaja TV News Promo.png",
 			"featured": true,
 			"keep": true,
-			"Highlight": true,
-			"dateCreated": "45145",
+			"highlight": true,
+			"dateCreated": "2023-08-07",
 			"createdUsing": [ "After Effects", "Photoshop", "Premiere Pro", "3ds Max" ],
 			"media": {
-				"type": "video\",",
+				"type": "video",
 				"source": "drive",
 				"link": "https://drive.google.com/uc?export=download&id=1aEDSfv0gG79J-s8DWDS8ZtFqmVxBPuu-",
 				"format": "horizontal",
-				"images": [					
+				"images": [
 				]
 			}
 		}
