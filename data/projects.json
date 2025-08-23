@@ -13,6 +13,7 @@
 			"featured": false,
 			"keep": false,
 			"highlight": false,
+			"rank": [0, 0],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -44,6 +45,7 @@
 			"featured": false,
 			"keep": false,
 			"highlight": false,
+			"rank": [0, 0],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -62,6 +64,7 @@
 			"highlight": true,
 			"dateCreated": "2023-08-07",
 			"createdUsing": [ "After Effects", "Photoshop", "Premiere Pro", "3ds Max" ],
+			"rank": [2, 2],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -86,6 +89,7 @@
 				"After Effects"
 			],
 			"dateCreated": "2019-11-20",
+			"rank": [1, 1],
 			"media": {
 				"type": "video",
 				"source": "youtube",
@@ -111,6 +115,7 @@
 				"After Effects"
 			],
 			"dateCreated": "2020-06-10",
+			"rank": [2, 2],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -129,6 +134,7 @@
 			"highlight": true,
 			"dateCreated": "2025-06-02",
 			"createdUsing": [ "After Effects" ],
+			"rank": [0, 3],
 			"media": {
 				"type": "mixed",
 				"source": "drive",
@@ -159,6 +165,7 @@
 			"featured": false,
 			"keep": true,
 			"highlight": false,
+			"rank": [0, 0],
 			"media": {
 				"type": "mixed",
 				"video": {
