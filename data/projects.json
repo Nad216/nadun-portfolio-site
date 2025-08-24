@@ -57,8 +57,8 @@
 		{
 			"title": "Gaja TV News Promo",
 			"description": "Gaja TV News Promotion that included all team members. shoutout to Local news reporters",
-			"image": "assets/thumbs/Gaja TV News Promo.png",
-			"thumb": "assets/thumbs/Gaja TV News Promo.png",
+			"image": "assets/thumbs/Gaja TV News Promo.jpg",
+			"thumb": "assets/thumbs/Gaja TV News Promo.jpg",
 			"featured": true,
 			"keep": true,
 			"highlight": true,
@@ -89,7 +89,7 @@
 				"After Effects"
 			],
 			"dateCreated": "2019-11-20",
-			"rank": [1, 1],
+			"rank": [ 1, 1 ],
 			"media": {
 				"type": "video",
 				"source": "youtube",
@@ -105,8 +105,8 @@
 		{
 			"title": "Lulu 60 Min Free Delivery Video",
 			"description": "A stylized 3D animation made in Blender. This short focuses on delivery process happening in 60 min from a different perspective.",
-			"image": "assets/thumbs/Lulu 60 Min Delivery Video.png",
-			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.png",
+			"image": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
+			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
 			"featured": true,
 			"keep": true,
 			"highlight": true,
@@ -115,7 +115,7 @@
 				"After Effects"
 			],
 			"dateCreated": "2020-06-10",
-			"rank": [2, 2],
+			"rank": [ 2, 2 ],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -127,14 +127,14 @@
 		{
 			"title": "LOT Fahaheel Opening",
 			"description": "LOT Kuwait Fahaheel Store Opening Promotion Video. in English, Hindi and Malayalam Languages",
-			"image": "assets/thumbs/LOT Fahaheel Opening EN.png",
-			"thumb": "assets/thumbs/LOT Fahaheel Opening EN.png",
+			"image": "assets/thumbs/LOT Fahaheel Opening EN.jpg",
+			"thumb": "assets/thumbs/LOT Fahaheel Opening EN.jpg",
 			"featured": false,
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2025-06-02",
 			"createdUsing": [ "After Effects" ],
-			"rank": [0, 3],
+			"rank": [ 0, 3 ],
 			"media": {
 				"type": "mixed",
 				"source": "drive",
@@ -145,9 +145,9 @@
 					"https://drive.google.com/uc?export=download&id=1HJ7RwTrYM9_o7xT91sxXAG0UDsBuFaWB"
 				],
 				"images": [
-					"assets/thumbs/LOT Fahaheel Opening EN.png",
-					"assets/thumbs/LOT Fahaheel Opening HIN.png",
-					"assets/thumbs/LOT Fahaheel Opening MAL.png"
+					"assets/thumbs/LOT Fahaheel Opening EN.jpg",
+					"assets/thumbs/LOT Fahaheel Opening HIN.jpg",
+					"assets/thumbs/LOT Fahaheel Opening MAL.jpg"
 				]
 			}
 		},
@@ -165,7 +165,7 @@
 			"featured": false,
 			"keep": true,
 			"highlight": false,
-			"rank": [0, 0],
+			"rank": [ 0, 0 ],
 			"media": {
 				"type": "mixed",
 				"video": {
@@ -183,6 +183,180 @@
 					"assets/projects/S-lon/7.jpg",
 					"assets/projects/S-lon/8.jpg"
 				]
+			}
+		},
+		{
+			"title": "Fruit and Veg Promotion",
+			"description": "Fruit and Veg Section CGI Video",
+			"image": "assets/thumbs/Fruit and Veg Promotion.jpg",
+			"thumb": "assets/thumbs/Fruit and Veg Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2024-12-04",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1eBGmiwP7BL6OGEH1Tg8IkoVQjasOVV0B",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Hawally Anniversary Promotion",
+			"description": "Hawally Anniversary Promotion",
+			"image": "assets/thumbs/Hawally Anniversary Promotion.jpg",
+			"thumb": "assets/thumbs/Hawally Anniversary Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-08-06",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1gRkrKoimrEkDF6ojjgtNOv8eiLXORIIw",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lets Travel Promotion",
+			"description": "Lets Travel Promotion",
+			"image": "assets/thumbs/Lets Travel Promotion.jpg",
+			"thumb": "assets/thumbs/Lets Travel Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-10",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1FoqengVSG25LpJ_GR2-CO_81WzSiCoAQ",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Onam Boat Video",
+			"description": "Celebrating Onam - Vallam Kali (Snake Boat Race), adding reference to meme worthy Indonesian boy as well.",
+			"image": "assets/thumbs/Onam Boat Video.jpg",
+			"thumb": "assets/thumbs/Onam Boat Video.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2025-03-26",
+			"rank": [ 3, 3 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1QC-0mcDuGxiIYD6XhQplCaajLwCYzOUS",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Ramadan Kit Promo",
+			"description": "Ramadan Kit - Box Opening and show what includes(Not all product have been added due to time constraints)",
+			"image": "assets/thumbs/Ramadan Kit Promo.jpg",
+			"thumb": "assets/thumbs/Ramadan Kit Promo.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-02-12",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Gy886GtlRk2d4BV5YG9phe0JRlWgy71a",
+				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Summer Surprises Promotion Videos",
+			"description": "Summer Surprises Promotion Including Sip into Summer, AC Deals,Intex Bestway Deals and Lulu Season to glow.",
+			"image": "assets/thumbs/Summer Surprises Promotion Videos.jpg",
+			"thumb": "assets/thumbs/Summer Surprises Promotion Videos.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-07-02",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"links": [ "https://drive.google.com/uc?export=download&id=1dIwHp-g4ZTMQu4MZoK55fueqjgMCngxM", "https://drive.google.com/uc?export=download&id=1q0p_RLo08xmJsr3GlzD0WClEVztMwIQH" ],
+				"format": "vertical",
+				"images": [
+					"assets/thumbs/Summer Surprises Promotion Videos.jpg",
+					"assets/thumbs/Summer Surprises Promotion Videos_2.jpg"
+				]
+			}
+		},
+		{
+			"title": "600 Trolley Free Promotion",
+			"description": "600 Trolley Free Promotion. That spans 5 days. in Celebration of National Day",
+			"image": "assets/thumbs/600 Trolley Free Promotion.jpg",
+			"thumb": "assets/thumbs/600 Trolley Free Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-02-24",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1SiaxLS9ypdiiOLt0wL99m6LvTalterC5",
+				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Ya Hala - Lulu Promotion",
+			"description": "Ya Hala - Lulu Promotion CGI Video - Including Kuwait Towers",
+			"image": "assets/thumbs/Ya Hala - Lulu Promotion.jpg",
+			"thumb": "assets/thumbs/Ya Hala - Lulu Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-01-23",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Jhuw_3TuP6kW70mRgjibrMaKB_hp7DFq",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "5 Big Days Promotion",
+			"description": "5 Big Days Promotion. Shining 5 on a podium.",
+			"image": "assets/thumbs/5 Big Days Promotion.jpg",
+			"thumb": "assets/thumbs/5 Big Days Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-23",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1z-oEqrg_jCmQ8sgtqxeRuEG5A2o_2M7c",
+				"format": "vertical",
+				"images": []
 			}
 		}
 	]

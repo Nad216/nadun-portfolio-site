@@ -4,3 +4,7 @@
 
 /.vs
 /Serve.py
+data/editor.css
+data/editor.js
+data/editor.html
+/admin
