@@ -13,7 +13,7 @@
 			"featured": false,
 			"keep": false,
 			"highlight": false,
-			"rank": [0, 0],
+			"rank": [ 0, 0 ],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -27,6 +27,665 @@
 					"assets/projects/IFlix/5.jpg",
 					"assets/projects/IFlix/6.jpg",
 					"assets/projects/IFlix/7.jpg"
+				]
+			}
+		},
+		{
+			"title": "Jat Stall",
+			"description": "Jat Stall",
+			"image": "assets/projects/2016 August Jat Stall/01.jpg",
+			"thumb": "assets/projects/2016 August Jat Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-08-02",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 August Jat Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 August Jat Stall/01.jpg",
+					"assets/projects/2016 August Jat Stall/02.jpg",
+					"assets/projects/2016 August Jat Stall/03.jpg",
+					"assets/projects/2016 August Jat Stall/04.jpg",
+					"assets/projects/2016 August Jat Stall/05.jpg",
+					"assets/projects/2016 August Jat Stall/06.jpg",
+					"assets/projects/2016 August Jat Stall/07.jpg",
+					"assets/projects/2016 August Jat Stall/08.jpg",
+					"assets/projects/2016 August Jat Stall/09.jpg",
+					"assets/projects/2016 August Jat Stall/10.jpg"
+				]
+			}
+		},
+		{
+			"title": "Redbull Stall",
+			"description": "Redbull Stall",
+			"image": "assets/projects/2016 August Redbull Stall/01.jpg",
+			"thumb": "assets/projects/2016 August Redbull Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-08-14",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 August Redbull Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 August Redbull Stall/01.jpg",
+					"assets/projects/2016 August Redbull Stall/02.jpg",
+					"assets/projects/2016 August Redbull Stall/03.jpg",
+					"assets/projects/2016 August Redbull Stall/04.jpg",
+					"assets/projects/2016 August Redbull Stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Oppo Stall",
+			"description": "Oppo Stall",
+			"image": "assets/projects/2016 July Oppo Stall/01.jpg",
+			"thumb": "assets/projects/2016 July Oppo Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-07-08",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 July Oppo Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 July Oppo Stall/01.jpg",
+					"assets/projects/2016 July Oppo Stall/02.jpg",
+					"assets/projects/2016 July Oppo Stall/03.jpg",
+					"assets/projects/2016 July Oppo Stall/04.jpg",
+					"assets/projects/2016 July Oppo Stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Fairway Stall Small",
+			"description": "Fairway Stall Small",
+			"image": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+			"thumb": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-09-15",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 September Fairway Stall Small/AW 01.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 02.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 03.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 04.jpg",
+					"assets/projects/2016 September Fairway Stall Small/01.jpg",
+					"assets/projects/2016 September Fairway Stall Small/02.jpg",
+					"assets/projects/2016 September Fairway Stall Small/03.jpg",
+					"assets/projects/2016 September Fairway Stall Small/04.jpg",
+					"assets/projects/2016 September Fairway Stall Small/05.jpg",
+					"assets/projects/2016 September Fairway Stall Small/06.jpg",
+					"assets/projects/2016 September Fairway Stall Small/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "AnationZ stall",
+			"description": "AnationZ stall",
+			"image": "assets/projects/AnationZ stall/01.jpg",
+			"thumb": "assets/projects/AnationZ stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/AnationZ stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/AnationZ stall/01.jpg",
+					"assets/projects/AnationZ stall/02.jpg",
+					"assets/projects/AnationZ stall/03.jpg",
+					"assets/projects/AnationZ stall/04.jpg",
+					"assets/projects/AnationZ stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Backdrops and Hoardings",
+			"description": "Backdrops and Hoardings",
+			"image": "assets/projects/Backdrops and Hoardings/01.jpg",
+			"thumb": "assets/projects/Backdrops and Hoardings/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Backdrops and Hoardings/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Backdrops and Hoardings/01.jpg",
+					"assets/projects/Backdrops and Hoardings/02.jpg",
+					"assets/projects/Backdrops and Hoardings/03.jpg",
+					"assets/projects/Backdrops and Hoardings/04.jpg",
+					"assets/projects/Backdrops and Hoardings/05.jpg",
+					"assets/projects/Backdrops and Hoardings/06.jpg",
+					"assets/projects/Backdrops and Hoardings/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Banners",
+			"description": "Banners",
+			"image": "assets/projects/Banners/01.jpg",
+			"thumb": "assets/projects/Banners/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Banners/01.jpg",
+				"format": "vertical",
+				"images": [
+					"assets/projects/Banners/01.jpg",
+					"assets/projects/Banners/02.jpg",
+					"assets/projects/Banners/03.jpg",
+					"assets/projects/Banners/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Basket Ball Court",
+			"description": "Basket Ball Court",
+			"image": "assets/projects/Basket Ball Court/01.jpg",
+			"thumb": "assets/projects/Basket Ball Court/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Basket Ball Court/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Basket Ball Court/01.jpg",
+					"assets/projects/Basket Ball Court/02.jpg",
+					"assets/projects/Basket Ball Court/03.jpg",
+					"assets/projects/Basket Ball Court/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Centara Seasands",
+			"description": "Centara Seasands",
+			"image": "assets/projects/Centara Seasands/01.jpg",
+			"thumb": "assets/projects/Centara Seasands/01.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 5, 1 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Centara Seasands/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Centara Seasands/01.jpg",
+					"assets/projects/Centara Seasands/02.jpg",
+					"assets/projects/Centara Seasands/03.jpg",
+					"assets/projects/Centara Seasands/04.jpg",
+					"assets/projects/Centara Seasands/05.jpg",
+					"assets/projects/Centara Seasands/06.jpg",
+					"assets/projects/Centara Seasands/07.jpg",
+					"assets/projects/Centara Seasands/08.jpg"
+				]
+			}
+		},
+		{
+			"title": "Central Environment Authority",
+			"description": "Central Environment Authority",
+			"image": "assets/projects/Central  Environment Authority/01.jpg",
+			"thumb": "assets/projects/Central  Environment Authority/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Central  Environment Authority/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Central  Environment Authority/01.jpg",
+					"assets/projects/Central  Environment Authority/02.jpg",
+					"assets/projects/Central  Environment Authority/03.jpg",
+					"assets/projects/Central  Environment Authority/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Colombo Coffee Company",
+			"description": "Colombo Coffee Company",
+			"image": "assets/projects/Colombo Coffee Company/01.jpg",
+			"thumb": "assets/projects/Colombo Coffee Company/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Colombo Coffee Company/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Colombo Coffee Company/01.jpg",
+					"assets/projects/Colombo Coffee Company/02.jpg",
+					"assets/projects/Colombo Coffee Company/03.jpg",
+					"assets/projects/Colombo Coffee Company/04.jpg",
+					"assets/projects/Colombo Coffee Company/05.jpg",
+					"assets/projects/Colombo Coffee Company/06.jpg"
+				]
+			}
+		},
+		{
+			"title": "Colombo Museum artworks",
+			"description": "Colombo Museum artworks",
+			"image": "assets/projects/Colombo Museum artworks/01.jpg",
+			"thumb": "assets/projects/Colombo Museum artworks/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Colombo Museum artworks/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Colombo Museum artworks/01.jpg",
+					"assets/projects/Colombo Museum artworks/02.jpg",
+					"assets/projects/Colombo Museum artworks/03.jpg",
+					"assets/projects/Colombo Museum artworks/04.jpg",
+					"assets/projects/Colombo Museum artworks/05.jpg",
+					"assets/projects/Colombo Museum artworks/06.jpg",
+					"assets/projects/Colombo Museum artworks/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Diamond Best Foods",
+			"description": "Diamond Best Foods",
+			"image": "assets/projects/Diamond Best Foods/01.jpg",
+			"thumb": "assets/projects/Diamond Best Foods/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Diamond Best Foods/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Diamond Best Foods/01.jpg",
+					"assets/projects/Diamond Best Foods/02.jpg",
+					"assets/projects/Diamond Best Foods/03.jpg",
+					"assets/projects/Diamond Best Foods/04.jpg",
+					"assets/projects/Diamond Best Foods/05.jpg",
+					"assets/projects/Diamond Best Foods/06.jpg"
+				]
+			}
+		},
+		{
+			"title": "Dominos Wall artwork",
+			"description": "Dominos Wall artwork",
+			"image": "assets/projects/Dominos Wall artwork/01.jpg",
+			"thumb": "assets/projects/Dominos Wall artwork/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Dominos Wall artwork/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Dominos Wall artwork/01.jpg",
+					"assets/projects/Dominos Wall artwork/02.jpg",
+					"assets/projects/Dominos Wall artwork/03.jpg",
+					"assets/projects/Dominos Wall artwork/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "EBC Solar",
+			"description": "EBC Solar",
+			"image": "assets/projects/EBC Solar/01.jpg",
+			"thumb": "assets/projects/EBC Solar/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/EBC Solar/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/EBC Solar/01.jpg",
+					"assets/projects/EBC Solar/02.jpg",
+					"assets/projects/EBC Solar/03.jpg",
+					"assets/projects/EBC Solar/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Fairway Artworks Renew",
+			"description": "Fairway Artworks Renew",
+			"image": "assets/projects/Fairway Artworks Renew/01.jpg",
+			"thumb": "assets/projects/Fairway Artworks Renew/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Fairway Artworks Renew/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Fairway Artworks Renew/01.jpg",
+					"assets/projects/Fairway Artworks Renew/02.jpg",
+					"assets/projects/Fairway Artworks Renew/03.jpg",
+					"assets/projects/Fairway Artworks Renew/04.jpg",
+					"assets/projects/Fairway Artworks Renew/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Jana Products artworks",
+			"description": "Jana Products artworks",
+			"image": "assets/projects/Jana Products artworks/01.jpg",
+			"thumb": "assets/projects/Jana Products artworks/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Jana Products artworks/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Jana Products artworks/01.jpg",
+					"assets/projects/Jana Products artworks/02.jpg",
+					"assets/projects/Jana Products artworks/03.jpg",
+					"assets/projects/Jana Products artworks/04.jpg",
+					"assets/projects/Jana Products artworks/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Logos",
+			"description": "Logos",
+			"image": "assets/projects/Logos/01.jpg",
+			"thumb": "assets/projects/Logos/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Logos/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Logos/01.jpg",
+					"assets/projects/Logos/02.jpg",
+					"assets/projects/Logos/03.jpg"
+				]
+			}
+		},
+		{
+			"title": "Lunawa Family Medicare boards",
+			"description": "Lunawa Family Medicare boards",
+			"image": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+			"thumb": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Lunawa Family Medicare boards/01.jpg",
+					"assets/projects/Lunawa Family Medicare boards/02.jpg",
+					"assets/projects/Lunawa Family Medicare boards/03.jpg"
+				]
+			}
+		},
+		{
+			"title": "Maharagama U Turn",
+			"description": "Maharagama U Turn",
+			"image": "assets/projects/Maharagama U Turn/01.jpg",
+			"thumb": "assets/projects/Maharagama U Turn/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Maharagama U Turn/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Maharagama U Turn/01.jpg",
+					"assets/projects/Maharagama U Turn/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "P2G Leaflets",
+			"description": "P2G Leaflets",
+			"image": "assets/projects/P2G Leaflets/01.jpg",
+			"thumb": "assets/projects/P2G Leaflets/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/P2G Leaflets/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/P2G Leaflets/01.jpg",
+					"assets/projects/P2G Leaflets/02.jpg",
+					"assets/projects/P2G Leaflets/03.jpg",
+					"assets/projects/P2G Leaflets/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Raja Jewellers",
+			"description": "Raja Jewellers",
+			"image": "assets/projects/Raja Jewellers/01.jpg",
+			"thumb": "assets/projects/Raja Jewellers/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Raja Jewellers/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Raja Jewellers/01.jpg",
+					"assets/projects/Raja Jewellers/02.jpg",
+					"assets/projects/Raja Jewellers/03.jpg",
+					"assets/projects/Raja Jewellers/04.jpg",
+					"assets/projects/Raja Jewellers/05.jpg",
+					"assets/projects/Raja Jewellers/06.jpg",
+					"assets/projects/Raja Jewellers/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Ru s Saloon leaflet",
+			"description": "Ru s Saloon leaflet",
+			"image": "assets/projects/Ru s Saloon leaflet/01.jpg",
+			"thumb": "assets/projects/Ru s Saloon leaflet/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Ru s Saloon leaflet/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Ru s Saloon leaflet/01.jpg",
+					"assets/projects/Ru s Saloon leaflet/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "Shashini Kulasekara Saloon",
+			"description": "Shashini Kulasekara Saloon",
+			"image": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+			"thumb": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Shashini Kulasekara Saloon/01.jpg",
+					"assets/projects/Shashini Kulasekara Saloon/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "SLC T20 2018 cheques",
+			"description": "SLC T20 2018 cheques",
+			"image": "assets/projects/SLC T20 2018 cheques/01.jpg",
+			"thumb": "assets/projects/SLC T20 2018 cheques/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/SLC T20 2018 cheques/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/SLC T20 2018 cheques/01.jpg",
+					"assets/projects/SLC T20 2018 cheques/02.jpg",
+					"assets/projects/SLC T20 2018 cheques/03.jpg",
+					"assets/projects/SLC T20 2018 cheques/04.jpg",
+					"assets/projects/SLC T20 2018 cheques/05.jpg",
+					"assets/projects/SLC T20 2018 cheques/06.jpg",
+					"assets/projects/SLC T20 2018 cheques/07.jpg",
+					"assets/projects/SLC T20 2018 cheques/08.jpg"
+				]
+			}
+		},
+		{
+			"title": "Structure Drawing",
+			"description": "Structure Drawing",
+			"image": "assets/projects/Structure Drawing/01.jpg",
+			"thumb": "assets/projects/Structure Drawing/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Structure Drawing/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Structure Drawing/01.jpg",
+					"assets/projects/Structure Drawing/02.jpg",
+					"assets/projects/Structure Drawing/03.jpg",
+					"assets/projects/Structure Drawing/04.jpg",
+					"assets/projects/Structure Drawing/05.jpg",
+					"assets/projects/Structure Drawing/06.jpg",
+					"assets/projects/Structure Drawing/07.jpg",
+					"assets/projects/Structure Drawing/08.jpg"
 				]
 			}
 		}
