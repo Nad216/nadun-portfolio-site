@@ -13,7 +13,10 @@
 			"featured": false,
 			"keep": false,
 			"highlight": false,
-			"rank": [ 0, 0 ],
+			"rank": [
+				0,
+				0
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -39,8 +42,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-08-02",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -69,8 +78,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-08-14",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -94,8 +109,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-07-08",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -119,8 +140,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-09-15",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -150,8 +177,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -175,8 +208,14 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -202,8 +241,14 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -226,8 +271,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -250,8 +301,14 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2016-01-01",
-			"rank": [ 5, 1 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				5,
+				1
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -278,8 +335,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -302,8 +365,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -328,8 +397,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -355,8 +430,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -381,8 +462,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -405,8 +492,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -429,8 +522,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -454,8 +553,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -479,8 +584,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -502,8 +613,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -525,8 +642,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -547,8 +670,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -571,8 +700,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max",
+				"Photoshop"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -598,8 +733,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -620,8 +761,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -642,8 +789,14 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Photoshop",
+				"Illustrator"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -670,8 +823,13 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2016-01-01",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "3ds Max" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"3ds Max"
+			],
 			"media": {
 				"type": "gallery",
 				"source": "local",
@@ -692,28 +850,6 @@
 	],
 	"animationMotion": [
 		{
-			"title": "Company Promo Video",
-			"description": "Promotional video for international launch.",
-			"image": "assets/company-video.jpg",
-			"thumb": "assets/company-video.jpg",
-			"createdUsing": [
-				"After Effects",
-				"Premiere Pro"
-			],
-			"dateCreated": "2022-09-01",
-			"featured": false,
-			"keep": false,
-			"highlight": false,
-			"rank": [0, 0],
-			"media": {
-				"type": "video",
-				"source": "drive",
-				"link": "https://drive.google.com/file/d/YourFileID/preview",
-				"format": "horizontal",
-				"images": []
-			}
-		},
-		{
 			"title": "Gaja TV News Promo",
 			"description": "Gaja TV News Promotion that included all team members. shoutout to Local news reporters",
 			"image": "assets/thumbs/Gaja TV News Promo.jpg",
@@ -722,15 +858,720 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2023-08-07",
-			"createdUsing": [ "After Effects", "Photoshop", "Premiere Pro", "3ds Max" ],
-			"rank": [2, 2],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Premiere Pro",
+				"3ds Max"
+			],
+			"rank": [
+				2,
+				2
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
 				"link": "https://drive.google.com/uc?export=download&id=1aEDSfv0gG79J-s8DWDS8ZtFqmVxBPuu-",
 				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Electronics Promotion",
+			"description": "Lulu Electronics Promotion",
+			"image": "assets/thumbs/Lulu Electronics Promotion.png",
+			"thumb": "assets/thumbs/Lulu Electronics Promotion.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2024-11-25",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1uWWT8XZriZuJrQyPRiK6eefrxlLz_B1p",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Gift Card Video",
+			"description": "Lulu Gift Card Video",
+			"image": "assets/thumbs/Lulu Gift Card Video.png",
+			"thumb": "assets/thumbs/Lulu Gift Card Video.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-29",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=18BmHE9cNBfcEh90IhfPrbpBq5HS79WR4",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Health & Beauty",
+			"description": "Lulu Health & Beauty",
+			"image": "assets/thumbs/Lulu Health & Beauty.png",
+			"thumb": "assets/thumbs/Lulu Health & Beauty.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-12",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=106TA2LpFdxxVofzCOrkvzyWw26nYHXds",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Home Appliences",
+			"description": "Lulu Home Appliences",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-26",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1LQfnGhsnD7IJxYJNgyTyKwpRkwUog2Fu",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Household Product Videos",
+			"description": "Lulu Household Product Videos for Lulu Food Fest and Ramadan",
+			"image": "assets/thumbs/Lulu Household Product Videos.png",
+			"thumb": "assets/thumbs/Lulu Household Product Videos.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-04-30",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=1UO4bRRrOASi5K8ImaNPIwN4reVdgQ4I9",
+					"https://drive.google.com/uc?export=download&id=1iRcSDaIH0VuX5GXQZpyq8we4Y2ncoK6e"
+				],
+				"format": "vertical",
 				"images": [
+					"assets/thumbs/",
+					"assets/thumbs/Lulu Household Product Videos.png"
 				]
+			}
+		},
+		{
+			"title": "Lulu Just Ride Promo",
+			"description": "Lulu Just Ride Promo",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2024-12-30",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=13k698MOn0RrwWx62NMqISW8n20MHsuvF",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Lets Travel",
+			"description": "Lulu Lets Travel",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-05-08",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1vrFZZCQJZqJ4ex2vCpMJmiVBDTOACHqr",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Ikon Promotion",
+			"description": "Ikon Promotion",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-20",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1iNHPfWW_MN-RghiIBbh9M0ZPQCHr17tD",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Luggage Product Videos",
+			"description": "Lulu Luggage Product Videos",
+			"image": "assets/thumbs/Lulu Luggage Product Videos.png",
+			"thumb": "assets/thumbs/Lulu Luggage Product Videos.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-05-28",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=1MRFopTT0YhZDHNewKkSg8La_s4XQLv8u",
+					"https://drive.google.com/uc?export=download&id=1-_72jHR8z52K0QVE8H4hByuSJ-CwAG8C"
+				],
+				"format": "vertical",
+				"images": [
+					"assets/thumbs/Lulu Luggage Product Videos.png",
+					"assets/thumbs/"
+				]
+			}
+		},
+		{
+			"title": "Lulu Food Fest 2025",
+			"description": "Lulu Food Fest",
+			"image": "assets/thumbs/Lulu Food Fest 2025.png",
+			"thumb": "assets/thumbs/Lulu Food Fest 2025.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-04-14",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1SOcfGWWKCsJuvMEo3B8RXTMidsKvEw8N",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Mega Discount Promotion",
+			"description": "Lulu Mega Discount SM Ver",
+			"image": "assets/thumbs/Lulu Mega Discount Promotion.png",
+			"thumb": "assets/thumbs/Lulu Mega Discount Promotion.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-07-29",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1-DcjbK7Ayp-uHI3uLQLOAxOcrGDQ55SV",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Mobile Lets Connect",
+			"description": "Lulu Mobile Lets Connect",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-26",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1vBrhpiT40hyWqnpw9Kdf6Ah1ghrhZPZQ",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Monin Briliance - New In Store",
+			"description": "Monin Briliance - New In Store In Lulu",
+			"image": "assets/thumbs/Monin Briliance - New In Store.png",
+			"thumb": "assets/thumbs/Monin Briliance - New In Store.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-05-31",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=10PBp-3pitWAAN8PO0Fzcy0YSdvY5z8ze",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu MORNING MAGIC",
+			"description": "Lulu MORNING MAGIC",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-04-02",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1LCtwYXsmRyMun4e_bv55YaQC9VYCqkPs",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu PC Deals",
+			"description": "Lulu PC Deals",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-26",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=11RXdWpNZ11SVvy5GmcfFBWfp8YVBz-LQ",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Pre Order Payasam",
+			"description": "Lulu Pre Order Payasam",
+			"image": "assets/thumbs/Lulu Pre Order Payasam.png",
+			"thumb": "assets/thumbs/Lulu Pre Order Payasam.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-08-14",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1uOheTdSbra5OFJyaj9TVapnD8hEuOu6f",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Sale (Fashion)",
+			"description": "Lulu Sale (Fashion)",
+			"image": "assets/thumbs/Lulu Sale (Fashion).png",
+			"thumb": "assets/thumbs/Lulu Sale (Fashion).png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-01-08",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=18wX9PXwTihLACnCUb5PJ-HP5dp7x3jCF",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu School Savers Promotion",
+			"description": "Lulu School Savers Promotion",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-04-01",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1PfoBEzzgwtDsLUtAiHh6BghaQAPYoYdo",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Squid Game Story",
+			"description": "Squid Game Story",
+			"image": "assets/thumbs/Squid Game Story.png",
+			"thumb": "assets/thumbs/Squid Game Story.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2024-12-28",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Ehgx5GdAEQohGhrMwzHGCrOM-Td7BiP-",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Style & Beauty Ver",
+			"description": "Lulu Style & Beauty Ver",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-02-20",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1YBncQAzDKp2QXaWXGBPFa6WG-KjMArtu",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Summer Part Sale Ver",
+			"description": "Lulu Summer Part Sale Ver",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-11",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1xVALyuNw0jGCIEF-AKSgNPeUCKL5Rhk6",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu The Kitchen Product Video",
+			"description": "Lulu The Kitchen Product Video",
+			"image": "assets/thumbs/Lulu The Kitchen Product Video.png",
+			"thumb": "assets/thumbs/Lulu The Kitchen Product Video.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2024-12-30",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1BKs-ciIshq202AA7D5r5_TJjBUij9yUG",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Toy Fest Video",
+			"description": "Lulu Toy Fest Video",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2024-12-08",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "mixed",
+				"source": "drive",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=1H7Wlci03EMkXf_95d9yb6oFkfuWPguDK",
+					"https://drive.google.com/uc?export=download&id=179BZXYMwirwIKd1VNVrq3jrSozD2E3-t"
+				],
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Toys Section - Product Videos",
+			"description": "Lulu Toys Section - Product Videos",
+			"image": "assets/thumbs/",
+			"thumb": "assets/thumbs/",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-27",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=10vn0Oxg0h2wseD2U4hF92m9BxpUYQjvw",
+					"https://drive.google.com/uc?export=download&id=14UumFIpUTfnC3a01qA6jNf9pSSlUQBQk"
+				],
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lulu Whitegoods Section - Product Videos",
+			"description": "Lulu Whitegoods Section - Product Videos",
+			"image": "assets/thumbs/Lulu Whitegoods Section 03.png",
+			"thumb": "assets/thumbs/Lulu Whitegoods Section 03.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-01-01",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=1qJkG0JM95b3yNHUkE69-Rd8JRxkP51VY",
+					"https://drive.google.com/uc?export=download&id=1B9ZFsJ9N3h0mG895Oue8jbr_dcQ3lb81",
+					"https://drive.google.com/uc?export=download&id=17S-kckYajWzLOYv1SbdMnYewdJ4ByMqk"
+				],
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Distribution Map for Lulu Kuwait",
+			"description": "Distribution Map for Lulu Kuwait wiht World Map",
+			"image": "assets/thumbs/Distribution Map for Lulu Kuwait.png",
+			"thumb": "assets/thumbs/Distribution Map for Lulu Kuwait.png",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-26",
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"After Effects",
+				"Photoshop",
+				"Illustrator"
+			],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Wj6Zc3gVs8s4uc84hUmgcPeEejN55iMb",
+				"format": "horizontal",
+				"images": []
 			}
 		}
 	],
@@ -748,7 +1589,10 @@
 				"After Effects"
 			],
 			"dateCreated": "2019-11-20",
-			"rank": [ 1, 1 ],
+			"rank": [
+				1,
+				1
+			],
 			"media": {
 				"type": "video",
 				"source": "youtube",
@@ -774,7 +1618,10 @@
 				"After Effects"
 			],
 			"dateCreated": "2020-06-10",
-			"rank": [ 2, 2 ],
+			"rank": [
+				2,
+				2
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -792,8 +1639,13 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2025-06-02",
-			"createdUsing": [ "After Effects" ],
-			"rank": [ 0, 3 ],
+			"createdUsing": [
+				"After Effects"
+			],
+			"rank": [
+				0,
+				3
+			],
 			"media": {
 				"type": "mixed",
 				"source": "drive",
@@ -824,7 +1676,10 @@
 			"featured": false,
 			"keep": true,
 			"highlight": false,
-			"rank": [ 0, 0 ],
+			"rank": [
+				0,
+				0
+			],
 			"media": {
 				"type": "mixed",
 				"video": {
@@ -853,8 +1708,15 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2024-12-04",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -872,8 +1734,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-08-06",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -891,8 +1760,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-03-10",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -910,8 +1786,15 @@
 			"keep": true,
 			"highlight": true,
 			"dateCreated": "2025-03-26",
-			"rank": [ 3, 3 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				3,
+				3
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -929,8 +1812,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-02-12",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -948,12 +1838,22 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-07-02",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
-				"links": [ "https://drive.google.com/uc?export=download&id=1dIwHp-g4ZTMQu4MZoK55fueqjgMCngxM", "https://drive.google.com/uc?export=download&id=1q0p_RLo08xmJsr3GlzD0WClEVztMwIQH" ],
+				"links": [
+					"https://drive.google.com/uc?export=download&id=1dIwHp-g4ZTMQu4MZoK55fueqjgMCngxM",
+					"https://drive.google.com/uc?export=download&id=1q0p_RLo08xmJsr3GlzD0WClEVztMwIQH"
+				],
 				"format": "vertical",
 				"images": [
 					"assets/thumbs/Summer Surprises Promotion Videos.jpg",
@@ -970,8 +1870,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-02-24",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -989,8 +1896,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-01-23",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
@@ -1008,8 +1922,15 @@
 			"keep": true,
 			"highlight": false,
 			"dateCreated": "2025-06-23",
-			"rank": [ 0, 0 ],
-			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"rank": [
+				0,
+				0
+			],
+			"createdUsing": [
+				"Blender",
+				"After Effects",
+				"Photoshop"
+			],
 			"media": {
 				"type": "video",
 				"source": "drive",
