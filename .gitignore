@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Serve.py
+data/editor.css
+data/editor.js
+data/editor.html
+/admin

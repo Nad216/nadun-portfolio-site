@@ -1,0 +1,275 @@
+/* responsive.css — media queries & mobile adaptations
+   IMPORTANT: load this file AFTER overlay.css so these overrides win.
+*/
+
+/* general breakpoint: hide sidebar, show mobile bar */
+@media (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-bar {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        padding-top: 56px;
+    }
+
+    .panel-inner {
+        padding: calc(56px + 1rem) 1rem 1.5rem;
+    }
+
+    .panel-content.top-left {
+        position: sticky;
+        left: 0;
+        padding: 0 0.5rem;
+        margin: 0;
+        z-index: 105;
+        background: transparent;
+    }
+
+    #featured-cards {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    #brand-cards, #animation-cards, #cgi-cards {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .panel-content h1 {
+        font-size: 3rem;
+    }
+
+    .panel-content h2 {
+        font-size: 2rem;
+    }
+
+    .panel-content h3 {
+        font-size: 2rem;
+    }
+
+    .panel-content p {
+        font-size: 1rem;
+    }
+
+    #featured-cards .built-with-logos img {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* DIALOG / OVERLAY MOBILE ADJUSTMENTS */
+    .fs-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .fs-content {
+        gap: 6px;
+    }
+
+    .fs-header {
+        padding: 12px;
+    }
+
+    /* non-split media area */
+    .fs-media {
+        padding: 8px 12px;
+        max-height: calc(100vh - 200px);
+        box-sizing: border-box;
+    }
+
+    /* reduce thumb sizes on mobile */
+    .fs-thumbs img, .fs-thumbs .thumb-bg {
+        width: 56px;
+        height: 40px;
+    }
+
+    /* ensure embed children on normal non-split overlays fill area (cover) on mobile */
+    .fs-media .embed-container iframe,
+    .fs-media .embed-container img,
+    .fs-media .embed-container video {
+        object-fit: cover;
+    }
+
+    /* Ensure all overlays (vertical and horizontal) embed containers fill width */
+    #fullscreen-overlay .embed-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 auto;
+        border-radius: 0;
+        overflow: hidden;
+    }
+
+    #fullscreen-overlay .embed-container iframe,
+    #fullscreen-overlay .embed-container video,
+    #fullscreen-overlay .embed-container img {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* small screens adjustments */
+@media (max-width: 768px) {
+    #featured-cards {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .featured-project {
+        flex-direction: column;
+        max-width: 100%;
+        padding: .1rem;
+        margin: 1rem 0;
+    }
+
+    .featured-project img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+        transform: none !important;
+    }
+}
+
+/* vertical split stacked behavior on mobile
+   When JS inserts .fs-split and overlay has .vertical class we want:
+   - header above media (stack)
+   - header sticky so user always sees title/controls
+   - media area uses aspect-ratio technique and object-fit: cover (so playing video fills)
+*/
+@media (max-width: 900px) {
+    #fullscreen-overlay.vertical .fs-split {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #fullscreen-overlay.vertical .fs-split > div {
+        flex: 1 1 auto;
+        min-height: 0;
+        max-height: 100%;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #fullscreen-overlay.vertical .fs-split .embed-container {
+        width: 100%;
+        max-width: 100%;
+        height: calc(100vh - 120px); /* header+footer estimated at 120px */
+        max-height: calc(100vh - 120px);
+        min-height: 0;
+        padding-bottom: 0 !important;
+        overflow: hidden;
+        background: #000;
+        margin: 0 auto;
+        border-radius: 0;
+    }
+
+    #fullscreen-overlay.vertical .fs-split .embed-container iframe,
+    #fullscreen-overlay.vertical .fs-split .embed-container video {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* ensure footer/thumbs remain visible (z-index) */
+    #fullscreen-overlay.vertical .fs-footer {
+        z-index: 2;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* small refinements when overlay has vertical class */
+    #fullscreen-overlay.vertical .fs-media {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #fullscreen-overlay .fs-split {
+        grid-row: 2;
+        height: 100%;
+        align-self: stretch;
+    }
+
+    #fullscreen-overlay.vertical .fs-content {
+        grid-template-rows: auto 1fr auto;
+        min-height: 0;
+    }
+}
+
+/* very large screens tweak */
+@media (min-width: 1600px) {
+    :root {
+        --overlay-height-desktop: 92vh;
+        --overlay-height-max: 95vh;
+    }
+}
+
+/* minor tweak for tiniest screens */
+@media (max-width: 360px) {
+    .mobile-brand {
+        font-size: 0.85rem;
+        max-width: 50%;
+    }
+}
+
+/* ensure thumbs slightly smaller on large screens if needed */
+@media (min-width: 900px) {
+    .fs-thumbs img {
+        width: 64px;
+        height: 48px;
+    }
+
+    .fs-thumbs .thumb-bg {
+        width: 64px;
+        height: 48px;
+    }
+}
+
+/* Responsive: multi-video overlay support */
+@media (max-width: 900px) {
+  .fs-media .embed-container.multi-video {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 180px;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 520px) {
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 120px;
+    margin-bottom: 2px;
+  }
+}

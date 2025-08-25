@@ -1,15 +1,110 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Coming Soon</title>
-    <link href="style_maintenance.css" rel="stylesheet" />
+    <title>Nadun Avishka Portfolio</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/overlay.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <script type="module" src="js/main.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>🚧 Portfolio Under Construction 🚧</h1>
-        <p>I’m currently building my portfolio. It will include my graphic design, 3D art, video editing, and animation projects.</p>      
+    <aside class="sidebar expanded">
+        <div class="profile">
+            <img src="assets/profile.jpg" alt="Nadun Avishka" />
+            <h1>Nadun Avishka</h1>
+            <p>Creative Visual Specialist</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#intro" class="nav-link active"><span>Intro</span><div class="progress"></div></a>
+            <a href="#featured" class="nav-link"><span>Featured</span><div class="progress"></div></a>
+            <a href="#digitalCreativeArts" class="nav-link"><span>Digital Creative Arts</span><div class="progress"></div></a>
+            <a href="#animationMotion" class="nav-link"><span>Animation & Motion</span><div class="progress"></div></a>
+            <a href="#threeDCreations" class="nav-link"><span>3D Creations</span><div class="progress"></div></a>
+            <a href="#about" class="nav-link"><span>About &amp; Contact</span><div class="progress"></div></a>
+        </nav>
+    </aside>
+    <div class="mobile-bar" id="mobile-bar">
+        <div class="mobile-left">
+            <img src="assets/profile.jpg" alt="Nadun Avishka" class="mobile-profile" />
+        </div>
+
+        <!-- optional brand text (hidden by default) -->
+        <div class="mobile-brand" aria-hidden="true">Nadun Avishka</div>
+
+        <div class="mobile-right">
+            <button id="menu-toggle" class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+        </div>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+        <a href="#intro" class="nav-link">Intro</a>
+        <a href="#featured" class="nav-link">Featured</a>
+        <a href="#digitalCreativeArts" class="nav-link">Digital Creative Arts</a>
+        <a href="#animationMotion" class="nav-link">Animation & Motion</a>
+        <a href="#threeDCreations" class="nav-link">3D Creations</a>
+        <a href="#about" class="nav-link">About &amp; Contact</a>
+    </nav>
+
+    <div class="main-content">
+        <section id="intro" class="panel" style="background-image: url('assets/hero-bg.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-content center">
+                <h1>VISUALS</h1><h3>SPEAK WHERE</h3><h1>WORDS</h1><h3>FALL SHORT</h3>
+                <p>Nadun Avishka | Design ∙ Motion ∙ Animation ∙ 3D</p>
+            </div>
+        </section>
+        <section id="featured" class="panel" style="background-image: url('assets/bg-featured.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-inner">
+                <div class="panel-content top-left">
+                    <h2>Featured Projects</h2>
+                </div>
+                <div id="featured-cards" class="card-grid"></div>
+            </div>
+        </section>
+        <section id="digitalCreativeArts" class="panel" style="background-image: url('assets/bg-brand.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-inner">
+                <div class="panel-content top-left">
+                    <h2>Digital Creative Arts</h2>
+                </div>
+                <div id="digitalCreativeArts-cards" class="card-grid"></div>
+            </div>
+        </section>
+        <section id="animationMotion" class="panel" style="background-image: url('assets/bg-Animation.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-inner">
+                <div class="panel-content top-left">
+                    <h2>Animation & Motion</h2>
+                </div>
+                <div id="animationMotion-cards" class="card-grid"></div>
+            </div>
+        </section>
+        <section id="threeDCreations" class="panel" style="background-image: url('assets/bg-cgi.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-inner">
+                <div class="panel-content top-left">
+                    <h2>3D Creations</h2>
+                </div>
+                <div id="threeDCreations-cards" class="card-grid"></div>
+            </div>
+        </section>
+        <section id="about" class="panel" style="background-image: url('assets/bg-about.jpg')">
+            <div class="overlay"></div>
+            <div class="panel-inner">
+                <div class="panel-content center">
+                    <h1>About &amp; Contact</h1>
+                    <p>Email: navishka123@gmail.com<br>WhatsApp: +94 77 085 4054</p>
+                </div>
+            </div>
+        </section>
     </div>
 </body>
 </html>

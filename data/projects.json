@@ -1,0 +1,1022 @@
+{
+	"digitalCreativeArts": [
+		{
+			"title": "Iflix Stall Concept",
+			"description": "Iflix Stall Concept for BMICH Exhibition.",
+			"image": "assets/thumbs/Iflix_stall.jpg",
+			"thumb": "assets/thumbs/Iflix_stall.jpg",
+			"createdUsing": [
+				"3DS Max",
+				"Photoshop"
+			],
+			"dateCreated": "2016-08-17",
+			"featured": false,
+			"keep": false,
+			"highlight": false,
+			"rank": [ 0, 0 ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "https://drive.google.com/uc?export=view&id=1-eodq3PQGuyB-Y2If8mWkdLdsu3xu8kd",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/IFlix/1.jpg",
+					"assets/projects/IFlix/2.jpg",
+					"assets/projects/IFlix/3.jpg",
+					"assets/projects/IFlix/4.jpg",
+					"assets/projects/IFlix/5.jpg",
+					"assets/projects/IFlix/6.jpg",
+					"assets/projects/IFlix/7.jpg"
+				]
+			}
+		},
+		{
+			"title": "Jat Stall",
+			"description": "Jat Stall",
+			"image": "assets/projects/2016 August Jat Stall/01.jpg",
+			"thumb": "assets/projects/2016 August Jat Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-08-02",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 August Jat Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 August Jat Stall/01.jpg",
+					"assets/projects/2016 August Jat Stall/02.jpg",
+					"assets/projects/2016 August Jat Stall/03.jpg",
+					"assets/projects/2016 August Jat Stall/04.jpg",
+					"assets/projects/2016 August Jat Stall/05.jpg",
+					"assets/projects/2016 August Jat Stall/06.jpg",
+					"assets/projects/2016 August Jat Stall/07.jpg",
+					"assets/projects/2016 August Jat Stall/08.jpg",
+					"assets/projects/2016 August Jat Stall/09.jpg",
+					"assets/projects/2016 August Jat Stall/10.jpg"
+				]
+			}
+		},
+		{
+			"title": "Redbull Stall",
+			"description": "Redbull Stall",
+			"image": "assets/projects/2016 August Redbull Stall/01.jpg",
+			"thumb": "assets/projects/2016 August Redbull Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-08-14",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 August Redbull Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 August Redbull Stall/01.jpg",
+					"assets/projects/2016 August Redbull Stall/02.jpg",
+					"assets/projects/2016 August Redbull Stall/03.jpg",
+					"assets/projects/2016 August Redbull Stall/04.jpg",
+					"assets/projects/2016 August Redbull Stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Oppo Stall",
+			"description": "Oppo Stall",
+			"image": "assets/projects/2016 July Oppo Stall/01.jpg",
+			"thumb": "assets/projects/2016 July Oppo Stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-07-08",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 July Oppo Stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 July Oppo Stall/01.jpg",
+					"assets/projects/2016 July Oppo Stall/02.jpg",
+					"assets/projects/2016 July Oppo Stall/03.jpg",
+					"assets/projects/2016 July Oppo Stall/04.jpg",
+					"assets/projects/2016 July Oppo Stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Fairway Stall Small",
+			"description": "Fairway Stall Small",
+			"image": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+			"thumb": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-09-15",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/2016 September Fairway Stall Small/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/2016 September Fairway Stall Small/AW 01.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 02.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 03.jpg",
+					"assets/projects/2016 September Fairway Stall Small/AW 04.jpg",
+					"assets/projects/2016 September Fairway Stall Small/01.jpg",
+					"assets/projects/2016 September Fairway Stall Small/02.jpg",
+					"assets/projects/2016 September Fairway Stall Small/03.jpg",
+					"assets/projects/2016 September Fairway Stall Small/04.jpg",
+					"assets/projects/2016 September Fairway Stall Small/05.jpg",
+					"assets/projects/2016 September Fairway Stall Small/06.jpg",
+					"assets/projects/2016 September Fairway Stall Small/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "AnationZ stall",
+			"description": "AnationZ stall",
+			"image": "assets/projects/AnationZ stall/01.jpg",
+			"thumb": "assets/projects/AnationZ stall/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/AnationZ stall/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/AnationZ stall/01.jpg",
+					"assets/projects/AnationZ stall/02.jpg",
+					"assets/projects/AnationZ stall/03.jpg",
+					"assets/projects/AnationZ stall/04.jpg",
+					"assets/projects/AnationZ stall/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Backdrops and Hoardings",
+			"description": "Backdrops and Hoardings",
+			"image": "assets/projects/Backdrops and Hoardings/01.jpg",
+			"thumb": "assets/projects/Backdrops and Hoardings/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Backdrops and Hoardings/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Backdrops and Hoardings/01.jpg",
+					"assets/projects/Backdrops and Hoardings/02.jpg",
+					"assets/projects/Backdrops and Hoardings/03.jpg",
+					"assets/projects/Backdrops and Hoardings/04.jpg",
+					"assets/projects/Backdrops and Hoardings/05.jpg",
+					"assets/projects/Backdrops and Hoardings/06.jpg",
+					"assets/projects/Backdrops and Hoardings/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Banners",
+			"description": "Banners",
+			"image": "assets/projects/Banners/01.jpg",
+			"thumb": "assets/projects/Banners/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Banners/01.jpg",
+				"format": "vertical",
+				"images": [
+					"assets/projects/Banners/01.jpg",
+					"assets/projects/Banners/02.jpg",
+					"assets/projects/Banners/03.jpg",
+					"assets/projects/Banners/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Basket Ball Court",
+			"description": "Basket Ball Court",
+			"image": "assets/projects/Basket Ball Court/01.jpg",
+			"thumb": "assets/projects/Basket Ball Court/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Basket Ball Court/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Basket Ball Court/01.jpg",
+					"assets/projects/Basket Ball Court/02.jpg",
+					"assets/projects/Basket Ball Court/03.jpg",
+					"assets/projects/Basket Ball Court/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Centara Seasands",
+			"description": "Centara Seasands",
+			"image": "assets/projects/Centara Seasands/01.jpg",
+			"thumb": "assets/projects/Centara Seasands/01.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2016-01-01",
+			"rank": [ 5, 1 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Centara Seasands/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Centara Seasands/01.jpg",
+					"assets/projects/Centara Seasands/02.jpg",
+					"assets/projects/Centara Seasands/03.jpg",
+					"assets/projects/Centara Seasands/04.jpg",
+					"assets/projects/Centara Seasands/05.jpg",
+					"assets/projects/Centara Seasands/06.jpg",
+					"assets/projects/Centara Seasands/07.jpg",
+					"assets/projects/Centara Seasands/08.jpg"
+				]
+			}
+		},
+		{
+			"title": "Central Environment Authority",
+			"description": "Central Environment Authority",
+			"image": "assets/projects/Central  Environment Authority/01.jpg",
+			"thumb": "assets/projects/Central  Environment Authority/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Central  Environment Authority/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Central  Environment Authority/01.jpg",
+					"assets/projects/Central  Environment Authority/02.jpg",
+					"assets/projects/Central  Environment Authority/03.jpg",
+					"assets/projects/Central  Environment Authority/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Colombo Coffee Company",
+			"description": "Colombo Coffee Company",
+			"image": "assets/projects/Colombo Coffee Company/01.jpg",
+			"thumb": "assets/projects/Colombo Coffee Company/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Colombo Coffee Company/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Colombo Coffee Company/01.jpg",
+					"assets/projects/Colombo Coffee Company/02.jpg",
+					"assets/projects/Colombo Coffee Company/03.jpg",
+					"assets/projects/Colombo Coffee Company/04.jpg",
+					"assets/projects/Colombo Coffee Company/05.jpg",
+					"assets/projects/Colombo Coffee Company/06.jpg"
+				]
+			}
+		},
+		{
+			"title": "Colombo Museum artworks",
+			"description": "Colombo Museum artworks",
+			"image": "assets/projects/Colombo Museum artworks/01.jpg",
+			"thumb": "assets/projects/Colombo Museum artworks/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Colombo Museum artworks/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Colombo Museum artworks/01.jpg",
+					"assets/projects/Colombo Museum artworks/02.jpg",
+					"assets/projects/Colombo Museum artworks/03.jpg",
+					"assets/projects/Colombo Museum artworks/04.jpg",
+					"assets/projects/Colombo Museum artworks/05.jpg",
+					"assets/projects/Colombo Museum artworks/06.jpg",
+					"assets/projects/Colombo Museum artworks/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Diamond Best Foods",
+			"description": "Diamond Best Foods",
+			"image": "assets/projects/Diamond Best Foods/01.jpg",
+			"thumb": "assets/projects/Diamond Best Foods/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Diamond Best Foods/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Diamond Best Foods/01.jpg",
+					"assets/projects/Diamond Best Foods/02.jpg",
+					"assets/projects/Diamond Best Foods/03.jpg",
+					"assets/projects/Diamond Best Foods/04.jpg",
+					"assets/projects/Diamond Best Foods/05.jpg",
+					"assets/projects/Diamond Best Foods/06.jpg"
+				]
+			}
+		},
+		{
+			"title": "Dominos Wall artwork",
+			"description": "Dominos Wall artwork",
+			"image": "assets/projects/Dominos Wall artwork/01.jpg",
+			"thumb": "assets/projects/Dominos Wall artwork/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Dominos Wall artwork/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Dominos Wall artwork/01.jpg",
+					"assets/projects/Dominos Wall artwork/02.jpg",
+					"assets/projects/Dominos Wall artwork/03.jpg",
+					"assets/projects/Dominos Wall artwork/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "EBC Solar",
+			"description": "EBC Solar",
+			"image": "assets/projects/EBC Solar/01.jpg",
+			"thumb": "assets/projects/EBC Solar/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/EBC Solar/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/EBC Solar/01.jpg",
+					"assets/projects/EBC Solar/02.jpg",
+					"assets/projects/EBC Solar/03.jpg",
+					"assets/projects/EBC Solar/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Fairway Artworks Renew",
+			"description": "Fairway Artworks Renew",
+			"image": "assets/projects/Fairway Artworks Renew/01.jpg",
+			"thumb": "assets/projects/Fairway Artworks Renew/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Fairway Artworks Renew/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Fairway Artworks Renew/01.jpg",
+					"assets/projects/Fairway Artworks Renew/02.jpg",
+					"assets/projects/Fairway Artworks Renew/03.jpg",
+					"assets/projects/Fairway Artworks Renew/04.jpg",
+					"assets/projects/Fairway Artworks Renew/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Jana Products artworks",
+			"description": "Jana Products artworks",
+			"image": "assets/projects/Jana Products artworks/01.jpg",
+			"thumb": "assets/projects/Jana Products artworks/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Jana Products artworks/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Jana Products artworks/01.jpg",
+					"assets/projects/Jana Products artworks/02.jpg",
+					"assets/projects/Jana Products artworks/03.jpg",
+					"assets/projects/Jana Products artworks/04.jpg",
+					"assets/projects/Jana Products artworks/05.jpg"
+				]
+			}
+		},
+		{
+			"title": "Logos",
+			"description": "Logos",
+			"image": "assets/projects/Logos/01.jpg",
+			"thumb": "assets/projects/Logos/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Logos/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Logos/01.jpg",
+					"assets/projects/Logos/02.jpg",
+					"assets/projects/Logos/03.jpg"
+				]
+			}
+		},
+		{
+			"title": "Lunawa Family Medicare boards",
+			"description": "Lunawa Family Medicare boards",
+			"image": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+			"thumb": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Lunawa Family Medicare boards/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Lunawa Family Medicare boards/01.jpg",
+					"assets/projects/Lunawa Family Medicare boards/02.jpg",
+					"assets/projects/Lunawa Family Medicare boards/03.jpg"
+				]
+			}
+		},
+		{
+			"title": "Maharagama U Turn",
+			"description": "Maharagama U Turn",
+			"image": "assets/projects/Maharagama U Turn/01.jpg",
+			"thumb": "assets/projects/Maharagama U Turn/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Maharagama U Turn/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Maharagama U Turn/01.jpg",
+					"assets/projects/Maharagama U Turn/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "P2G Leaflets",
+			"description": "P2G Leaflets",
+			"image": "assets/projects/P2G Leaflets/01.jpg",
+			"thumb": "assets/projects/P2G Leaflets/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/P2G Leaflets/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/P2G Leaflets/01.jpg",
+					"assets/projects/P2G Leaflets/02.jpg",
+					"assets/projects/P2G Leaflets/03.jpg",
+					"assets/projects/P2G Leaflets/04.jpg"
+				]
+			}
+		},
+		{
+			"title": "Raja Jewellers",
+			"description": "Raja Jewellers",
+			"image": "assets/projects/Raja Jewellers/01.jpg",
+			"thumb": "assets/projects/Raja Jewellers/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max", "Photoshop" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Raja Jewellers/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Raja Jewellers/01.jpg",
+					"assets/projects/Raja Jewellers/02.jpg",
+					"assets/projects/Raja Jewellers/03.jpg",
+					"assets/projects/Raja Jewellers/04.jpg",
+					"assets/projects/Raja Jewellers/05.jpg",
+					"assets/projects/Raja Jewellers/06.jpg",
+					"assets/projects/Raja Jewellers/07.jpg"
+				]
+			}
+		},
+		{
+			"title": "Ru s Saloon leaflet",
+			"description": "Ru s Saloon leaflet",
+			"image": "assets/projects/Ru s Saloon leaflet/01.jpg",
+			"thumb": "assets/projects/Ru s Saloon leaflet/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Ru s Saloon leaflet/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Ru s Saloon leaflet/01.jpg",
+					"assets/projects/Ru s Saloon leaflet/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "Shashini Kulasekara Saloon",
+			"description": "Shashini Kulasekara Saloon",
+			"image": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+			"thumb": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Shashini Kulasekara Saloon/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Shashini Kulasekara Saloon/01.jpg",
+					"assets/projects/Shashini Kulasekara Saloon/02.jpg"
+				]
+			}
+		},
+		{
+			"title": "SLC T20 2018 cheques",
+			"description": "SLC T20 2018 cheques",
+			"image": "assets/projects/SLC T20 2018 cheques/01.jpg",
+			"thumb": "assets/projects/SLC T20 2018 cheques/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Photoshop", "Illustrator" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/SLC T20 2018 cheques/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/SLC T20 2018 cheques/01.jpg",
+					"assets/projects/SLC T20 2018 cheques/02.jpg",
+					"assets/projects/SLC T20 2018 cheques/03.jpg",
+					"assets/projects/SLC T20 2018 cheques/04.jpg",
+					"assets/projects/SLC T20 2018 cheques/05.jpg",
+					"assets/projects/SLC T20 2018 cheques/06.jpg",
+					"assets/projects/SLC T20 2018 cheques/07.jpg",
+					"assets/projects/SLC T20 2018 cheques/08.jpg"
+				]
+			}
+		},
+		{
+			"title": "Structure Drawing",
+			"description": "Structure Drawing",
+			"image": "assets/projects/Structure Drawing/01.jpg",
+			"thumb": "assets/projects/Structure Drawing/01.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2016-01-01",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "3ds Max" ],
+			"media": {
+				"type": "gallery",
+				"source": "local",
+				"link": "assets/projects/Structure Drawing/01.jpg",
+				"format": "horizontal",
+				"images": [
+					"assets/projects/Structure Drawing/01.jpg",
+					"assets/projects/Structure Drawing/02.jpg",
+					"assets/projects/Structure Drawing/03.jpg",
+					"assets/projects/Structure Drawing/04.jpg",
+					"assets/projects/Structure Drawing/05.jpg",
+					"assets/projects/Structure Drawing/06.jpg",
+					"assets/projects/Structure Drawing/07.jpg",
+					"assets/projects/Structure Drawing/08.jpg"
+				]
+			}
+		}
+	],
+	"animationMotion": [
+		{
+			"title": "Company Promo Video",
+			"description": "Promotional video for international launch.",
+			"image": "assets/company-video.jpg",
+			"thumb": "assets/company-video.jpg",
+			"createdUsing": [
+				"After Effects",
+				"Premiere Pro"
+			],
+			"dateCreated": "2022-09-01",
+			"featured": false,
+			"keep": false,
+			"highlight": false,
+			"rank": [0, 0],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/file/d/YourFileID/preview",
+				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Gaja TV News Promo",
+			"description": "Gaja TV News Promotion that included all team members. shoutout to Local news reporters",
+			"image": "assets/thumbs/Gaja TV News Promo.jpg",
+			"thumb": "assets/thumbs/Gaja TV News Promo.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2023-08-07",
+			"createdUsing": [ "After Effects", "Photoshop", "Premiere Pro", "3ds Max" ],
+			"rank": [2, 2],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1aEDSfv0gG79J-s8DWDS8ZtFqmVxBPuu-",
+				"format": "horizontal",
+				"images": [
+				]
+			}
+		}
+	],
+	"threeDCreations": [
+		{
+			"title": "Viral YouTube Song - Thoppi Welenda",
+			"description": "A stylized 3D animation made in 3ds Max. This video focuses on humor and timing, with hand-keyed character animation and simple environment design.",
+			"image": "assets/thumbs/Toppi Welenda Thumb.jpg",
+			"thumb": "assets/thumbs/Toppi Welenda Thumb.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"createdUsing": [
+				"3ds Max",
+				"After Effects"
+			],
+			"dateCreated": "2019-11-20",
+			"rank": [ 1, 1 ],
+			"media": {
+				"type": "video",
+				"source": "youtube",
+				"link": "https://www.youtube.com/watch?v=K7nV9zwF0nk",
+				"format": "horizontal",
+				"images": [
+					"assets/thumbs/Toppi Welenda Thumb.jpg",
+					"assets/thumbs/Toppi Welenda Thumb.jpg",
+					"assets/thumbs/Toppi Welenda Thumb.jpg"
+				]
+			}
+		},
+		{
+			"title": "Lulu 60 Min Free Delivery Video",
+			"description": "A stylized 3D animation made in Blender. This short focuses on delivery process happening in 60 min from a different perspective.",
+			"image": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
+			"thumb": "assets/thumbs/Lulu 60 Min Delivery Video.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"createdUsing": [
+				"Blender",
+				"After Effects"
+			],
+			"dateCreated": "2020-06-10",
+			"rank": [ 2, 2 ],
+			"media": {
+				"type": "video",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1FRiMEof6Voneic9bmgcwKa38eYZo5FUO",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "LOT Fahaheel Opening",
+			"description": "LOT Kuwait Fahaheel Store Opening Promotion Video. in English, Hindi and Malayalam Languages",
+			"image": "assets/thumbs/LOT Fahaheel Opening EN.jpg",
+			"thumb": "assets/thumbs/LOT Fahaheel Opening EN.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2025-06-02",
+			"createdUsing": [ "After Effects" ],
+			"rank": [ 0, 3 ],
+			"media": {
+				"type": "mixed",
+				"source": "drive",
+				"format": "vertical",
+				"links": [
+					"https://drive.google.com/uc?export=download&id=11yHjT3OVBflyNL5e949S9znM8j9mFKLt",
+					"https://drive.google.com/uc?export=download&id=1LZm4rF6yDHVnrlt5rW7vHWdEj_wpYLzV",
+					"https://drive.google.com/uc?export=download&id=1HJ7RwTrYM9_o7xT91sxXAG0UDsBuFaWB"
+				],
+				"images": [
+					"assets/thumbs/LOT Fahaheel Opening EN.jpg",
+					"assets/thumbs/LOT Fahaheel Opening HIN.jpg",
+					"assets/thumbs/LOT Fahaheel Opening MAL.jpg"
+				]
+			}
+		},
+		{
+			"title": "S-LON Stall Concept",
+			"description": "S-LON Stall Concept for BMICH Exhibition. One of my earliest 3D Video",
+			"image": "assets/projects/S-lon/1.jpg",
+			"thumb": "assets/projects/S-lon/1.jpg",
+			"createdUsing": [
+				"3ds Max",
+				"After Effects",
+				"Photoshop"
+			],
+			"dateCreated": "2016-06-15",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"rank": [ 0, 0 ],
+			"media": {
+				"type": "mixed",
+				"video": {
+					"source": "drive",
+					"link": "https://drive.google.com/file/d/10HqqWoGdXn4LWbgQ7tGUoH-4-dA5GjDD/preview",
+					"format": "horizontal"
+				},
+				"images": [
+					"assets/projects/S-lon/1.jpg",
+					"assets/projects/S-lon/2.jpg",
+					"assets/projects/S-lon/3.jpg",
+					"assets/projects/S-lon/4.jpg",
+					"assets/projects/S-lon/5.jpg",
+					"assets/projects/S-lon/6.jpg",
+					"assets/projects/S-lon/7.jpg",
+					"assets/projects/S-lon/8.jpg"
+				]
+			}
+		},
+		{
+			"title": "Fruit and Veg Promotion",
+			"description": "Fruit and Veg Section CGI Video",
+			"image": "assets/thumbs/Fruit and Veg Promotion.jpg",
+			"thumb": "assets/thumbs/Fruit and Veg Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2024-12-04",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1eBGmiwP7BL6OGEH1Tg8IkoVQjasOVV0B",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Hawally Anniversary Promotion",
+			"description": "Hawally Anniversary Promotion",
+			"image": "assets/thumbs/Hawally Anniversary Promotion.jpg",
+			"thumb": "assets/thumbs/Hawally Anniversary Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-08-06",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1gRkrKoimrEkDF6ojjgtNOv8eiLXORIIw",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Lets Travel Promotion",
+			"description": "Lets Travel Promotion",
+			"image": "assets/thumbs/Lets Travel Promotion.jpg",
+			"thumb": "assets/thumbs/Lets Travel Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-03-10",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1FoqengVSG25LpJ_GR2-CO_81WzSiCoAQ",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Onam Boat Video",
+			"description": "Celebrating Onam - Vallam Kali (Snake Boat Race), adding reference to meme worthy Indonesian boy as well.",
+			"image": "assets/thumbs/Onam Boat Video.jpg",
+			"thumb": "assets/thumbs/Onam Boat Video.jpg",
+			"featured": true,
+			"keep": true,
+			"highlight": true,
+			"dateCreated": "2025-03-26",
+			"rank": [ 3, 3 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1QC-0mcDuGxiIYD6XhQplCaajLwCYzOUS",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "Ramadan Kit Promo",
+			"description": "Ramadan Kit - Box Opening and show what includes(Not all product have been added due to time constraints)",
+			"image": "assets/thumbs/Ramadan Kit Promo.jpg",
+			"thumb": "assets/thumbs/Ramadan Kit Promo.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-02-12",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Gy886GtlRk2d4BV5YG9phe0JRlWgy71a",
+				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Summer Surprises Promotion Videos",
+			"description": "Summer Surprises Promotion Including Sip into Summer, AC Deals,Intex Bestway Deals and Lulu Season to glow.",
+			"image": "assets/thumbs/Summer Surprises Promotion Videos.jpg",
+			"thumb": "assets/thumbs/Summer Surprises Promotion Videos.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-07-02",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"links": [ "https://drive.google.com/uc?export=download&id=1dIwHp-g4ZTMQu4MZoK55fueqjgMCngxM", "https://drive.google.com/uc?export=download&id=1q0p_RLo08xmJsr3GlzD0WClEVztMwIQH" ],
+				"format": "vertical",
+				"images": [
+					"assets/thumbs/Summer Surprises Promotion Videos.jpg",
+					"assets/thumbs/Summer Surprises Promotion Videos_2.jpg"
+				]
+			}
+		},
+		{
+			"title": "600 Trolley Free Promotion",
+			"description": "600 Trolley Free Promotion. That spans 5 days. in Celebration of National Day",
+			"image": "assets/thumbs/600 Trolley Free Promotion.jpg",
+			"thumb": "assets/thumbs/600 Trolley Free Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-02-24",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1SiaxLS9ypdiiOLt0wL99m6LvTalterC5",
+				"format": "horizontal",
+				"images": []
+			}
+		},
+		{
+			"title": "Ya Hala - Lulu Promotion",
+			"description": "Ya Hala - Lulu Promotion CGI Video - Including Kuwait Towers",
+			"image": "assets/thumbs/Ya Hala - Lulu Promotion.jpg",
+			"thumb": "assets/thumbs/Ya Hala - Lulu Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-01-23",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1Jhuw_3TuP6kW70mRgjibrMaKB_hp7DFq",
+				"format": "vertical",
+				"images": []
+			}
+		},
+		{
+			"title": "5 Big Days Promotion",
+			"description": "5 Big Days Promotion. Shining 5 on a podium.",
+			"image": "assets/thumbs/5 Big Days Promotion.jpg",
+			"thumb": "assets/thumbs/5 Big Days Promotion.jpg",
+			"featured": false,
+			"keep": true,
+			"highlight": false,
+			"dateCreated": "2025-06-23",
+			"rank": [ 0, 0 ],
+			"createdUsing": [ "Blender", "After Effects", "Photoshop" ],
+			"media": {
+				"type": "video\",",
+				"source": "drive",
+				"link": "https://drive.google.com/uc?export=download&id=1z-oEqrg_jCmQ8sgtqxeRuEG5A2o_2M7c",
+				"format": "vertical",
+				"images": []
+			}
+		}
+	]
+}

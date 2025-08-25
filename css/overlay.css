@@ -1,0 +1,426 @@
+/* overlay.css — fullscreen overlay, fs-split (desktop) and embed helpers */
+
+/* Fullscreen overlay (dialog) */
+#fullscreen-overlay,
+.fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+    padding: 28px;
+    box-sizing: border-box;
+}
+
+#fullscreen-overlay.open, .fullscreen-overlay.open {
+    display: flex;
+}
+
+#fullscreen-overlay[aria-hidden="true"], .fullscreen-overlay[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* inner dialog */
+.fs-inner {
+    background: linear-gradient(180deg, rgba(15,20,25,0.98), rgba(10,12,14,0.98));
+    border-radius: 12px;
+    width: min(1100px, 98%);
+    max-height: 92vh;
+    overflow: hidden;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    height: var(--overlay-height-desktop);
+    max-height: var(--overlay-height-max);
+    box-sizing: border-box;
+}
+
+.fs-close {
+    position: absolute;
+    right: 18px;
+    top: 16px;
+    z-index: 10;
+    border: none;
+    background: transparent;
+    color: var(--clr-light);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px 10px;
+}
+
+/* --- Overlay core layout: restore original, remove conflicts --- */
+/* Overlay grid layout: ensure footer always visible, no scrolling */
+.fs-content {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+}
+
+.fs-split {
+    min-height: 0;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.fs-header {
+    padding: 18px 22px 6px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    position: static;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fs-split .fs-header {
+    flex: 1 1 40%;
+    max-width: 46%;
+    min-width: 260px;
+    padding: 18px 12px;
+    overflow-y: auto;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.fs-media {
+    padding: 12px 18px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    max-height: calc(92vh - 230px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.fs-footer {
+    padding: 12px 18px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+}
+
+/* thumbs - preferred img */
+.fs-thumbs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.fs-thumbs img {
+    width: 72px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.9;
+    border: 2px solid transparent;
+}
+
+/* thumb fallback using background-image (for old mobile browsers where object-fit fails) */
+.fs-thumbs .thumb-bg {
+    display: inline-block;
+    width: 72px;
+    height: 48px;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: 0.95;
+    border: 2px solid transparent;
+}
+
+.fs-thumbs img.active,
+.fs-thumbs .thumb-bg.active {
+    border-color: var(--clr-primary);
+    opacity: 1;
+}
+
+/* embed aspect helpers (base) */
+.embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: #000;
+    border-radius: 10px;
+}
+
+.embed-16-9 {
+    padding-bottom: 56.25%;
+}
+
+.embed-9-16 {
+    padding-bottom: 177.7778%;
+}
+
+.embed-1-1 {
+    padding-bottom: 100%;
+}
+
+/* IMPORTANT: Default for embed children = CONTAIN (desktop/web friendly) */
+.embed-container iframe,
+.embed-container img,
+.embed-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #000;
+    object-fit: contain;
+}
+
+/* play button */
+.fs-play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.fs-play-button:hover {
+    transform: scale(1.04);
+}
+
+.fs-play-button:focus, .fs-close:focus {
+    outline: 3px solid rgba(28,183,169,0.24);
+    outline-offset: 2px;
+}
+
+/* overlay media sizing niceties */
+.fs-media .embed-container {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 180px;
+    max-width: 1200px;
+}
+
+/* fullscreen button */
+.fs-fullscreen {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: var(--clr-light);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fs-fullscreen:hover {
+    transform: translateY(-1px);
+}
+
+.fs-fullscreen:focus {
+    outline: 3px solid rgba(28,183,169,0.18);
+    outline-offset: 2px;
+}
+
+/* VERTICAL SPLIT (desktop) - inserted by JS when needed */
+.fs-split {
+    display: flex;
+    gap: 18px;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0 18px 12px 18px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+}
+
+.fs-split .fs-header {
+    flex: 1 1 40%;
+    max-width: 46%;
+    min-width: 260px;
+    padding: 18px 12px;
+    overflow-y: auto;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.fs-split .fs-media {
+    flex: 1 1 58%;
+    max-width: 58%;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* inside desktop split, embed should fill the slot but use contain so whole media is visible */
+.fs-split .embed-container {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 0;
+    min-height: 320px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.fs-split .embed-container iframe,
+.fs-split .embed-container img,
+.fs-split .embed-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.fs-split .embed-container video {
+    max-height: 100%;
+    box-sizing: border-box;
+}
+
+/* keep overlay inner from being focusable when hidden */
+#fullscreen-overlay[aria-hidden="true"] .fs-inner {
+    pointer-events: none;
+}
+
+/* Gallery navigation buttons for overlay - improved design */
+.fs-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(30,30,30,0.18);
+    color: #fff;
+    border: none;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fs-media:hover .fs-nav-btn,
+.fs-media:focus-within .fs-nav-btn {
+    opacity: 1;
+}
+.fs-nav-btn:focus {
+    background: rgba(30,183,169,0.18);
+    outline: 2px solid #1cb7a9;
+    opacity: 1;
+}
+.fs-nav-left {
+    left: 12px;
+}
+.fs-nav-right {
+    right: 12px;
+}
+.fs-nav-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+@media (max-width: 900px) {
+    .fs-nav-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+        left: 6px;
+        right: 6px;
+        opacity: 1;
+    }
+    .fs-nav-left {
+        left: 6px;
+    }
+    .fs-nav-right {
+        right: 6px;
+    }
+}
+
+/* Remove conflicting rules and ensure correct sizing for overlay media on small screens */
+@media (max-width: 520px) {
+  .fs-media .embed-container,
+  .embed-container {
+    max-width: 100vw;
+    width: 100vw;
+    min-width: 0;
+    border-radius: 0;
+  }
+  .embed-container iframe,
+  .embed-container img,
+  .embed-container video {
+    width: 100vw;
+    height: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* Remove object-fit: cover for mobile overlays */
+@media (max-width: 900px) {
+  .fs-media .embed-container iframe,
+  .fs-media .embed-container img,
+  .fs-media .embed-container video {
+    object-fit: contain;
+  }
+}
+
+/* Add support for multiple videos in overlay */
+.fs-media .embed-container.multi-video {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fs-media .embed-container.multi-video iframe,
+.fs-media .embed-container.multi-video video {
+  width: 100%;
+  height: 360px;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 220px;
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 520px) {
+  .fs-media .embed-container.multi-video iframe,
+  .fs-media .embed-container.multi-video video {
+    height: 160px;
+    margin-bottom: 4px;
+  }
+}
