@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Film Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0a0b;
+    --surface: #111113;
+    --surface2: #18181b;
+    --surface3: #1f1f24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0f0f0;
+    --muted: #888;
+    --dim: #555;
+    --accent: #e8ff47;
+    --accent2: #47ffe0;
+    --accent3: #ff6b47;
+    --fal: #7c6dfa;
+    --wave: #47c5ff;
+    --kling: #ff9f47;
+    --google: #47d87a;
+    --ok: #47d87a;
+    --warn: #ffb347;
+    --err: #ff5f5f;
+    --info: #47c5ff;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* LAYOUT */
+  .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+  .logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+  .sidebar-section { padding: 16px 16px 0; }
+  .sidebar-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  /* PLATFORM KEYS */
+  .platform-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .platform-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .platform-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .platform-name { font-size: 12px; font-weight: 500; flex: 1; }
+  .platform-count { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  .key-entry {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+    align-items: center;
+  }
+  .key-entry input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 4px 8px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    outline: none;
+    min-width: 0;
+  }
+  .key-entry input:focus { border-color: var(--border2); }
+  .key-entry input::placeholder { color: var(--dim); }
+  .key-badge {
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-ok { background: rgba(71,216,122,0.15); color: var(--ok); }
+  .badge-exhausted { background: rgba(255,95,95,0.15); color: var(--err); }
+  .badge-idle { background: rgba(255,255,255,0.06); color: var(--muted); }
+  .badge-active { background: rgba(71,197,255,0.15); color: var(--info); }
+
+  .btn-tiny {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--dim);
+    cursor: pointer;
+    padding: 3px 6px;
+    font-size: 10px;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .btn-tiny:hover { border-color: var(--border2); color: var(--text); }
+
+  .add-key-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: 5px;
+    color: var(--dim);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 10px;
+    width: 100%;
+    margin-top: 4px;
+    transition: all 0.15s;
+  }
+  .add-key-btn:hover { border-color: var(--border2); color: var(--muted); }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; }
+  .stat-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* MAIN */
+  .main { display: flex; flex-direction: column; overflow: hidden; }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0 20px;
+    gap: 0;
+  }
+  .tab {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PANELS */
+  .panel { flex: 1; overflow-y: auto; padding: 20px; display: none; }
+  .panel.active { display: block; }
+
+  /* SCRIPT PANEL */
+  .script-drop {
+    border: 2px dashed var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+    background: var(--surface);
+  }
+  .script-drop:hover, .script-drop.drag-over {
+    border-color: var(--accent);
+    background: rgba(232,255,71,0.04);
+  }
+  .drop-icon { font-size: 28px; margin-bottom: 8px; }
+  .drop-text { font-size: 13px; color: var(--muted); }
+  .drop-text span { color: var(--accent); cursor: pointer; }
+  #file-input { display: none; }
+
+  .script-textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 200px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .script-textarea:focus { border-color: var(--border2); }
+  .script-textarea::placeholder { color: var(--dim); }
+
+  .config-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .config-field label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .config-field select, .config-field input[type=range] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    color: var(--text);
+    font-size: 12px;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .config-field select:focus { border-color: var(--border2); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover { background: #d4eb30; transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-secondary:hover { background: var(--surface3); }
+
+  /* SCENES PANEL */
+  .scene-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .scene-card.generating { border-color: var(--info); }
+  .scene-card.approved { border-color: var(--ok); }
+  .scene-card.rejected { border-color: var(--err); }
+  .scene-card.flagged { border-color: var(--warn); }
+
+  .scene-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .scene-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--muted);
+    min-width: 28px;
+  }
+  .scene-title { flex: 1; font-weight: 500; font-size: 13px; }
+  .scene-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .status-pending { background: rgba(255,255,255,0.06); color: var(--dim); }
+  .status-generating { background: rgba(71,197,255,0.15); color: var(--info); }
+  .status-approved { background: rgba(71,216,122,0.15); color: var(--ok); }
+  .status-rejected { background: rgba(255,95,95,0.15); color: var(--err); }
+  .status-flagged { background: rgba(255,180,71,0.15); color: var(--warn); }
+  .status-waiting { background: rgba(255,155,71,0.15); color: var(--kling); }
+
+  .scene-body { padding: 12px 14px; }
+  .scene-prompt {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+  .scene-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 10px;
+    color: var(--dim);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .meta-tag span { color: var(--muted); }
+
+  .scene-video {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .video-placeholder { color: var(--dim); font-size: 11px; text-align: center; }
+  .video-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(71,197,255,0.05) 50%, transparent 100%);
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+  .scene-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .btn-approve {
+    background: rgba(71,216,122,0.15);
+    color: var(--ok);
+    border: 1px solid rgba(71,216,122,0.3);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-approve:hover { background: rgba(71,216,122,0.25); }
+  .btn-reject {
+    background: rgba(255,95,95,0.1);
+    color: var(--err);
+    border: 1px solid rgba(255,95,95,0.25);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-reject:hover { background: rgba(255,95,95,0.2); }
+  .btn-regen {
+    background: rgba(124,109,250,0.12);
+    color: var(--fal);
+    border: 1px solid rgba(124,109,250,0.25);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-regen:hover { background: rgba(124,109,250,0.22); }
+
+  .feedback-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .feedback-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    color: var(--text);
+    font-size: 11px;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .feedback-input:focus { border-color: var(--border2); }
+  .feedback-input::placeholder { color: var(--dim); }
+
+  /* LOG PANEL */
+  .log-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.9;
+    min-height: 200px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .log-entry { display: flex; gap: 10px; }
+  .log-ts { color: var(--dim); min-width: 70px; }
+  .log-platform {
+    min-width: 55px;
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-align: center;
+    align-self: flex-start;
+    margin-top: 3px;
+  }
+  .log-ok { color: var(--ok); }
+  .log-warn { color: var(--warn); }
+  .log-err { color: var(--err); }
+  .log-info { color: var(--info); }
+  .log-claude { color: var(--accent); }
+  .log-dim { color: var(--muted); }
+
+  /* REFERENCE PANEL */
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ref-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+  }
+  .ref-type {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .ref-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .ref-desc { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+  .ref-tag-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .ref-tag {
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* EXHAUSTED BANNER */
+  .exhausted-banner {
+    background: rgba(255,155,71,0.1);
+    border: 1px solid rgba(255,155,71,0.25);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .exhausted-banner.visible { display: flex; }
+  .banner-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .banner-text { flex: 1; }
+  .banner-title { font-size: 12px; font-weight: 600; color: var(--warn); margin-bottom: 3px; }
+  .banner-desc { font-size: 11px; color: rgba(255,180,71,0.8); }
+  .banner-actions { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .banner-btn {
+    background: none;
+    border: 1px solid rgba(255,180,71,0.3);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 10px;
+    color: var(--warn);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .banner-btn:hover { background: rgba(255,180,71,0.12); }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 16px; }
+  .progress-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .progress-bar-bg { background: var(--surface2); border-radius: 4px; height: 3px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s ease; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--dim); }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-title { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+  .empty-sub { font-size: 12px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* PLATFORM COLORS */
+  .dot-fal { background: var(--fal); }
+  .dot-wave { background: var(--wave); }
+  .dot-kling { background: var(--kling); }
+  .dot-google { background: var(--google); }
+  .plat-fal { background: rgba(124,109,250,0.15); color: var(--fal); }
+  .plat-wave { background: rgba(71,197,255,0.15); color: var(--wave); }
+  .plat-kling { background: rgba(255,159,71,0.15); color: var(--kling); }
+  .plat-google { background: rgba(71,216,122,0.15); color: var(--google); }
+
+  .section-gap { margin-bottom: 16px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  .inline-flex { display: flex; align-items: center; gap: 8px; }
+  .flex-between { display: flex; align-items: center; justify-content: space-between; }
+
+  .claude-key-note {
+    font-size: 10px;
+    color: var(--dim);
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin: 8px 16px 16px;
+    line-height: 1.5;
+  }
+  .claude-key-note a { color: var(--accent); text-decoration: none; }
+  .claude-key-note a:hover { text-decoration: underline; }
+
+  .key-input-main {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .key-input-main:focus { border-color: var(--border2); }
+  .key-input-main::placeholder { color: var(--dim); }
+
+  /* SERIES MODE */
+  .series-banner {
+    background: rgba(232,255,71,0.07);
+    border: 1px solid rgba(232,255,71,0.25);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .series-banner.active { display: flex; }
+  .series-banner-text { flex: 1; font-size: 12px; color: var(--accent); }
+  .series-banner-sub { font-size: 10px; color: rgba(232,255,71,0.6); margin-top: 2px; }
+  .series-clear-btn {
+    background: none;
+    border: 1px solid rgba(232,255,71,0.3);
+    border-radius: 5px;
+    color: rgba(232,255,71,0.7);
+    font-size: 10px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .series-clear-btn:hover { background: rgba(232,255,71,0.1); }
+
+  .ref-img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    object-fit: cover;
+    max-height: 140px;
+    background: var(--surface3);
+    display: block;
+  }
+  .ref-img-placeholder {
+    width: 100%;
+    height: 100px;
+    border-radius: 6px;
+    background: var(--surface3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+  .ref-gen-btn {
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border2);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .ref-gen-btn:hover { background: var(--surface3); color: var(--text); }
+  .ref-gen-btn.generating { color: var(--info); border-color: rgba(71,197,255,0.3); }
+
+  /* SAVE / LOAD */
+  .project-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    flex-wrap: wrap;
+  }
+  .project-btn {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 6px 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .project-btn:hover { background: var(--surface3); border-color: var(--border2); }
+  .project-btn.accent { background: rgba(232,255,71,0.1); border-color: rgba(232,255,71,0.3); color: var(--accent); }
+  .project-btn.accent:hover { background: rgba(232,255,71,0.18); }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 12px;
+    color: var(--text);
+    opacity: 0;
+    transition: all 0.25s;
+    z-index: 9999;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.ok { border-color: rgba(71,216,122,0.4); color: var(--ok); }
+  .toast.err { border-color: rgba(255,95,95,0.4); color: var(--err); }
+
+  .keys-file-note {
+    font-size: 9px;
+    color: var(--dim);
+    padding: 0 16px 10px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-text">FILM AGENT</div>
+      <div class="logo-sub">AI Filmmaking Pipeline</div>
+    </div>
+
+    <!-- Claude Brain Key -->
+    <div class="sidebar-section" style="padding-bottom:0">
+      <div class="sidebar-label">🧠 Claude Brain (Required)</div>
+      <input class="key-input-main" id="claude-key" type="password" placeholder="Claude API key (sk-ant-...)" />
+    </div>
+    <div class="claude-key-note">
+      Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Used for script analysis, shot prompts, and quality review.
+    </div>
+
+    <!-- FAL.AI -->
+    <div class="sidebar-section section-gap">
+      <div class="sidebar-label">Video Generation Keys</div>
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-fal"></div>
+          <span class="platform-name">fal.ai</span>
+          <span class="platform-count" id="fal-count">0 keys</span>
+        </div>
+        <div id="fal-keys"></div>
+        <button class="add-key-btn" onclick="addKey('fal')">+ Add key</button>
+      </div>
+
+      <!-- WAVESPEED -->
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-wave"></div>
+          <span class="platform-name">WaveSpeed.ai</span>
+          <span class="platform-count" id="wave-count">0 keys</span>
+        </div>
+        <div id="wave-keys"></div>
+        <button class="add-key-btn" onclick="addKey('wave')">+ Add key</button>
+      </div>
+
+      <!-- KLING -->
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-kling"></div>
+          <span class="platform-name">Kling AI</span>
+          <span class="platform-count" id="kling-count">0 keys</span>
+        </div>
+        <div id="kling-keys"></div>
+        <button class="add-key-btn" onclick="addKey('kling')">+ Add key</button>
+      </div>
+
+      <!-- GOOGLE -->
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-google"></div>
+          <span class="platform-name">Google AI Studio (Veo 2)</span>
+          <span class="platform-count" id="google-count">0 keys</span>
+        </div>
+        <div id="google-keys"></div>
+        <button class="add-key-btn" onclick="addKey('google')">+ Add key</button>
+        <div style="font-size:9px;color:var(--dim);margin-top:4px">Get free key at <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--google)">aistudio.google.com</a></div>
+      </div>
+
+      <!-- MAGIC HOUR -->
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-wave"></div>
+          <span class="platform-name">Magic Hour (LTX-2 · free)</span>
+          <span class="platform-count" id="magic-count">0 keys</span>
+        </div>
+        <div id="magic-keys"></div>
+        <button class="add-key-btn" onclick="addKey('magic')">+ Add key</button>
+        <div style="font-size:9px;color:var(--dim);margin-top:4px">100 free credits/day at <a href="https://magichour.ai/developer" target="_blank" style="color:var(--wave)">magichour.ai/developer</a></div>
+      </div>
+
+      <!-- ZSKY -->
+      <div class="platform-block">
+        <div class="platform-header">
+          <div class="platform-dot dot-kling"></div>
+          <span class="platform-name">ZSky AI (Wan 2.2 · no key)</span>
+          <span class="platform-count" id="zsky-count">1 slot</span>
+        </div>
+        <div style="font-size:10px;color:var(--muted);padding:4px 0;">No API key needed — free daily limit, rate limited. Always enabled as fallback.</div>
+      </div>
+
+      <!-- LOAD KEYS FROM FILE -->
+      <button class="add-key-btn" style="width:calc(100% - 0px);margin-top:4px;border-color:rgba(71,197,255,0.3);color:var(--wave);" onclick="document.getElementById('keys-file-input').click()">
+        📂 Load all keys from file
+      </button>
+      <input type="file" id="keys-file-input" accept=".json,.txt" style="display:none" onchange="loadKeysFromFile(event)" />
+      <div class="keys-file-note">
+        .txt: one key per line, prefix <b>google:</b> / <b>magic:</b> / <b>claude:</b><br>or drop a saved project .json
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 0 16px 12px;" />
+
+    <!-- STATS -->
+    <div style="padding: 0 16px; margin-bottom: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim);">Stats</div>
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-keys" style="color:var(--accent)">0</div>
+        <div class="stat-lbl">Keys + ZSky</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-active" style="color:var(--ok)">0</div>
+        <div class="stat-lbl">Active</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-scenes" style="color:var(--info)">0</div>
+        <div class="stat-lbl">Scenes</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-done" style="color:var(--ok)">0</div>
+        <div class="stat-lbl">Approved</div>
+      </div>
+    </div>
+    <!-- PROJECT SAVE / LOAD -->
+    <div style="flex:1"></div>
+    <div class="project-bar">
+      <button class="project-btn accent" onclick="saveProject()">💾 Save Project</button>
+      <button class="project-btn" onclick="document.getElementById('project-load-input').click()">📂 Load Project</button>
+      <input type="file" id="project-load-input" accept=".json" style="display:none" onchange="loadProject(event)" />
+      <button class="project-btn" onclick="exportKeysOnly()" title="Export just your API keys as a standalone file">🔑 Export Keys</button>
+    </div>
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <nav class="tabs">
+      <div class="tab active" onclick="switchTab('script')">Script</div>
+      <div class="tab" onclick="switchTab('scenes')">Scenes</div>
+      <div class="tab" onclick="switchTab('refs')">References</div>
+      <div class="tab" onclick="switchTab('log')">Agent Log</div>
+    </nav>
+
+    <!-- SCRIPT TAB -->
+    <div class="panel active" id="tab-script">
+      <div class="exhausted-banner" id="exhausted-banner">
+        <div class="banner-icon">⚠</div>
+        <div class="banner-text">
+          <div class="banner-title">All keys exhausted across all platforms</div>
+          <div class="banner-desc">Daily quota hit on every account. Add more keys or wait for reset.</div>
+          <div class="banner-actions">
+            <button class="banner-btn" onclick="focusSidebar()">+ Add a new key</button>
+            <button class="banner-btn" onclick="resetAllKeys()">↺ Reset all (new day)</button>
+            <button class="banner-btn" onclick="showWaitInfo()">⏱ Wait for reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="script-drop" id="drop-zone" onclick="document.getElementById('file-input').click()"
+        ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <div class="drop-icon">📄</div>
+        <div class="drop-text">Drop a script file here or <span>browse</span></div>
+        <div style="font-size:10px; color:var(--dim); margin-top:4px">.txt, .md, .fountain supported</div>
+      </div>
+      <input type="file" id="file-input" accept=".txt,.md,.fountain,.pdf" onchange="handleFileSelect(event)" />
+
+      <div style="font-size:11px; color:var(--dim); text-align:center; margin: -8px 0 12px;">— or type / paste below —</div>
+
+      <textarea class="script-textarea" id="script-input"
+        placeholder="Paste your script here...&#10;&#10;Example:&#10;INT. COFFEE SHOP - DAY&#10;A young woman sits alone, staring out the rain-streaked window. Her half-empty cup grows cold.&#10;&#10;EXT. CITY STREET - NIGHT&#10;Neon signs reflect on wet pavement as a figure in a hoodie walks quickly..."></textarea>
+
+      <div class="config-row" style="margin-top: 14px;">
+        <div class="config-field">
+          <label>Default model</label>
+          <select id="default-model">
+            <option value="auto">Auto (best available)</option>
+            <option value="google-veo2">Google · Veo 2 (best quality)</option>
+            <option value="magic-ltx2">Magic Hour · LTX-2 (fast)</option>
+            <option value="zsky-wan">ZSky · Wan 2.2 (no key fallback)</option>
+          </select>
+        </div>
+        <div class="config-field">
+          <label>Aspect ratio</label>
+          <select id="aspect-ratio">
+            <option value="16:9">16:9 Cinematic</option>
+            <option value="9:16">9:16 Vertical</option>
+            <option value="1:1">1:1 Square</option>
+            <option value="2.39:1">2.39:1 Anamorphic</option>
+          </select>
+        </div>
+        <div class="config-field">
+          <label>Clip duration</label>
+          <select id="clip-duration">
+            <option value="5">5 seconds</option>
+            <option value="8" selected>8 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="15">15 seconds</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="series-banner" id="series-banner">
+        <span style="font-size:18px">🎬</span>
+        <div class="series-banner-text">
+          <div><b>Series Mode Active</b> — Episode references locked</div>
+          <div class="series-banner-sub" id="series-banner-sub">Characters and locations from previous episode will anchor all shot prompts</div>
+        </div>
+        <button class="series-clear-btn" onclick="clearSeriesBible()">✕ Clear</button>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-top: 4px;">
+        <button class="btn-primary" id="run-btn" onclick="runAgent()">
+          ▶ Run Agent
+        </button>
+        <button class="btn-secondary" id="continue-btn" onclick="continueSeriesMode()">
+          🎬 Continue Series
+        </button>
+        <button class="btn-secondary" onclick="clearAll()">Clear</button>
+        <span id="run-status" style="font-size:11px; color:var(--muted);"></span>
+      </div>
+
+      <div id="progress-section" style="display:none; margin-top:16px;">
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progress-step">Analyzing script...</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENES TAB -->
+    <div class="panel" id="tab-scenes">
+      <div id="scenes-container">
+        <div class="empty-state">
+          <div class="empty-icon">🎬</div>
+          <div class="empty-title">No scenes yet</div>
+          <div class="empty-sub">Run the agent on a script to generate scenes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFERENCES TAB -->
+    <div class="panel" id="tab-refs">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <span style="font-size:12px; color:var(--muted);">Character & location reference sheets</span>
+        <button class="btn-secondary" onclick="generateAllRefImages()" id="gen-all-refs-btn" style="font-size:10px; padding:4px 10px; display:none;">
+          🍌 Generate all images
+        </button>
+      </div>
+      <div id="refs-container">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <div class="empty-title">No reference sheets yet</div>
+          <div class="empty-sub">Claude will build character and location references from your script</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOG TAB -->
+    <div class="panel" id="tab-log">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <span style="font-size:12px; color:var(--muted);">Agent activity log</span>
+        <button class="btn-secondary" onclick="clearLog()" style="font-size:10px; padding: 4px 10px;">Clear</button>
+      </div>
+      <div class="log-wrap" id="log-wrap">
+        <div class="log-entry"><span class="log-ts">--:--:--</span><span class="log-dim">Agent initialized. Add keys and paste a script to begin.</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const platforms = { google: [], magic: [] }; // zsky needs no key
+let scenes = [];
+let references = { characters: [], locations: [] };
+let seriesBible = null; // locked references from previous episode
+let isRunning = false;
+let keyIdCounter = 0;
+
+// ── KEY MANAGEMENT ────────────────────────────────────────────────────────────
+function addKey(platform, val = '') {
+  if (platform === 'zsky') return;
+  const id = ++keyIdCounter;
+  platforms[platform].push({ id, value: val, status: 'idle' });
+  renderKeys(platform);
+  updateStats();
+}
+
+function removeKey(platform, id) {
+  if (platform === 'zsky') return;
+  platforms[platform] = platforms[platform].filter(k => k.id !== id);
+  renderKeys(platform);
+  updateStats();
+}
+
+function renderKeys(platform) {
+  if (platform === 'zsky') return; // no keys needed
+  const container = document.getElementById(platform + '-keys');
+  const count = document.getElementById(platform + '-count');
+  if (!container) return;
+  const keys = platforms[platform];
+  if (count) count.textContent = keys.length + ' key' + (keys.length !== 1 ? 's' : '');
+  container.innerHTML = '';
+  keys.forEach(k => {
+    const statusClass = k.status === 'exhausted' ? 'badge-exhausted' : k.status === 'active' ? 'badge-active' : 'badge-idle';
+    const statusLabel = k.status === 'exhausted' ? 'exhausted' : k.status === 'active' ? 'in use' : 'idle';
+    const row = document.createElement('div');
+    row.className = 'key-entry';
+    row.innerHTML = `
+      <input id="key-${platform}-${k.id}" type="password" placeholder="${getPlaceholder(platform)}"
+        value="${k.value}" oninput="onKeyChange('${platform}',${k.id},this.value)"
+        style="font-size:10px;" />
+      <span class="key-badge ${statusClass}">${statusLabel}</span>
+      <button class="btn-tiny" onclick="removeKey('${platform}',${k.id})">✕</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function getPlaceholder(p) {
+  return p === 'google' ? 'AIza…' : 'mhk_live_…';
+}
+
+function onKeyChange(platform, id, val) {
+  const k = platforms[platform].find(k => k.id === id);
+  if (k) { k.value = val.trim(); if (k.status === 'exhausted') { k.status = 'idle'; renderKeys(platform); updateStats(); } }
+}
+
+function updateStats() {
+  let total = 0, active = 0;
+  ['google','magic'].forEach(p => {
+    platforms[p].forEach(k => {
+      total++;
+      if (k.status !== 'exhausted') active++;
+    });
+  });
+  total++; active++; // ZSky always available
+  document.getElementById('stat-keys').textContent = total;
+  document.getElementById('stat-active').textContent = active;
+  document.getElementById('stat-scenes').textContent = scenes.length;
+  document.getElementById('stat-done').textContent = scenes.filter(s => s.status === 'approved').length;
+  const googleMagicExhausted = ['google','magic'].every(p => platforms[p].length > 0 && platforms[p].every(k => k.status === 'exhausted'));
+  document.getElementById('exhausted-banner').className = 'exhausted-banner' + (googleMagicExhausted ? ' visible' : '');
+}
+
+function getNextKey() {
+  for (const p of ['google', 'magic']) {
+    for (const k of platforms[p]) {
+      if (k.value && k.status !== 'exhausted') return { platform: p, key: k };
+    }
+  }
+  return { platform: 'zsky', key: { id: 'zsky', value: '', status: 'idle' } };
+}
+
+function markKeyExhausted(platform, id) {
+  if (platform === 'zsky') return;
+  const k = platforms[platform]?.find(k => k.id === id);
+  if (k) { k.status = 'exhausted'; renderKeys(platform); updateStats(); }
+}
+
+function markKeyActive(platform, id) {
+  if (platform === 'zsky') return;
+  const k = platforms[platform]?.find(k => k.id === id);
+  if (k) { k.status = 'active'; renderKeys(platform); }
+}
+
+function markKeyIdle(platform, id) {
+  if (platform === 'zsky') return;
+  const k = platforms[platform]?.find(k => k.id === id);
+  if (k) { k.status = 'idle'; renderKeys(platform); }
+}
+
+function resetAllKeys() {
+  ['google','magic'].forEach(p => {
+    platforms[p].forEach(k => { k.status = 'idle'; });
+    renderKeys(p);
+  });
+  updateStats();
+  log('All keys reset to idle (new day / manual reset).', 'ok');
+}
+
+// ── FILE HANDLING ─────────────────────────────────────────────────────────────
+function handleDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+function handleDragLeave(e) { document.getElementById('drop-zone').classList.remove('drag-over'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) readFile(file);
+}
+function handleFileSelect(e) { const file = e.target.files[0]; if (file) readFile(file); }
+function readFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => { document.getElementById('script-input').value = e.target.result; log(`Loaded file: ${file.name}`, 'dim'); };
+  reader.readAsText(file);
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const tabs = ['script','scenes','refs','log'];
+    t.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── LOG ───────────────────────────────────────────────────────────────────────
+function log(msg, type = 'dim', platform = '') {
+  const wrap = document.getElementById('log-wrap');
+  const d = new Date();
+  const ts = d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0') + ':' + d.getSeconds().toString().padStart(2,'0');
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  const platClass = platform ? `log-platform plat-${platform}` : '';
+  const platHtml = platform ? `<span class="${platClass}">${platform.toUpperCase()}</span>` : '';
+  entry.innerHTML = `<span class="log-ts">${ts}</span>${platHtml}<span class="log-${type}">${msg}</span>`;
+  wrap.appendChild(entry);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('log-wrap').innerHTML = '';
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function setProgress(step, pct) {
+  document.getElementById('progress-section').style.display = 'block';
+  document.getElementById('progress-step').textContent = step;
+  document.getElementById('progress-pct').textContent = Math.round(pct) + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ── CLAUDE API CALL ───────────────────────────────────────────────────────────
+async function callClaude(systemPrompt, userPrompt) {
+  const key = document.getElementById('claude-key').value.trim();
+  if (!key) throw new Error('No Claude API key provided');
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.error?.message || `Claude API error ${resp.status}`);
+  }
+  const data = await resp.json();
+  return data.content.map(b => b.text || '').join('');
+}
+
+// ── MAIN AGENT ────────────────────────────────────────────────────────────────
+async function runAgent() {
+  const script = document.getElementById('script-input').value.trim();
+  if (!script) { alert('Please paste a script first.'); return; }
+  const claudeKey = document.getElementById('claude-key').value.trim();
+  if (!claudeKey) { alert('Please enter your Claude API key in the sidebar.'); return; }
+
+  isRunning = true;
+  scenes = [];
+  references = { characters: [], locations: [] };
+  document.getElementById('run-btn').disabled = true;
+  document.getElementById('run-status').textContent = '';
+  switchTab('scenes');
+  document.getElementById('scenes-container').innerHTML = '<div class="empty-state"><div class="empty-icon" style="font-size:24px">⏳</div><div class="empty-title">Claude is analyzing your script...</div></div>';
+
+  // STEP 1: Analyze script
+  log('Starting agent pipeline...', 'claude');
+  setProgress('Claude analyzing script...', 5);
+
+  let analysis;
+  try {
+    log('Sending script to Claude for analysis...', 'claude');
+    const raw = await callClaude(
+      `You are an expert AI film director and production assistant. Analyze scripts and return structured JSON only. No markdown, no backticks, pure JSON.`,
+      `Analyze this script and return a JSON object with:
+{
+  "title": "film title or 'Untitled'",
+  "logline": "one sentence summary",
+  "characters": [{"name":"...", "description":"...", "appearance":"...", "traits":["..."]}],
+  "locations": [{"name":"...", "description":"...", "timeOfDay":"...", "mood":"..."}],
+  "scenes": [
+    {
+      "id": 1,
+      "title": "short scene title",
+      "location": "location name",
+      "timeOfDay": "day/night/dawn/dusk",
+      "action": "what happens in 1-2 sentences",
+      "characters": ["character names present"],
+      "mood": "emotional tone",
+      "cameraStyle": "suggested camera movement/style",
+      "shotPrompt": "detailed cinematic video generation prompt for this scene (50-80 words, include lighting, camera movement, subjects, mood, style)${seriesBible ? '. IMPORTANT: maintain exact visual consistency with the series bible — same character appearances, same location aesthetics' : ''}"
+    }
+  ]
+}
+${buildSeriesBiblePrompt()}
+Script:
+${script.slice(0, 8000)}`
+    );
+    analysis = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    log(`Script analyzed: "${analysis.title}" — ${analysis.scenes.length} scenes, ${analysis.characters.length} characters, ${analysis.locations.length} locations`, 'ok');
+  } catch (e) {
+    log(`Claude analysis failed: ${e.message}`, 'err');
+    document.getElementById('run-btn').disabled = false;
+    isRunning = false;
+    return;
+  }
+
+  // STEP 2: Build references — merge series bible images if available
+  setProgress('Building reference sheets...', 20);
+  references = { characters: analysis.characters || [], locations: analysis.locations || [] };
+
+  // If series bible active, copy locked images into matching refs for continuity
+  if (seriesBible) {
+    references.characters.forEach(c => {
+      const prev = seriesBible.characters.find(p => p.name.toLowerCase() === c.name.toLowerCase());
+      if (prev?.imageDataUrl) { c.imageDataUrl = prev.imageDataUrl; c.lockedFromBible = true; }
+    });
+    references.locations.forEach(l => {
+      const prev = seriesBible.locations.find(p => p.name.toLowerCase() === l.name.toLowerCase());
+      if (prev?.imageDataUrl) { l.imageDataUrl = prev.imageDataUrl; l.lockedFromBible = true; }
+    });
+  }
+
+  renderReferences();
+  if (references.characters.length || references.locations.length) {
+    document.getElementById('gen-all-refs-btn').style.display = 'inline-flex';
+  }
+  log(`Built ${references.characters.length} character sheets + ${references.locations.length} location sheets`, 'claude');
+
+  // Auto-generate reference images for refs without one
+  const needsImages = [
+    ...references.characters.map((_,i) => ({type:'character',i})),
+    ...references.locations.map((_,i) => ({type:'location',i}))
+  ].filter(({type,i}) => {
+    const r = type === 'character' ? references.characters[i] : references.locations[i];
+    return !r.imageDataUrl;
+  });
+  if (needsImages.length > 0) {
+    log(`Generating ${needsImages.length} Nano Banana 2 reference images…`, 'info', 'google');
+    for (const {type, i} of needsImages) {
+      await generateRefImage(type, i);
+      await sleep(400);
+    }
+  }
+
+  // STEP 3: Set up scenes
+  scenes = (analysis.scenes || []).map(s => ({ ...s, status: 'pending', attempts: 0, videoUrl: null, feedback: '' }));
+  renderScenes();
+  updateStats();
+  setProgress(`Generating ${scenes.length} scenes...`, 25);
+
+  // STEP 4: Generate each scene
+  const ratio = document.getElementById('aspect-ratio').value;
+  const duration = document.getElementById('clip-duration').value;
+
+  for (let i = 0; i < scenes.length; i++) {
+    const scene = scenes[i];
+    setProgress(`Generating scene ${i+1}/${scenes.length}: ${scene.title}`, 25 + (i / scenes.length) * 65);
+    await generateScene(scene, ratio, duration);
+    renderScenes();
+    updateStats();
+    await sleep(300);
+  }
+
+  setProgress('Pipeline complete!', 100);
+  log(`✦ Agent done — ${scenes.filter(s=>s.status==='approved').length}/${scenes.length} scenes approved`, 'ok');
+  document.getElementById('run-btn').disabled = false;
+  document.getElementById('run-status').textContent = `${scenes.filter(s=>s.status==='approved').length}/${scenes.length} approved`;
+  isRunning = false;
+}
+
+async function generateScene(scene, ratio, duration, feedbackNote = '') {
+  scene.status = 'generating';
+  scene.attempts++;
+  renderScenes();
+
+  const keyInfo = getNextKey();
+  if (!keyInfo) {
+    scene.status = 'pending';
+    log(`Scene ${scene.id}: no keys available — paused`, 'warn');
+    document.getElementById('exhausted-banner').className = 'exhausted-banner visible';
+    return;
+  }
+
+  const { platform, key } = keyInfo;
+  markKeyActive(platform, key.id);
+  let prompt = scene.shotPrompt;
+  if (feedbackNote) prompt += `. Director note: ${feedbackNote}`;
+  log(`Scene ${scene.id} "${scene.title}" → ${platform.toUpperCase()} (attempt ${scene.attempts})`, 'info', platform);
+
+  try {
+    let videoUrl = null;
+    if (platform === 'google') videoUrl = await generateGoogleVeo(key.value, prompt, ratio, duration);
+    else if (platform === 'magic') videoUrl = await generateMagicHour(key.value, prompt, ratio, duration);
+    else if (platform === 'zsky') videoUrl = await generateZSky(prompt, ratio, duration);
+
+    markKeyIdle(platform, key.id);
+    scene.videoUrl = videoUrl;
+    scene.usedPlatform = platform;
+    log(`Scene ${scene.id} generated successfully`, 'ok', platform);
+    await claudeQC(scene, prompt);
+
+  } catch (err) {
+    const msg = err.message || '';
+    const isQuota = msg.includes('429') || msg.includes('quota') || msg.includes('402') || msg.includes('exhausted') || msg.includes('limit') || msg.includes('insufficient');
+    if (isQuota) {
+      markKeyExhausted(platform, key.id);
+      log(`Scene ${scene.id}: quota/rate limit on ${platform.toUpperCase()} — rotating key...`, 'warn', platform);
+      return await generateScene(scene, ratio, duration, feedbackNote);
+    }
+    markKeyIdle(platform, key.id);
+    scene.status = 'rejected';
+    scene.qcNote = `API error: ${msg.slice(0, 80)}`;
+    log(`Scene ${scene.id} error: ${msg.slice(0, 100)}`, 'err', platform);
+    renderScenes();
+  }
+}
+
+// ── REAL API: GOOGLE VEO (AI Studio) ─────────────────────────────────────────
+// Uses Gemini API generateVideo endpoint. Polls until complete.
+async function generateGoogleVeo(apiKey, prompt, ratio, duration) {
+  const dur = Math.min(parseInt(duration), 8); // Veo free: max 8s
+  const ar = ratio === '9:16' ? 'ASPECT_RATIO_9_16' : 'ASPECT_RATIO_16_9';
+
+  // Submit generation job
+  const submitResp = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/veo-2.0-generate-001:generateVideo?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: { text: prompt },
+        videoGenerationConfig: {
+          durationSeconds: dur,
+          aspectRatio: ar,
+          personGeneration: 'allow_adult'
+        }
+      })
+    }
+  );
+
+  if (!submitResp.ok) {
+    const e = await submitResp.json().catch(() => ({}));
+    const errMsg = e.error?.message || `HTTP ${submitResp.status}`;
+    if (submitResp.status === 429 || submitResp.status === 402) throw new Error('429 quota exceeded');
+    throw new Error(errMsg);
+  }
+
+  const opData = await submitResp.json();
+  const opName = opData.name;
+  if (!opName) throw new Error('No operation name returned from Veo API');
+  log(`Google Veo job started: ${opName}`, 'info', 'google');
+
+  // Poll for completion (up to 3 minutes)
+  for (let i = 0; i < 36; i++) {
+    await sleep(5000);
+    const pollResp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/${opName}?key=${apiKey}`
+    );
+    if (!pollResp.ok) continue;
+    const pollData = await pollResp.json();
+    if (pollData.done) {
+      if (pollData.error) throw new Error(pollData.error.message || 'Veo generation failed');
+      const videos = pollData.response?.generatedSamples;
+      if (videos && videos[0]?.video?.uri) return videos[0].video.uri;
+      throw new Error('Veo returned no video URI');
+    }
+    log(`Google Veo: still rendering... (${(i+1)*5}s)`, 'dim', 'google');
+  }
+  throw new Error('Google Veo timed out after 3 minutes');
+}
+
+// ── REAL API: MAGIC HOUR (LTX-2, free tier) ──────────────────────────────────
+// POST /v1/text-to-video → poll GET /v1/video-projects/{id}
+async function generateMagicHour(apiKey, prompt, ratio, duration) {
+  const dur = Math.min(parseInt(duration), 10); // LTX-2 supports up to 30s but free is limited
+  const ar = ratio === '9:16' ? '9:16' : ratio === '1:1' ? '1:1' : '16:9';
+
+  const submitResp = await fetch('https://api.magichour.ai/v1/text-to-video', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      name: `Film Agent Scene`,
+      end_seconds: dur,
+      aspect_ratio: ar,
+      resolution: '480p', // free tier max
+      model: 'ltx-2',
+      audio: true,
+      style: { prompt: prompt }
+    })
+  });
+
+  if (!submitResp.ok) {
+    const e = await submitResp.json().catch(() => ({}));
+    if (submitResp.status === 402) throw new Error('402 insufficient credits');
+    if (submitResp.status === 401) throw new Error('401 unauthorized — check Magic Hour key');
+    throw new Error(e.message || `Magic Hour HTTP ${submitResp.status}`);
+  }
+
+  const { id } = await submitResp.json();
+  if (!id) throw new Error('Magic Hour returned no job ID');
+  log(`Magic Hour job: ${id}`, 'info', 'magic');
+
+  // Poll for completion (up to 3 minutes)
+  for (let i = 0; i < 36; i++) {
+    await sleep(5000);
+    const pollResp = await fetch(`https://api.magichour.ai/v1/video-projects/${id}`, {
+      headers: { 'Authorization': `Bearer ${apiKey}` }
+    });
+    if (!pollResp.ok) continue;
+    const pollData = await pollResp.json();
+    if (pollData.status === 'complete') {
+      const url = pollData.downloads?.[0]?.url;
+      if (url) return url;
+      throw new Error('Magic Hour complete but no download URL');
+    }
+    if (pollData.status === 'error') throw new Error(pollData.error?.message || 'Magic Hour render failed');
+    log(`Magic Hour: ${pollData.status}... (${(i+1)*5}s)`, 'dim', 'magic');
+  }
+  throw new Error('Magic Hour timed out after 3 minutes');
+}
+
+// ── REAL API: ZSKY (Wan 2.2, no key needed) ───────────────────────────────────
+// Simple REST, returns MP4 directly — no polling needed
+async function generateZSky(prompt, ratio, duration) {
+  const dur = Math.min(parseInt(duration), 10); // ZSky free max 10s
+  const ar = ratio === '9:16' ? '9:16' : '16:9';
+
+  const resp = await fetch('https://zsky.ai/api/v1/video/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      prompt,
+      duration: dur,
+      resolution: '1080p',
+      aspect_ratio: ar,
+      audio: true,
+      style: 'cinematic'
+    })
+  });
+
+  if (!resp.ok) {
+    if (resp.status === 429) throw new Error('429 rate limit');
+    throw new Error(`ZSky HTTP ${resp.status}`);
+  }
+
+  // ZSky returns MP4 bytes directly — create object URL
+  const blob = await resp.blob();
+  if (!blob.size) throw new Error('ZSky returned empty response');
+  return URL.createObjectURL(blob);
+}
+
+// ── CLAUDE HYBRID QC ──────────────────────────────────────────────────────────
+async function claudeQC(scene, originalPrompt) {
+  log(`Scene ${scene.id}: Claude reviewing against shot prompt...`, 'claude');
+  try {
+    const verdict = await callClaude(
+      `You are a film director's AI quality control assistant. You review AI-generated video shots against their intended prompts. 
+       Be concise. Return ONLY a JSON object: {"decision":"approve"|"flag"|"reject","reason":"brief reason","improvedPrompt":"improved prompt if rejecting, else empty string"}
+       - approve: prompt intent is clearly met, good quality expected
+       - flag: uncertain, needs human review (character consistency, mood, subtle issues)  
+       - reject: clear mismatch, wrong scene, obvious quality issue — auto-regenerate with improved prompt`,
+      `Original shot prompt: "${originalPrompt}"
+Scene title: "${scene.title}"
+Scene action: "${scene.action}"
+Mood: "${scene.mood}"
+Characters present: ${(scene.characters||[]).join(', ')||'none'}
+
+The video has been generated. Based on the prompt and scene requirements, assess likely quality and flag any concerns.
+Return JSON only.`
+    );
+
+    const parsed = JSON.parse(verdict.replace(/```json|```/g,'').trim());
+    if (parsed.decision === 'approve') {
+      scene.status = 'approved';
+      log(`Scene ${scene.id} ✓ auto-approved by Claude`, 'ok');
+    } else if (parsed.decision === 'flag') {
+      scene.status = 'flagged';
+      scene.qcNote = parsed.reason || 'Needs review';
+      log(`Scene ${scene.id} ⚑ flagged — "${scene.qcNote}"`, 'warn');
+    } else {
+      scene.status = 'rejected';
+      scene.qcNote = parsed.reason || 'Quality issue';
+      if (parsed.improvedPrompt) scene.shotPrompt = parsed.improvedPrompt;
+      log(`Scene ${scene.id} ✗ auto-rejected — "${scene.qcNote}" — regenerating with improved prompt...`, 'err');
+      await sleep(500);
+      await generateScene(scene, '16:9', '8');
+    }
+  } catch (e) {
+    // If Claude QC fails, fall back to flagging for human review
+    scene.status = 'flagged';
+    scene.qcNote = 'Claude QC unavailable — please review manually';
+    log(`Scene ${scene.id}: QC fallback to manual review`, 'warn');
+  }
+}
+
+// ── MANUAL APPROVE / REJECT / REGEN ──────────────────────────────────────────
+async function approveScene(id) {
+  const scene = scenes.find(s => s.id === id);
+  if (!scene) return;
+  scene.status = 'approved';
+  log(`Scene ${id} manually approved`, 'ok');
+  renderScenes(); updateStats();
+}
+
+async function rejectScene(id) {
+  const scene = scenes.find(s => s.id === id);
+  if (!scene) return;
+  const fb = document.getElementById(`fb-${id}`) ? document.getElementById(`fb-${id}`).value.trim() : '';
+  scene.feedback = fb;
+  scene.status = 'generating';
+  log(`Scene ${id} rejected — regenerating${fb ? ` with feedback: "${fb}"` : ''}...`, 'warn');
+  renderScenes();
+  await generateScene(scene, '16:9', '8', fb);
+  renderScenes(); updateStats();
+}
+
+async function regenScene(id) {
+  const scene = scenes.find(s => s.id === id);
+  if (!scene) return;
+  const fb = document.getElementById(`fb-${id}`) ? document.getElementById(`fb-${id}`).value.trim() : '';
+  scene.status = 'generating';
+  log(`Scene ${id} manual regen${fb ? ` — director note: "${fb}"` : ''}`, 'info');
+  renderScenes();
+  await generateScene(scene, '16:9', '8', fb);
+  renderScenes(); updateStats();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderScenes() {
+  const container = document.getElementById('scenes-container');
+  if (!scenes.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🎬</div><div class="empty-title">No scenes yet</div><div class="empty-sub">Run the agent on a script to generate scenes</div></div>';
+    return;
+  }
+  container.innerHTML = '';
+  scenes.forEach(scene => {
+    const card = document.createElement('div');
+    const cardClass = scene.status === 'generating' ? 'generating' : scene.status === 'approved' ? 'approved' : scene.status === 'rejected' ? 'rejected' : scene.status === 'flagged' ? 'flagged' : '';
+    card.className = `scene-card ${cardClass}`;
+
+    const statusLabel = { pending: 'Pending', generating: 'Generating…', approved: '✓ Approved', rejected: '✗ Rejected', flagged: '⚑ Flagged', waiting: 'Waiting' };
+    const statusClass = `status-${scene.status}`;
+
+    const platformBadge = scene.usedPlatform ? `<span class="key-badge plat-${scene.usedPlatform}" style="font-size:9px;padding:2px 6px;">${scene.usedPlatform.toUpperCase()}</span>` : '';
+
+    const showVideo = scene.videoUrl || scene.status === 'generating';
+    const videoHtml = showVideo ? `
+      <div class="scene-video">
+        ${scene.status === 'generating' ? '<div class="video-shimmer"></div><div class="video-placeholder">Generating clip…</div>' : '<div class="video-placeholder">🎞 Video ready<br><span style="font-size:9px;color:var(--dim)">'+scene.videoUrl+'</span></div>'}
+      </div>` : '';
+
+    const qcNote = scene.qcNote ? `<div style="font-size:10px;color:var(--warn);margin-bottom:8px;background:rgba(255,180,71,0.08);border-radius:5px;padding:6px 8px;">⚑ ${scene.qcNote}</div>` : '';
+
+    const showActions = scene.status !== 'generating' && scene.status !== 'pending';
+    const actionsHtml = showActions ? `
+      ${scene.status === 'flagged' || scene.status === 'generating' ? `
+        <div class="scene-actions">
+          <button class="btn-approve" onclick="approveScene(${scene.id})">✓ Approve</button>
+          <button class="btn-reject" onclick="rejectScene(${scene.id})">✗ Reject</button>
+          <button class="btn-regen" onclick="regenScene(${scene.id})">↺ Regen</button>
+        </div>` : ''}
+      ${scene.status === 'approved' ? `
+        <div class="scene-actions">
+          <button class="btn-regen" onclick="regenScene(${scene.id})">↺ Regen</button>
+          <span style="font-size:10px;color:var(--ok)">✓ Approved${scene.usedPlatform ? ' via '+scene.usedPlatform.toUpperCase() : ''}</span>
+        </div>` : ''}
+      ${scene.status === 'rejected' ? `
+        <div class="scene-actions">
+          <button class="btn-regen" onclick="regenScene(${scene.id})">↺ Retry</button>
+        </div>` : ''}
+      <div class="feedback-row">
+        <input class="feedback-input" id="fb-${scene.id}" placeholder="Director note for next generation…" value="${scene.feedback || ''}" />
+      </div>` : '';
+
+    card.innerHTML = `
+      <div class="scene-header">
+        <span class="scene-num">${String(scene.id).padStart(2,'0')}</span>
+        <span class="scene-title">${scene.title}</span>
+        ${platformBadge}
+        <span class="scene-status ${statusClass}">${statusLabel[scene.status] || scene.status}</span>
+      </div>
+      <div class="scene-body">
+        <div class="scene-meta">
+          <span class="meta-tag">📍 <span>${scene.location || '—'}</span></span>
+          <span class="meta-tag">🕐 <span>${scene.timeOfDay || '—'}</span></span>
+          <span class="meta-tag">🎭 <span>${scene.mood || '—'}</span></span>
+          <span class="meta-tag">🎥 <span>${scene.cameraStyle || '—'}</span></span>
+        </div>
+        <div class="scene-prompt">${scene.shotPrompt || '—'}</div>
+        ${qcNote}
+        ${videoHtml}
+        ${actionsHtml}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderReferences() {
+  const container = document.getElementById('refs-container');
+  if (!references.characters.length && !references.locations.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No reference sheets yet</div></div>';
+    return;
+  }
+  container.innerHTML = '';
+  if (references.characters.length) {
+    const header = document.createElement('div');
+    header.style.cssText = 'font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:10px;font-weight:500;';
+    header.textContent = 'Characters';
+    container.appendChild(header);
+    const grid = document.createElement('div');
+    grid.className = 'ref-grid';
+    references.characters.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'ref-card';
+      card.innerHTML = `
+        <div class="ref-type">Character</div>
+        <div class="ref-name">${c.name}</div>
+        <div class="ref-desc">${c.appearance || c.description || '—'}</div>
+        <div class="ref-tag-row">${(c.traits||[]).map(t=>`<span class="ref-tag">${t}</span>`).join('')}</div>
+      `;
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  }
+  if (references.locations.length) {
+    const header = document.createElement('div');
+    header.style.cssText = 'font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:16px 0 10px;font-weight:500;';
+    header.textContent = 'Locations';
+    container.appendChild(header);
+    const grid = document.createElement('div');
+    grid.className = 'ref-grid';
+    references.locations.forEach(l => {
+      const card = document.createElement('div');
+      card.className = 'ref-card';
+      card.innerHTML = `
+        <div class="ref-type">Location</div>
+        <div class="ref-name">${l.name}</div>
+        <div class="ref-desc">${l.description || '—'}</div>
+        <div class="ref-tag-row">
+          ${l.timeOfDay ? `<span class="ref-tag">${l.timeOfDay}</span>` : ''}
+          ${l.mood ? `<span class="ref-tag">${l.mood}</span>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function clearAll() {
+  document.getElementById('script-input').value = '';
+  scenes = [];
+  references = { characters: [], locations: [] };
+  renderScenes();
+  renderReferences();
+  updateStats();
+  document.getElementById('progress-section').style.display = 'none';
+  document.getElementById('run-status').textContent = '';
+}
+
+function focusSidebar() {
+  document.getElementById('exhausted-banner').className = 'exhausted-banner';
+  document.querySelector('.sidebar').scrollTop = 0;
+}
+
+function showWaitInfo() {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0);
+  const ms = tomorrow - now;
+  const hrs = Math.floor(ms/3600000), mins = Math.floor((ms%3600000)/60000);
+  log(`Daily reset in approximately ${hrs}h ${mins}m. Keys will refresh at midnight.`, 'warn');
+  document.getElementById('exhausted-banner').className = 'exhausted-banner';
+}
+
+// ── NANO BANANA 2 — REFERENCE IMAGE GENERATION ───────────────────────────────
+async function generateNanaBanana2Image(prompt) {
+  const key = document.getElementById('claude-key').value.trim();
+  // Use first google key if available, else fall back to claude key (same AI Studio account)
+  const googleKey = platforms.google.find(k => k.value && k.status !== 'exhausted');
+  const apiKey = (googleKey ? googleKey.value : key);
+  if (!apiKey) throw new Error('No Google AI Studio key available for image generation');
+
+  const resp = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
+      })
+    }
+  );
+
+  if (!resp.ok) {
+    const e = await resp.json().catch(() => ({}));
+    throw new Error(e.error?.message || `Nano Banana 2 HTTP ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  for (const part of parts) {
+    if (part.inlineData?.mimeType?.startsWith('image/')) {
+      return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+    }
+  }
+  throw new Error('Nano Banana 2 returned no image');
+}
+
+async function generateRefImage(type, index) {
+  const ref = type === 'character' ? references.characters[index] : references.locations[index];
+  if (!ref) return;
+
+  const btn = document.getElementById(`refbtn-${type}-${index}`);
+  if (btn) { btn.textContent = '⏳ Generating…'; btn.className = 'ref-gen-btn generating'; btn.disabled = true; }
+
+  const prompt = type === 'character'
+    ? `Cinematic character reference sheet portrait. ${ref.name}: ${ref.appearance || ref.description}. ${(ref.traits||[]).join(', ')}. Neutral background, full body and face visible, film production reference style, photorealistic.`
+    : `Cinematic location reference image. ${ref.name}: ${ref.description}. Time of day: ${ref.timeOfDay || 'unspecified'}. Mood: ${ref.mood || 'cinematic'}. Wide establishing shot, film production reference style, photorealistic.`;
+
+  try {
+    log(`Generating Nano Banana 2 reference image for ${ref.name}…`, 'info', 'google');
+    const dataUrl = await generateNanaBanana2Image(prompt);
+    ref.imageDataUrl = dataUrl;
+    log(`✓ Reference image ready: ${ref.name}`, 'ok');
+    renderReferences();
+  } catch (e) {
+    log(`Reference image failed for ${ref.name}: ${e.message}`, 'warn');
+    if (btn) { btn.textContent = '🍌 Generate image'; btn.className = 'ref-gen-btn'; btn.disabled = false; }
+  }
+}
+
+async function generateAllRefImages() {
+  const btn = document.getElementById('gen-all-refs-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Generating…'; }
+  log('Generating Nano Banana 2 reference images for all characters and locations…', 'info');
+  for (let i = 0; i < references.characters.length; i++) {
+    if (!references.characters[i].imageDataUrl) await generateRefImage('character', i);
+    await sleep(500);
+  }
+  for (let i = 0; i < references.locations.length; i++) {
+    if (!references.locations[i].imageDataUrl) await generateRefImage('location', i);
+    await sleep(500);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🍌 Generate all images'; }
+  log('All reference images done.', 'ok');
+}
+
+// ── SERIES BIBLE ──────────────────────────────────────────────────────────────
+function continueSeriesMode() {
+  if (!references.characters.length && !references.locations.length) {
+    showToast('Run Episode 1 first to generate references', 'err');
+    return;
+  }
+  // Lock current references as series bible
+  seriesBible = JSON.parse(JSON.stringify(references));
+  document.getElementById('series-banner').className = 'series-banner active';
+  const charNames = seriesBible.characters.map(c => c.name).join(', ');
+  const locNames = seriesBible.locations.map(l => l.name).join(', ');
+  document.getElementById('series-banner-sub').textContent =
+    `Characters: ${charNames || '—'} · Locations: ${locNames || '—'}`;
+  // Clear scenes and script for new episode
+  scenes = [];
+  references = { characters: [], locations: [] };
+  document.getElementById('script-input').value = '';
+  renderScenes();
+  renderReferences();
+  updateStats();
+  switchTab('script');
+  log('Series mode active — paste Episode 2 script and run agent. References locked from previous episode.', 'ok');
+  showToast('✓ Series bible locked from Ep 1', 'ok');
+}
+
+function clearSeriesBible() {
+  seriesBible = null;
+  document.getElementById('series-banner').className = 'series-banner';
+  log('Series bible cleared — running in standalone mode.', 'dim');
+  showToast('Series bible cleared', '');
+}
+
+function buildSeriesBiblePrompt() {
+  if (!seriesBible) return '';
+  const chars = seriesBible.characters.map(c =>
+    `- ${c.name}: ${c.appearance || c.description}. Visual reference image: ${c.imageDataUrl ? '[locked reference image attached]' : 'text only'}. Traits: ${(c.traits||[]).join(', ')}.`
+  ).join('\n');
+  const locs = seriesBible.locations.map(l =>
+    `- ${l.name}: ${l.description}. Time: ${l.timeOfDay||'—'}. Mood: ${l.mood||'—'}. Visual reference: ${l.imageDataUrl ? '[locked reference image attached]' : 'text only'}.`
+  ).join('\n');
+  return `\n\nSERIES BIBLE (LOCKED — from previous episode, maintain exact consistency):\nCHARACTERS:\n${chars}\nLOCATIONS:\n${locs}\n`;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// ── SAVE PROJECT ──────────────────────────────────────────────────────────────
+function saveProject() {
+  ['google','magic'].forEach(p => {
+    platforms[p].forEach(k => {
+      const el = document.getElementById(`key-${p}-${k.id}`);
+      if (el) k.value = el.value.trim();
+    });
+  });
+  const project = {
+    version: '1.0',
+    savedAt: new Date().toISOString(),
+    claudeKey: document.getElementById('claude-key').value,
+    platforms: JSON.parse(JSON.stringify(platforms)),
+    script: document.getElementById('script-input').value,
+    settings: {
+      defaultModel: document.getElementById('default-model').value,
+      aspectRatio: document.getElementById('aspect-ratio').value,
+      clipDuration: document.getElementById('clip-duration').value,
+    },
+    scenes: JSON.parse(JSON.stringify(scenes)),
+    references: JSON.parse(JSON.stringify(references)),
+  };
+  const blob = new Blob([JSON.stringify(project, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const title = (project.script.split('\n')[0] || 'project').slice(0, 30).replace(/[^a-z0-9]/gi, '_').toLowerCase();
+  a.href = url; a.download = `film-agent-${title}-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  log('Project saved to file.', 'ok');
+  showToast('✓ Project saved', 'ok');
+}
+
+function loadProject(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const project = JSON.parse(e.target.result);
+      if (!project.version) throw new Error('Not a valid Film Agent project file');
+      if (project.claudeKey) document.getElementById('claude-key').value = project.claudeKey;
+      if (project.platforms) {
+        ['google','magic'].forEach(p => {
+          if (project.platforms[p]) {
+            platforms[p] = project.platforms[p];
+            platforms[p].forEach(k => { if (k.status === 'active') k.status = 'idle'; });
+            renderKeys(p);
+          }
+        });
+      }
+      if (project.script) document.getElementById('script-input').value = project.script;
+      if (project.settings) {
+        if (project.settings.defaultModel) document.getElementById('default-model').value = project.settings.defaultModel;
+        if (project.settings.aspectRatio) document.getElementById('aspect-ratio').value = project.settings.aspectRatio;
+        if (project.settings.clipDuration) document.getElementById('clip-duration').value = project.settings.clipDuration;
+      }
+      if (project.scenes) { scenes = project.scenes; renderScenes(); }
+      if (project.references) { references = project.references; renderReferences(); }
+      updateStats();
+      log(`Project loaded: "${file.name}" — ${scenes.length} scenes, ${getTotalKeys()} keys restored.`, 'ok');
+      showToast('✓ Project loaded', 'ok');
+    } catch (err) {
+      log(`Failed to load project: ${err.message}`, 'err');
+      showToast('✗ Invalid project file', 'err');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function loadKeysFromFile(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const content = e.target.result.trim();
+    if (content.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(content);
+        let added = 0;
+        if (parsed.platforms) {
+          ['google','magic'].forEach(p => {
+            if (parsed.platforms[p]) {
+              parsed.platforms[p].forEach(k => { if (k.value) { platforms[p].push({ id: ++keyIdCounter, value: k.value, status: 'idle' }); added++; } });
+              renderKeys(p);
+            }
+          });
+          if (parsed.claudeKey) document.getElementById('claude-key').value = parsed.claudeKey;
+        } else {
+          ['google','magic'].forEach(p => {
+            if (Array.isArray(parsed[p])) {
+              parsed[p].forEach(v => { if (v) { platforms[p].push({ id: ++keyIdCounter, value: v, status: 'idle' }); added++; } });
+              renderKeys(p);
+            }
+          });
+          if (parsed.claude) document.getElementById('claude-key').value = parsed.claude;
+        }
+        updateStats();
+        log(`Loaded ${added} keys from JSON file.`, 'ok');
+        showToast(`✓ ${added} keys loaded`, 'ok');
+        return;
+      } catch (_) {}
+    }
+    const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
+    let added = 0;
+    lines.forEach(line => {
+      if (line.startsWith('#') || line.startsWith('//')) return;
+      const lower = line.toLowerCase();
+      if (lower.startsWith('claude:')) { document.getElementById('claude-key').value = line.slice(7).trim(); }
+      else if (lower.startsWith('google:')) { platforms.google.push({ id: ++keyIdCounter, value: line.slice(7).trim(), status: 'idle' }); added++; }
+      else if (lower.startsWith('magic:')) { platforms.magic.push({ id: ++keyIdCounter, value: line.slice(6).trim(), status: 'idle' }); added++; }
+      else if (line.startsWith('AIza')) { platforms.google.push({ id: ++keyIdCounter, value: line, status: 'idle' }); added++; }
+      else if (line.startsWith('mhk_')) { platforms.magic.push({ id: ++keyIdCounter, value: line, status: 'idle' }); added++; }
+      else if (line.startsWith('sk-ant-')) { document.getElementById('claude-key').value = line; }
+    });
+    ['google','magic'].forEach(p => renderKeys(p));
+    updateStats();
+    log(`Loaded ${added} keys from text file.`, 'ok');
+    showToast(`✓ ${added} keys loaded`, 'ok');
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportKeysOnly() {
+  ['google','magic'].forEach(p => {
+    platforms[p].forEach(k => {
+      const el = document.getElementById(`key-${p}-${k.id}`);
+      if (el) k.value = el.value.trim();
+    });
+  });
+  const keysJson = {
+    _note: 'Film Agent master keys file. Load with "Load all keys from file".',
+    _updated: new Date().toISOString(),
+    claude: document.getElementById('claude-key').value || '',
+    google: platforms.google.map(k => k.value).filter(Boolean),
+    magic: platforms.magic.map(k => k.value).filter(Boolean),
+  };
+  const total = keysJson.google.length + keysJson.magic.length;
+  const blob = new Blob([JSON.stringify(keysJson, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `film-agent-keys-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  log(`Keys exported: ${total} video keys + Claude key.`, 'ok');
+  showToast(`✓ ${total} keys exported`, 'ok');
+}
+
+function getTotalKeys() {
+  return ['google','magic'].reduce((n, p) => n + platforms[p].length, 0);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderKeys('google');
+renderKeys('magic');
+updateStats();
+</script>
+</body>
+</html>
